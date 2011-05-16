@@ -1,0 +1,42 @@
+﻿@model IEnumerable<CLFacadeLayer.GenericBE>
+@{
+    ViewBag.Title = "CurrentCourses";
+    Layout = "~/Views/Shared/_ProfileMaster.cshtml";
+    int RecordCount = Model.Count();
+         
+}
+@if (RecordCount == 0)
+{
+    <p style="padding:35px 0px 0px 20px">
+        @ViewData["Message"]
+        <br />
+        <a onclick="javascript:GoToSearch();" style="cursor: pointer; color: Blue;">Please click
+            to go to Search Course</a>
+    </p>
+}
+@foreach (var item in Model)
+{
+
+    string HomePageURL = "../CourseHome/CourseHome?CourseID=" + @item.CourseID + "&IsTopVoted=0" + "&PageNumber=1";
+    //string CourseTitle = @item.Prefix + @item.CourseNumber + @item.CourseTitle;
+    <div class="form-row-9">
+        <div class="form-left-5">
+            @item.Prefix
+        </div>
+        <div class="form-left-5">
+            @item.CourseNumber</div>
+        <div class="form-left-5">
+            @item.CourseTitle</div>
+        <div class="add-bt-1">
+            <a href="@HomePageURL" class="faceblue">Course Home</a></div>
+    </div>
+    
+    @*<div>
+        <a href="@HomePageURL" class="faceblue">@item.Prefix @item.CourseNumber @item.CourseTitle</a>
+    </div>*@
+}
+<script type="text/javascript">
+    function GoToSearch() {
+        window.location.href = "../Courses/SearchCourse";
+    }
+</script>

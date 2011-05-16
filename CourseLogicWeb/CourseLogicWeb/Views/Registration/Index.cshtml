@@ -1,0 +1,174 @@
+﻿@using CLFacadeLayer;
+@using CourseLogicWeb.ConfigurationService
+<script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"></script>
+<script type="text/javascript" src="../../Scripts/jquery-1.4.1.js"></script>
+<script type="text/javascript" src="../../Scripts/Common.js"></script>
+@model CourseLogicWeb.Models.RegisterModel
+@{
+    string RootPath = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.GetRoot().ToString()))
+    {
+        RootPath = ConfigurationService.GetRoot().ToString();
+    }
+    string ApplicationKey = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.APPLICATION_KEY().ToString()))
+    {
+        ApplicationKey = ConfigurationService.APPLICATION_KEY().ToString();
+    }
+    Layout = null;
+    string url = @Url.Action("CLRegistration", "Registration");
+    string ActivationKey = "";
+    string FinialURL = "";
+    if (Request.QueryString["ActivationKey"] != null)
+    {
+        string Keyvalue = Request.QueryString["ActivationKey"].ToString();
+        ActivationKey = "?ActivationKey=" + Keyvalue;
+    }
+    else
+    {
+        ActivationKey = "?ActivationKey=" + Model.VerificationGuid;
+    }
+    FinialURL = RootPath + url + ActivationKey;
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Registration</title>
+    <script type="text/javascript">
+        function CallReg() {
+            newwindow = window.open('@FinialURL', 'name', 'height=679,width=1067,scrollbars=1');
+            if (window.focus) {
+                if (window.opener != null) {
+                    window.opener.window.location.reload(true);
+                }
+                window.self.close()
+                newwindow.focus()
+            }
+            return false;
+        }
+    </script>
+    <link href="../../Content/courselogic_new.css" rel="stylesheet" type="text/css" />
+</head>
+<body onload="CheckValue();">
+    <div style="width: 100%;">
+        <div class="top-bg float-l">
+            <div class="top">
+                <div class="logo float-l">
+                    <img src="../../Images/logo_new.gif" class="logo" alt="Course Logic" /></div>
+                <div class="content">
+                    <div class="mainMenu ">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="registration-main">
+            <div class="left-content">
+            </div>
+        </div>
+    </div>
+    <div style="width: 980px; margin: auto;">
+        <div class="registration-div">
+            <div style="float: left; margin-right: 21px; width: auto;">
+                <div id="ErrorMessage" style="padding-bottom: 0px; margin: auto; float: left; padding-left: 15px;
+                    width: 550px; line-height: 24px; position: absolute; padding-right: 0px; padding-top: 3px;
+                    font-size: 13px; color: red; font-weight: 700;">@View.Message
+                </div>
+                <div id="loginButtonDiv" style="display: none; width: 71px; line-height: 24px;">
+                    <input type="button" name="btnSubmit" id="btnSubmit" value="Login" style="float: right;
+                        margin-left: 560px; margin-right: 5px; width: 71px; line-height: 24px; clear: both;
+                        background: transparent url('../Images/askque-btn.gif') no-repeat scroll 0 0;
+                        color: #FFFFFF; font-weight: bold;" onclick="javascript:goToLogin();" />
+                </div>
+            </div>
+            <div id="Facebook" class="registration-login">
+                <div class="login-icon">
+                    Facebook</div>
+                <div class="registration-text">
+                    Register using your Facebook account.</div>
+                <div>
+                    <form action="http://www.facebook.com/logout.php" method="POST">
+                    <input type="hidden" name="confirm" value="1" />
+                    </form>
+                    <div runat="server" id="AuthenticationSection" align="left" class="facebookconnect login-button">
+                        <fb:login-button background="white" length="long" v="2" id="fb" size="large" onlogin="window.location.reload();">Connect with Facebook</fb:login-button>
+                    </div>
+                </div>
+            </div>
+            <div id="MiddleLine" style="float: left; border-left: 1px solid #CCCCCC; width: 1px;
+                height: 191px; margin-top: 20px;">
+            </div>
+            <div id="Normal" class="registration-login">
+                <div class="login-icon2">
+                    CourseLogic</div>
+                <div class="registration-text">
+                    Create your own user name.</div>
+                <form>
+                </form>
+                <div class="login-button">
+                    <a onclick="javascript:CallReg();">
+                        <img src="../../Images/cl-login.png" /></a></div>
+            </div>
+        </div>
+    </div>
+    @{Html.RenderPartial("../Common/Footer");}
+</body>
+<script type="text/javascript">
+    FB.init("@ApplicationKey", "@RootPath/xd_receiver.htm");
+</script>
+<script type="text/javascript">
+
+    function CheckValue() {
+        var ErrorReport = document.getElementById("ErrorMessage").innerHTML;   //$("#ErrorMessage").val();
+        /*
+        if (typeof String.prototype.trim !== 'function') {
+            String.prototype.trim = function () {
+                ErrorReport = ErrorReport.replace(/^\s+|\s+$/g, '');
+            }
+        }
+        else {
+            ErrorReport = ErrorReport.trim();
+        }
+        */
+        ErrorReport = MyTrim(ErrorReport);
+        if (ErrorReport == "" || ErrorReport == null) {
+            // Do Nothing....
+        }
+        else {
+            // Error Accour
+            if ((ErrorReport == "Your are already registered with CourseLogic. You can directly sign in.Thank you!") || (ErrorReport == "Link is not valid.Please follow proper signup step again.Thanks!") || (ErrorReport == "Please verify link,which was sent to you in your E-mail Account.")) {
+                //$("#Facebook").attr("style", "display:none;");
+                //$("#Normal").attr("style", "display:none;");
+                $("#Facebook").empty();
+                $("#Normal").empty();
+                $("#MiddleLine").attr("style", "display:none;");
+
+                if (ErrorReport == "Your are already registered with CourseLogic. You can directly sign in.Thank you!") {
+                    $("#loginButtonDiv").attr("style", "display:block;");
+
+                }
+
+            }
+            else {
+                // Do Nothing...
+            }
+        }
+    }
+
+    function LTrim(value) {
+        var re = /\s*((\S+\s*)*)/;
+        return value.replace(re, "$1");
+    }
+
+    // Removes ending whitespaces
+    function RTrim(value) {
+        var re = /((\s*\S+)*)\s*/;
+        return value.replace(re, "$1");
+    }
+
+    // Removes leading and ending whitespaces
+    function MyTrim(value) {
+        return LTrim(RTrim(value));
+    }
+
+</script>
+</html>

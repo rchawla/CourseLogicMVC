@@ -1,0 +1,175 @@
+﻿@model IEnumerable<CLFacadeLayer.GenericBE>
+
+@{
+    View.Title = "QuestionList";
+    Layout = "~/Views/Shared/_DetailsMaster.cshtml";
+}
+
+<h2>QuestionList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th></th>
+        <th>
+            CourseItemID
+        </th>
+        <th>
+            CourseID
+        </th>
+        <th>
+            AccountID
+        </th>
+        <th>
+            CreateDate
+        </th>
+        <th>
+            DateDeleted
+        </th>
+        <th>
+            IsActive
+        </th>
+        <th>
+            SystemObjectID
+        </th>
+        <th>
+            SystemObjectName
+        </th>
+        <th>
+            StarCount
+        </th>
+        <th>
+            VoteCount
+        </th>
+        <th>
+            CommentCount
+        </th>
+        <th>
+            CourseItemTitle
+        </th>
+        <th>
+            CourseItemDescription
+        </th>
+        <th>
+            CourseItemChildCount
+        </th>
+        <th>
+            ParentCourseItemID
+        </th>
+        <th>
+            FlagCount
+        </th>
+        <th>
+            Chapter
+        </th>
+        <th>
+            Section
+        </th>
+        <th>
+            PageNumber
+        </th>
+        <th>
+            UserName
+        </th>
+        <th>
+            ProfileImage
+        </th>
+        <th>
+            PageFlag
+        </th>
+        <th>
+            VoteUpDisplay
+        </th>
+        <th>
+            VoteDownDisplay
+        </th>
+    </tr>
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "QuestionByQuestionID", new { QID = item.CourseItemID }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+        <td>
+            @item.CourseItemID
+        </td>
+        <td>
+            @item.CourseID
+        </td>
+        <td>
+            @item.AccountID
+        </td>
+        <td>
+            @String.Format("{0:g}", item.CreateDate)
+        </td>
+        <td>
+            @String.Format("{0:g}", item.DateDeleted)
+        </td>
+        <td>
+            @item.IsActive
+        </td>
+        <td>
+            @item.SystemObjectID
+        </td>
+        <td>
+            @item.SystemObjectName
+        </td>
+        <td>
+            @item.StarCount
+        </td>
+        <td>
+            @item.VoteCount
+        </td>
+        <td>
+            @item.CommentCount
+        </td>
+        <td>
+            @item.CourseItemTitle
+        </td>
+        <td>
+            @item.CourseItemDescription
+        </td>
+        <td>
+            @item.CourseItemChildCount
+        </td>
+        <td>
+            @item.ParentCourseItemID
+        </td>
+        <td>
+            @item.FlagCount
+        </td>
+        <td>
+            @item.Chapter
+        </td>
+        <td>
+            @item.Section
+        </td>
+        <td>
+            @item.PageNumber
+        </td>
+        <td>
+            @item.UserName
+        </td>
+        <td>
+            @item.ProfileImage
+        </td>
+        <td>
+            @item.PageFlag
+        </td>
+        <td>
+            @item.VoteUpDisplay
+        </td>
+        <td>
+            @item.VoteDownDisplay
+        </td>
+    </tr>
+    }
+}
+</table>
+

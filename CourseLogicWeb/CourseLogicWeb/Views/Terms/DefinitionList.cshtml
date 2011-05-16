@@ -1,0 +1,146 @@
+﻿@model IEnumerable<CLFacadeLayer.GenericBE>
+@using SystemObject = CLFacadeLayer.SystemObject
+@{
+    ViewBag.Title = "TermsList";
+    string ActionURLComment = @Url.Action("LoadComments", "Comment");
+    string ActionURLSaveComment = @Url.Action("SaveComment", "Comment");
+    string ActionURLLoadComment = @Url.Action("LoadComments", "Comment");
+    long LoginUserID = 0;
+    string IsCourseHomePageAnswer = "";
+    if (Request.Cookies["ID"] != null)
+    {
+        LoginUserID = Convert.ToInt64(Request.Cookies["ID"].Value.ToString());
+    }
+    if (Request.QueryString["IsLoadInRightPane"] != null)
+    {
+        if (Request.QueryString["IsLoadInRightPane"] == "1")
+        {
+            IsCourseHomePageAnswer = "1";
+        }
+    }
+    }
+@*<h3>
+    <span class="voteright DefinitionTitle">Definition</span>
+</h3>*@
+
+<div class="DefinitionTitle">Definitions</div>
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        string ActionURLDelete = @Url.Action("DeleteComments", "Comment");
+
+        string ActionURLLoadAnswer = @Url.Action("DefinitionList", "Terms");
+
+        string lnkDeleteID = "lnkdelete" + item.CourseItemID;
+        string DivVoteID = "DivVote" + item.CourseItemID;
+        string DivComment1 = "DivCommentCtl" + item.CourseItemID;
+        string DivComment2 = "DivCommentCtl1" + item.CourseItemID;
+        string ActionURLAnswer = @Url.Action("LoadEditor", "Editor");
+        string ActionURL = @Url.Action("CommentByCommentID", "Comment");
+        string DivWriteCommentID = "DivWriteCommentID" + item.CourseItemID;
+        string DivQuesCommentInput = "DivQuesCommentInput" + item.CourseItemID;
+        string CourseItemDescription = "CourseItemDescription" + item.CourseItemID;
+    <div class="answerCon">
+        <!-- comment start -->
+        <div class="padding20">
+            <!-- right panel start -->
+            <div class="flaotr answerright">
+                <div class="queContent">
+                    <div class="clear">
+                    </div>
+                    @MvcHtmlString.Create(HttpUtility.HtmlDecode(item.CourseItemDescription))
+                    <br />
+                    <div class="ans-new2">
+                        <div style="float: left; width: 6px; height: 54px;">
+                            <img src="../../Images/answer-box2-left.png" alt="" border="0" />
+                        </div>
+                        <div class="ans2-new-center">
+                            <div style="float: left; padding-top: 3px; width: 48px; height: 48px;">
+                                @if (!string.IsNullOrEmpty(item.ProfileImage))
+                                {
+                                    <img align="middle" style="height:48px;width:48px;" alt="" src="/images/ProfileImage/@item.AccountID/@item.ProfileImage" />
+                                }
+                                else
+                                { 
+                        <img align="middle" style="height: 48px; width: 48px;" alt="" src="/images/answerPic.jpg" />
+                                }
+                            </div>
+                            <div style="float: left; width: 170px;">
+                                @if (@item.AccountID == LoginUserID)
+                                {
+                                    <div class="user-info-link">
+                                        @*<a  class="linkb" onclick="javascript:EditComment('0','Comments','@LoginUserID','@item.CourseItemID','@ActionURL','@item.CourseID'); ">
+                                    Comment</a>*@
+                                        @if (item.AccountID == LoginUserID)
+                                        {
+                                            <a  class="linkr" onclick="javascript:EditChildItem('@item.CourseItemID','@item.ParentCourseItemID','@ActionURLAnswer','@LoginUserID','@SystemObject.Definations');">
+                                                Edit</a> <span> | </span>
+                                            <a id="@lnkDeleteID" class="linkr" onclick="javascript:DeleteComment('@item.CourseItemID', '@item.CourseID', '@LoginUserID', '9', '@SystemObject.Definations', '@item.ParentCourseItemID', '@ActionURLDelete', '@ActionURLLoadAnswer');">
+                                            Delete</a>
+                                        }
+                               @* | <a href="#" class="linkb">Flag</a>*@
+                                    </div>
+                                }
+                            </div>
+                            <div class="user-info-de">
+                                <div style="width: auto;">
+                                    <a href="#" class="blue">@item.UserName </a>
+                                </div>
+                                <div class="timeNew">
+                                    @item.PostedDate
+                                </div>
+                            </div>
+                        </div>
+                        <div style="float: left; width: 6px; height: 54px;">
+                            <img src="../../Images/answer-box2-right.png" alt="" border="0" />
+                        </div>
+                    </div>
+                    <!--user-info-new-->
+                    <div class="clear">
+                    </div>
+                    <!--user-info-new-->
+                    <!-- comment start -->
+                    <div class="bluecomment-bg">
+                        &nbsp;</div>
+                    @if (item.CommentCount > 2 && IsCourseHomePageAnswer == "1")
+                    {
+                        <div class="answerComment">
+                            <div id="@DivComment1">
+                                <div class="bluecomment">
+                                    <div class="commentright paddingtb">
+                                        <p>
+                                            <span><a id="lnkcomment @item.CommentCount"  class="linkb" onclick="Javascript:loadAllComments('@item.CourseItemID','Comments','@LoginUserID','false','@ActionURLComment','@item.CourseID');">
+                                                View all @item.CommentCount Comments</a></span></p>
+                                    </div>
+                                    <div class="clear1">
+                                    </div>
+                                </div>
+                                @{Html.RenderAction("LoadComments", "Comment", new { AssociatedID = @item.CourseItemID, SystemObjectName = SystemObject.Comments, AccountID = LoginUserID, CommentFlag = true, CourseID = @item.CourseID });}
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                    <div class="answerComment">
+                        <div id="@DivComment2">
+                            @{Html.RenderAction("LoadComments", "Comment", new { AssociatedID = @item.CourseItemID, SystemObjectName = SystemObject.Comments, AccountID = LoginUserID, CommentFlag = false, CourseID = @item.CourseID });}
+                        </div>
+                    </div>
+                    }
+                </div>
+                <!-- right panel end -->
+                <!-- left panel start -->
+            </div>
+            <div class="flaotl vote">
+                <div id="@DivVoteID">
+                    @{Html.RenderPartial("~/Views/Vote/Vote.cshtml", Model.Single(AID => AID.CourseItemID == @item.CourseItemID));}
+                </div>
+            </div>
+            <!-- comment end -->
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    }
+}

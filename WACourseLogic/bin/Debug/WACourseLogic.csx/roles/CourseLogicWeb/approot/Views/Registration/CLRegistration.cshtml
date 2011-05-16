@@ -1,0 +1,136 @@
+﻿@using CLFacadeLayer;
+@model CourseLogicWeb.Models.RegisterModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Registration</title>
+    <link href="../../Content/courselogic_new.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="top-bg float-l">
+        <div class="top">
+            <div class="logo float-l">
+                <img src="../../Images/logo_new.gif" class="logo" alt="Course Logic" /></div>
+            <div class="content">
+                <div class="mainMenu ">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="registration-main">
+        <div class="left-content">
+        </div>
+    </div>
+    <div style="width: 980px; margin: auto;">
+        <div class="registration-div">
+            @using (Html.BeginForm("CLRegistration", "Registration", FormMethod.Post))
+            {
+                 @Html.Hidden("VerificationGuid", Model.VerificationGuid)
+                <div class="registration-form-div">
+                    <div class="form-title">
+                        Create Your Login Information</div>
+                    <div class="form-row">
+                        <div class="form-left">
+                            User name :</div>
+                        <div class="form-right">
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-input" })
+                            <div style="color: Red; font-size: 11px;">
+                                @Html.ValidationMessageFor(m => m.UserName) @Html.DisplayFor(m => m.UserNameAvaliable)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row-2">
+                        <div class="form-left">
+                            Password :</div>
+                        <div class="form-right">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-input" })
+                            <div style="color: Red; font-size: 11px;">
+                                @Html.ValidationMessageFor(m => m.Password)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-left">
+                            Password Varification :</div>
+                        <div class="form-right">
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-input" })
+                            <div style="color: Red; font-size: 11px;">
+                                @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="registration-form-div">
+                <div class="form-title">
+                    Personal Information</div>
+                <div class="form-row">
+                    <div class="form-left">
+                        First name :</div>
+                    <div class="form-right">
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-input" })
+                        <div style="color: Red; font-size: 11px;">
+                            @Html.ValidationMessageFor(m => m.FirstName)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row-2">
+                    <div class="form-left">
+                        Last name :</div>
+                    <div class="form-right">
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-input" })
+                        <div style="color: Red; font-size: 11px;">
+                            @Html.ValidationMessageFor(m => m.LastName)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="registration-form-div">
+                <div class="form-title">
+                    Contact Information</div>
+                <div class="form-row">
+                    <div class="form-left">
+                        Primary Communication Email :</div>
+                    <div class="form-right">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-input" })
+                        <div style="color: Red; font-size: 11px;">
+                            @Html.ValidationMessageFor(m => m.Email)
+                        </div>
+                    </div>
+                </div>
+                @*<div class="form-row-2">
+                    <div class="form-left">
+                        Secondary Email :</div>
+                    <div class="form-right">
+                        <input type="text" name="sds" value="" class="form-input" /></div>
+                </div>
+                <div class="form-row-2">
+                    <div class="form-left">
+                        Mobile Number ( for sms reminder ) :</div>
+                    <div class="form-right">
+                        <input type="text" name="sds" value="" class="form-input" /></div>
+                </div>*@
+            </div>
+            <div class="bt">
+                <input type="submit" class="submit-bt" value="SUBMIT" />
+            </div>
+            }
+        </div>
+    </div>
+   @* <div class="footer">
+        <p class="copyRights">
+            CourseLogic &copy; 2010 - English (US)</p>
+        <p class="links">
+            <a href="#" title="About CL">About CL</a> - <a href="javascript:CallTerms();" title="Terms &amp; Conditions">
+                Terms &amp; Conditions</a> - <a href="#" title="Help">Help Center</a></p>
+    </div>*@
+
+
+    @{Html.RenderPartial("../Common/Footer");}
+
+   
+</body>
+</html>

@@ -1,0 +1,142 @@
+﻿@using SystemObject = CLFacadeLayer.SystemObject
+@model CLFacadeLayer.GenericBE
+@{
+    int VoteUpFlag = Model.VoteUpDisplay;
+    int VoteDownFlag = Model.VoteDownDisplay;
+    int StarDisplay = Model.StarDisplay;
+    string SystemObjectName = Model.SystemObjectName;
+    string ActionURL = @Url.Action("VoteUp", "Vote");
+    string ActionURLVoteDown = @Url.Action("VoteDown", "Vote");
+    string ActionURLStar = @Url.Action("Star", "Vote");
+    long LoginUserAccountID = 0;
+    if (Request.Cookies["ID"] != null)
+    {
+        LoginUserAccountID = Convert.ToInt64(Request.Cookies["ID"].Value.ToString());
+    }
+
+}
+@if (SystemObjectName != SystemObject.Comments.ToString())
+{
+    if (LoginUserAccountID == Model.AccountID && VoteUpFlag == 0 && VoteDownFlag == 0)
+    {
+    <div style="float: left; width: 40px; padding: 5px;">
+        <span style="float: left; clear: both;">
+            <img alt="" src="../../Images/Vote-Up.png" />
+        </span><span style="float: left; clear: both; text-align: center; width: 30px;" class="font-6">
+            @Model.VoteCount </span><span style="float: left; clear: both;">
+                <img alt="" src="../../Images/Vote-Down.png" />
+            </span><span style="float: left; clear: both;">
+                <img alt="" src="../../Images/Favorite-Blue.png" />
+            </span><span style="float: left; clear: both; text-align: center; width: 30px;" class="font-6">
+                @Model.StarCount </span>
+    </div>
+    }
+    if (VoteUpFlag == 0 && VoteDownFlag == 0 && LoginUserAccountID != Model.AccountID)
+    {
+        <div style="float: left; width: 40px; padding: 5px;">
+            <span style="float: left; clear: both;">
+                <img alt="" src="../../Images/Vote-Up.png" onclick="javascript:VoteUp('@Model.CourseItemID','@Model.SystemObjectName','@Model.CourseID','@ActionURL','@Model.AccountID');" />
+            </span><span style="float: left; clear: both; text-align: center; width: 30px;" class="font-6">
+                @Model.VoteCount </span><span style="float: left; clear: both;">
+                    <img alt="" src="../../Images/Vote-Down.png" onclick="javascript:VoteDown('@Model.CourseItemID','@Model.SystemObjectName','@Model.CourseID','@ActionURLVoteDown','@Model.AccountID');" />
+                </span>
+            @if (StarDisplay > 0)
+            {
+                <span style="float: left; clear: both;">
+                    <img alt="" src="../../Images/Favorite-Gold_03.png" onclick="javascript:Star('@Model.CourseItemID','@Model.SystemObjectName','@Model.CourseID','@ActionURLStar','@Model.AccountID');" />
+                </span><span style="float: left; clear: both; text-align: center; width: 30px;" class="font-6">
+                    @Model.StarCount </span>
+            }
+            else
+            {
+                <span style="float: left; clear: both;">
+                    <img alt="" src="../../Images/Favorite-Blue.png" onclick="javascript:Star('@Model.CourseItemID','@Model.SystemObjectName','@Model.CourseID','@ActionURLStar','@Model.AccountID');" />
+                </span><span style="float: left; clear: both; text-align: center; width: 30px;" class="font-6">
+                    @Model.StarCount </span>
+            }
+        </div>
+    }
+    if (VoteUpFlag == 1 && VoteDownFlag == 0)
+    {
+        <div style="float: left; width: 40px; padding: 5px;">
+            <span style="float: left; clear: both;">
+                <img alt="" src="../../Images/voted-up.png" onclick="javascript:VoteUp('@Model.CourseItemID','@Model.SystemObjectName','@Model.CourseID','@ActionURL','@Model.AccountID');" />
+            </span><span style="float: left; clear: both; text-align: center; width: 30px;" class="font-6">
+                @Model.VoteCount </span><span style="float: left; clear: both;">
+                    <img alt="" src="../../Images/Vote-Down.png" />
+                </span>
+            @if (StarDisplay > 0)
+            {
+                <span style="float: left; clear: both;">
+                    <img alt="" src="../../Images/Favorite-Gold_03.png" onclick="javascript:Star('@Model.CourseItemID','@Model.SystemObjectName','@Model.CourseID','@ActionURLStar','@Model.AccountID');" />
+                </span><span style="float: left; clear: both; text-align: center; width: 30px;" class="font-6">
+                    @Model.StarCount </span>
+            }
+            else
+            {
+                <span style="float: left; clear: both;">
+                    <img alt="" src="../../Images/Favorite-Blue.png" onclick="javascript:Star('@Model.CourseItemID','@Model.SystemObjectName','@Model.CourseID','@ActionURLStar','@Model.AccountID');" />
+                </span><span style="float: left; clear: both; text-align: center; width: 30px;" class="font-6">
+                    @Model.StarCount </span>
+            }
+        </div>
+    }
+    if (VoteUpFlag == 0 && VoteDownFlag == 1)
+    {
+        <div style="float: left; width: 40px; padding: 5px;">
+            <span style="float: left; clear: both;">
+                <img alt="" src="../../Images/Vote-Up.png"  />
+            </span><span style="float: left; clear: both; text-align: center; width: 30px;" class="font-6">
+                @Model.VoteCount </span><span style="float: left; clear: both;">
+                    <img alt="" src="../../Images/voted-down.png" onclick="javascript:VoteDown('@Model.CourseItemID','@Model.SystemObjectName','@Model.CourseID','@ActionURLVoteDown','@Model.AccountID');" />
+                </span>
+            @if (StarDisplay > 0)
+            {
+                <span style="float: left; clear: both;">
+                    <img alt="" src="../../Images/Favorite-Gold_03.png" onclick="javascript:Star('@Model.CourseItemID','@Model.SystemObjectName','@Model.CourseID','@ActionURLStar','@Model.AccountID');" />
+                </span><span style="float: left; clear: both; text-align: center; width: 30px;" class="font-6">
+                    @Model.StarCount </span>
+            }
+            else
+            {
+                <span style="float: left; clear: both;">
+                    <img alt="" src="../../Images/Favorite-Blue.png" onclick="javascript:Star('@Model.CourseItemID','@Model.SystemObjectName','@Model.CourseID','@ActionURLStar','@Model.AccountID');" />
+                </span><span style="float: left; clear: both; text-align: center; width: 30px;" class="font-6">
+                    @Model.StarCount </span>
+            }
+        </div>
+    }
+}
+else
+{
+    if (SystemObjectName == "Comments")
+    {
+        if (LoginUserAccountID == Model.AccountID && VoteUpFlag == 0)
+        {
+            <div style="float: left; width: 40px; padding: 5px;">
+                <span style="float: left; clear: both;">
+                    <img alt="" src="../../Images/Vote-Up.png" />
+                </span><span class="font-1" style="float: left; clear: both; text-align: center;
+                    width: 30px;">@Model.VoteCount </span>
+            </div>
+        }
+        if (VoteUpFlag == 0 && LoginUserAccountID != Model.AccountID)
+        {
+            <div style="float: left; width: 40px; padding: 5px;">
+                <span style="float: left; clear: both;">
+                    <img alt="" src="../../Images/Vote-Up.png" onclick="javascript:VoteUp('@Model.CourseItemID','@Model.SystemObjectName','@Model.CourseID','@ActionURL','@Model.AccountID');" />
+                </span><span class="font-1" style="float: left; clear: both; text-align: center;
+                    width: 30px;">@Model.VoteCount </span>
+            </div>
+        }
+        if (VoteUpFlag == 1)
+        {
+            <div style="float: left; width: 40px; padding: 5px;">
+                <span style="float: left; clear: both;">
+                    <img alt="" src="../../Images/voted-up.png" onclick="javascript:VoteUp('@Model.CourseItemID','@Model.SystemObjectName','@Model.CourseID','@ActionURL','@Model.AccountID');" />
+                </span><span class="font-1" style="float: left; clear: both; text-align: center;
+                    width: 30px;">@Model.VoteCount </span>
+            </div>
+        }
+    }
+}

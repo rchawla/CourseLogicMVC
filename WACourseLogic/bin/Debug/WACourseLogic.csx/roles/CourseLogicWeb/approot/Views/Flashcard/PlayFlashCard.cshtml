@@ -1,0 +1,311 @@
+﻿@using CLFacadeLayer;
+@model GenericBE
+@using Systemobject = CLFacadeLayer.SystemObject;
+@{
+    View.Title = "PlayFlashCard -090";
+    Layout = "~/Views/Shared/_PlayFlashCardMaster.cshtml";
+    string ActionNextUrl = @Url.Action("PlayFlashCard", "Flashcard");
+    string CheckBothOnLoad = @Model.IsBoth.ToString().ToLower();
+    int CheckSystemObject = @Model.SystemObjectID;
+    int CourseID = 0;
+    if (Request.QueryString["CourseID"] != null)
+    {
+        CourseID = Convert.ToInt32(Request.QueryString["CourseID"]);
+        CourseID = @Model.CourseID;
+    }
+    if (CourseID == 0)
+    {
+        CourseID = @Model.CourseID;
+    }
+}
+<script type="text/javascript" src="../../Scripts/jquery-1.4.1.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+
+    if(@CheckSystemObject == parseInt(4) || @CheckSystemObject == parseInt(8))
+    {
+        if ("@CheckBothOnLoad" == "true") {
+            $('#BothCheck').attr('checked', true);
+            if (document.getElementById("Question").style.display == "block") {
+                if ($("#BothCheck").is(':checked')) {
+                    $("#Answer").toggle();
+                    $("#FlipButton").toggle();
+                } 
+                else {
+                    $("#Answer").toggle();
+                    $("#FlipButton").toggle();
+                }
+                return;
+            }
+
+            if (document.getElementById("Answer").style.display == "block") {
+                if ($("#BothCheck").is(':checked')) {
+                    $("#Question").toggle();
+                    $("#FlipButton").toggle();
+                }
+                else {
+                    $("#Question").toggle();
+                    $("#FlipButton").toggle();
+                }
+                return;
+            }
+        }
+       }
+    });
+
+    $(function () {
+        $('#FlipButton').click(function () {
+            $("#Question").toggle();
+            $("#Answer").toggle();
+        });
+    });
+
+
+    $(function () {
+        $('#BothCheck').click(function () {
+            if (document.getElementById("Question").style.display == "block") {
+                //alert("Question is block");
+                //alert("answer toggle");
+                if ($("#BothCheck").is(':checked')) {
+                    $("#Answer").toggle();
+                    $("#FlipButton").toggle();
+                }
+                else {
+                    $("#Answer").toggle();
+                    $("#FlipButton").toggle();
+                }
+                return;
+            }
+
+            if (document.getElementById("Answer").style.display == "block") {
+                //alert("answer is block");
+                //alert("question toggle");
+                if ($("#BothCheck").is(':checked')) {
+                    $("#Question").toggle();
+                    $("#FlipButton").toggle();
+                }
+                else {
+                    $("#Question").toggle();
+                    $("#FlipButton").toggle();
+                }
+                return;
+            }
+        });
+    });
+
+
+
+    function FlashPrevious(PageNumber, FlashCard,CID) {
+        var Page = parseInt(PageNumber) - parseInt(1);
+        var IsBoth = $("#BothCheck").is(':checked');
+        $.post(
+            url = '@ActionNextUrl',
+             {CourseID: CID, FlashCard: FlashCard, PageNumber: Page, IsBoth: IsBoth },
+             function (data) {
+                 $('body').html(data);
+             }
+            );
+    }
+
+    function FlashNext(PageNumber, FlashCard,CID) {
+        var Page = parseInt(PageNumber) + parseInt(1);
+        var IsBoth = $("#BothCheck").is(':checked');
+        $.post(
+             url = '@ActionNextUrl',
+             {CourseID: CID, FlashCard: FlashCard, PageNumber: Page, IsBoth: IsBoth },
+             function (data) {
+                 $('body').html(data);
+             }
+            );
+    }
+
+    function GetRootPathJS() {
+        var url = document.location.toString(); //url
+        var e_url = ''; //edited url
+        var p = 0; //position
+        var p2 = 0; //position 2
+        p = url.indexOf("//");
+        e_url = url.substring(p + 2);
+        p2 = e_url.indexOf("/");
+        var root_url = url.substring(0, p + p2 + 3);
+        return root_url;
+    }
+
+    function GoToHomePage() {
+        window.top.location.href = GetRootPathJS() + "flashcard/getflashcardsets?CourseID=@CourseID";
+    }
+
+</script>
+<style type="text/css">
+    .QuestionTitle-2
+    {
+        background: url(../../Images/question-big.gif) no-repeat scroll 5px 10px;
+        font-size: 20px;
+        font-weight: 200;
+        height: 30px;
+        margin-bottom: 3px;
+        margin-left: 13px;
+        color: #ffffff;
+        font-family: Helvetica,Arial,sans-serif;
+        text-align: left;
+        height: 44px;
+        line-height: 44px;
+    }
+    
+    .TermTitle-2
+    {
+        background: url(./../Images/term-big.png) no-repeat scroll 5px 10px;
+        font-size: 20px;
+        font-weight: 200;
+        height: 30px;
+        margin-bottom: 3px;
+        margin-left: 13px;
+        color: #ffffff;
+        font-family: Helvetica,Arial,sans-serif;
+        text-align: left;
+        height: 44px;
+        line-height: 44px;
+    }
+    
+    .NoteTitle-2
+    {
+        background: url(../../Images/notes-big.png) no-repeat scroll 5px 10px;
+        font-size: 20px;
+        font-weight: 200;
+        height: 30px;
+        margin-bottom: 3px;
+        margin-left: 13px;
+        color: #ffffff;
+        font-family: Helvetica,Arial,sans-serif;
+        text-align: left;
+        height: 44px;
+        line-height: 44px;
+    }
+    
+    .SummaryTitle-2
+    {
+        background: url(../../Images/summary-big.png) no-repeat scroll 5px 10px;
+        font-size: 20px;
+        font-weight: 200;
+        height: 30px;
+        margin-bottom: 3px;
+        margin-left: 13px;
+        color: #ffffff;
+        font-family: Helvetica,Arial,sans-serif;
+        text-align: left;
+        height: 44px;
+        line-height: 44px;
+    }
+</style>
+<div class="flash-card">
+    <!--add-new-area-->
+    <div style="float: left; width: 900px; padding: 0px; min-height: 250px; background: none repeat scroll 0% 0% rgb(0, 0, 0);
+        margin: 25px;">
+        <div style="float: right; height: 50px; width: 900px;">
+            @if (Model.SystemObjectID == Convert.ToInt32(SystemObject.Questions))
+            {
+                <div class="QuestionTitle-2" style="float: left; padding-left: 50px; width: 700px;">
+                    &nbsp;</div>
+            }
+            @if (Model.SystemObjectID == Convert.ToInt32(SystemObject.Terms))
+            {
+                <div class="TermTitle-2" style="float: left; padding-left: 50px; width: 700px;">
+                    &nbsp;</div>
+            }
+            @if (Model.SystemObjectID == Convert.ToInt32(SystemObject.Notes))
+            {
+                <div class="NoteTitle-2" style="float: left; padding-left: 50px; width: 700px;">
+                    &nbsp;</div>
+            }
+            @if (Model.SystemObjectID == Convert.ToInt32(SystemObject.Summary))
+            {
+                <div class="SummaryTitle-2" style="float: left; padding-left: 50px; width: 700px;">
+                    &nbsp;</div>
+            }
+            <div style="float: left; width: 100px; height: 30px;">
+                @if ((Model.SystemObjectID == Convert.ToInt32(Systemobject.Questions)) || (Model.SystemObjectID == Convert.ToInt32(SystemObject.Terms)))
+                {
+                    <span style="margin-top: 12px; float: left;">
+                        <input id="BothCheck" type="checkbox" />
+                    </span>
+                        <span style="float: left; margin: 12px 0px 0px 10px; font-size: 12px; color: rgb(255, 255, 255);
+                            font-weight: 700;">Both Side</span>
+                }
+            </div>
+            <div style="float: right; width: 24px; height: 24px; margin: 5px;">
+                <img alt="" border="0" src="../../Images/FlashCard-close.png" onclick="GoToHomePage();" /></div>
+        </div>
+        <div style="float: left; width: 50px; padding-top: 170px;">
+            &nbsp
+            <div align="right" style="float: left; width: 50px;">
+                @if (Model.PageNumber > 1 && Model.PageNumber != 1)
+                {
+                    <img alt="" border="0" src="../../Images/prv-bt.jpg" onclick="javascript:FlashPrevious('@Model.PageNumber','@Model.FlashCardID','@CourseID');" />
+               @* @Html.ActionLink("Previous", "PlayFlashCard", new { FlashCard = @Model.FlashCardID, PageNumber = @Model.PageNumber - 1 })*@
+                }
+                else
+                {
+                <img alt="" border="0" src="../../Images/prv-bt.jpg" style="opacity: 0.5;" />
+                }
+            </div>
+        </div>
+        <div style="float: left; min-height: 400px; width: 800px;">
+            <div style="float: left; width: 780px; min-height: 380px; background: #ffffff; margin: 10px;
+                border: 1px solid rgb(184, 184, 184);">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" align="center">
+                    <tr>
+                        <td valign="middle" align="center" style="height: 380px;">
+                            <div id="Question" style="display: block; width: 760px; font-size: 30px; font-weight: 700;
+                                color: #000000; text-align: center;">
+                                @MvcHtmlString.Create(HttpUtility.HtmlDecode(Model.CourseItemTitle))
+                            </div>
+                            @if ((Model.SystemObjectID == Convert.ToInt32(Systemobject.Questions)) || (Model.SystemObjectID == Convert.ToInt32(SystemObject.Terms)))
+                            {
+                                <div id="Answer" style="display: none; width: 760px; margin: 20px auto; font-size: 30px;
+                                    font-weight: 700; color: #000000; text-align: center;">
+                                    @MvcHtmlString.Create(HttpUtility.HtmlDecode(Model.CourseItemDescription))
+                                </div>
+                            }
+                            else
+                            {
+                                 <div id="Answer" style="display: block; width: 760px; margin: 20px auto; font-size: 30px;
+                                     font-weight: 700; color: #000000; text-align: center;">
+                                     @MvcHtmlString.Create(HttpUtility.HtmlDecode(Model.CourseItemDescription))
+                                 </div>
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div style="float: left; width: 50px; padding-top: 170px;">
+            &nbsp
+            <div style="float: left; width: 50px;">
+                @if (Model.PageNumber < Model.PageFlag)
+                {
+                    <img alt="" border="0" src="../../Images/next-bt.jpg" onclick="javascript:FlashNext('@Model.PageNumber','@Model.FlashCardID','@CourseID');" />
+                @* @Html.ActionLink("Next", "PlayFlashCard", new { FlashCard = @Model.FlashCardID, PageNumber = @Model.PageNumber + 1 })*@
+                }
+                else
+                {
+                <img alt="" border="0" src="../../Images/next-bt.jpg" style="opacity: 0.5;" />
+                }
+            </div>
+        </div>
+        <div style="float: right; height: 50px; width: 900px; color: rgb(255, 255, 255);">
+            @if ((Model.SystemObjectID == Convert.ToInt32(Systemobject.Questions)) || (Model.SystemObjectID == Convert.ToInt32(SystemObject.Terms)))
+            {
+                <div style="float: right; margin: 8px 57px;">
+                    <a id="FlipButton">
+                        <img border="0" alt="" src="../../Images/flip-bt.png" /></a></div>
+               
+            }
+            <div style="color: White; float: left; margin: 17px 20px;">
+                @Model.PageNumber&nbsp;/&nbsp;@Model.PageFlag
+            </div>
+        </div>
+        <!--row1-->
+        <!--row1-end-->
+        <!--add-new-area-->
+    </div>
+</div>

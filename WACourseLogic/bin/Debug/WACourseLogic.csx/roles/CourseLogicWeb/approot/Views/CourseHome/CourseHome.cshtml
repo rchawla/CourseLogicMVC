@@ -1,0 +1,169 @@
+﻿<div id="CourseHomePage">
+    @using CLFacadeLayer;
+    @model IEnumerable<GenericBE>
+    @{
+        View.Title = "CourseHome";
+        if (Request.QueryString["IsEditedAddItem"] != null)
+        {
+            if (Request.QueryString["IsEditedAddItem"] == "1")
+            {
+
+            }
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_CourseHomeMaster.cshtml";
+        }
+        string DetailPageURL = "";
+        string ItemImageURL = "";
+        int CourseID = 0;
+        if (Request.QueryString["CourseID"] != null)
+        {
+            CourseID = Convert.ToInt32(Request.QueryString["CourseID"]);
+        }
+        string CourseTitle = "";
+        if (Request.QueryString["Title"] != null)
+        {
+            CourseTitle = Request.QueryString["Title"].ToString();
+        }
+        int ItemCount = @Model.Count();
+        int ForLoopCount = 0;       
+}
+    <div style="float: left; width: 280px; font-size: 15px; color: rgb(24, 24, 24); font-weight: bold;
+        margin: 10px 13px;">
+        Recent Activity</div>
+    @if (ViewData["Message"] != "" && @ViewData["Message"] != null)
+    {
+        <div id="CourseHomeContent" style="font-size: 13px; color: black; font-weight: bold;
+            margin-top: 10px; float: left; text-align: center; width: 290px;">
+            @ViewData["Message"]
+        </div>
+    }
+    @foreach (var item in Model)
+    {
+        string DivItemID = "DivItemID" + item.CourseItemID;
+
+
+        switch (item.SystemObjectID)
+        {
+            case 4: DetailPageURL = "../Question/QuestionByQuestionID?QID=" + @item.CourseItemID + "&CourseID=" + CourseID + "&Title=" + Server.UrlEncode(CourseTitle);
+                //ItemImageURL = "../../Images/question.gif";
+                ItemImageURL = "../../Images/question-answer-new-design.png";
+                break;
+            case 5:
+                //DetailPageURL = "../Answer/GetChildByCourseItemID?AnswerID=" + @item.CourseItemID + "&SysObjectId=" + @item.SystemObjectID + "&IsDetail=1" + "&CourseID=" + CourseID + "&Title=" + Server.UrlEncode(CourseTitle) + "&IsEditedAddItem=1" + "#Child" + @item.CourseItemID;
+                //ItemImageURL = "../../Images/answer.gif";
+                DetailPageURL = "../Question/QuestionByQuestionID?QID=" + @item.ParentCourseItemID + "&CourseID=" + CourseID + "&Title=" + Server.UrlEncode(CourseTitle);
+                //ItemImageURL = "../../Images/answer.gif";
+                ItemImageURL = "../../Images/question-answer-new-design.png";
+                break;
+            case 7: DetailPageURL = "../Discussion/DiscussionByDiscussionID?DID=" + @item.CourseItemID + "&CourseID=" + CourseID + "&Title=" + Server.UrlEncode(CourseTitle);
+                //ItemImageURL = "../../Images/discussion.png";
+                ItemImageURL = "../../Images/discussion-new-design.png";
+                break;
+            case 8: DetailPageURL = "../Terms/TermByTermID?TID=" + @item.CourseItemID + "&CourseID=" + CourseID + "&Title=" + Server.UrlEncode(CourseTitle);
+                //ItemImageURL = "../../Images/term.png";
+                ItemImageURL = "../../Images/term-definition-new-design.png";
+                break;
+            case 9:
+                //DetailPageURL = "../Answer/GetChildByCourseItemID?AnswerID=" + @item.CourseItemID + "&SysObjectId=" + @item.SystemObjectID + "&IsDetail=1" + "&CourseID=" + CourseID + "&Title=" + Server.UrlEncode(CourseTitle) + "&IsEditedAddItem=1" + "#Child" + @item.CourseItemID;
+                //ItemImageURL = "../../Images/definition.png";
+                DetailPageURL = "../Terms/TermByTermID?TID=" + @item.ParentCourseItemID + "&CourseID=" + CourseID + "&Title=" + Server.UrlEncode(CourseTitle);
+                //ItemImageURL = "../../Images/definition.png";
+                ItemImageURL = "../../Images/term-definition-new-design.png";
+                break;
+            case 10: DetailPageURL = "../Note/NoteByNoteID?NID=" + @item.CourseItemID + "&CourseID=" + CourseID + "&Title=" + Server.UrlEncode(CourseTitle);
+                //ItemImageURL = "../../Images/notes.png";
+                ItemImageURL = "../../Images/note-new-design.png";
+                break;
+            case 14: DetailPageURL = "../Summary/SummarybySummaryID?SID=" + @item.CourseItemID + "&CourseID=" + CourseID + "&Title=" + Server.UrlEncode(CourseTitle);
+                //ItemImageURL = "../../Images/summary.png";
+                ItemImageURL = "../../Images/summary-new-design.png";
+                break;
+            default: DetailPageURL = "#";
+                ItemImageURL = "";
+                break;
+        }
+        <!--new-tab-menu-area-->
+  @*      <div class="twitter_row" id="@item.CourseItemID">
+            <div class="content">
+                <div>
+                    <div style="float: left; padding: 5px 0px 0px 5px; width: 30px;" class="icon-1">
+                        <img src="@ItemImageURL" border="0" /></div>
+                    <div class="answer-box-in">
+                        @if ((@item.SystemObjectID != 5) && (@item.SystemObjectID != 9))
+                        {
+                            <div class="answer-title">
+                                <a onclick="javascript:GoToDetails('@DetailPageURL');">@item.CourseItemTitle</a></div>
+                        }
+                        <span style="visibility: hidden;" class="arrow"></span>
+                        @if ((@item.CourseItemDescription != "") && (@item.CourseItemDescription != null))
+                        {
+                            <div class="answer-text">@MvcHtmlString.Create(HttpUtility.HtmlDecode(item.CourseItemDescription))
+                            </div>
+                        }
+                    </div>
+                    <div class="answer-time">@item.UserName <span>- </span>@item.PostedDate
+                        <div class="linkb" style="float: right;">
+                            <a onclick="javascript:GoToDetails('@DetailPageURL');">View Full Page</a></div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" value="@item.CourseItemID" class="datahtml" />
+            <input type="hidden" value="@item.ParentCourseItemID" class="hdnParentCourseItemID" />
+            <input type="hidden" value="@item.SystemObjectID" class="hdnSysObjectID"/>
+            <input type="hidden" value="@item.CourseItemID" class="hdnCourseItemID"/>
+        </div> *@     
+        <div style="float: left; width: 280px; padding: 5px 0px; margin-left: 13px;" class="FB_hover">
+            <div style="float: left; width: 40px;">
+                <img alt="" src="@ItemImageURL" /></div>
+            <div style="float: left; width: 240px;">
+                <div class="tw-p">
+                    @if ((@item.SystemObjectID != 5) && (@item.SystemObjectID != 9))
+                    {
+                        <a>@item.CourseItemTitle</a>
+                    }
+                    @if ((@item.CourseItemDescription != "") && (@item.CourseItemDescription != null))
+                    {
+                        <br />
+                        <span class="desc">@MvcHtmlString.Create(HttpUtility.HtmlDecode(item.CourseItemDescription))
+                        </span>
+                    }
+                </div>
+                <br />
+                <div class="tw-row" style="float: left; width: 240px;">
+                    <span style="float: left;">@item.UserName</span> <span style="float: right;">@item.PostedDate</span>
+                </div>
+            </div>
+        </div>
+        <div style="float: left; width: 280px; border-bottom: 1px solid rgb(204, 204, 204);
+            margin-left: 13px;">
+        </div>
+	    <!--tab-menu-->
+                                                                                            if (ItemCount - 1 == ForLoopCount)
+                                                                                            {
+            <div class="MainPaging">
+                <input type="hidden" id="CourseHomePageNumber" value="@item.CourseHomePageNumber" />
+                @if (@item.CourseHomePageNumber * 20 <= @item.TotalCourseHomeItemNumber)
+                {
+                    <div class="Paging" style="float: right;">
+                        <a onclick="CourseHomeNextPage('@item.CourseHomePageNumber','@item.CourseID');">Next</a>
+                    </div>
+                }
+                @if (ItemCount > 0 && item.CourseHomePageNumber != 1)
+                {
+                    <div class="Paging" style="float: left;">
+                        <a onclick="CourseHomePreviousPage('@item.CourseHomePageNumber','@item.CourseID');">
+                            Previous</a>
+                    </div>
+                }
+            </div>
+                                                                                            }
+                                                                                            ForLoopCount++;
+    }
+</div>
+<script type="text/javascript">
+    function GoToDetails(DetailPageURL) {
+        window.location.href = DetailPageURL;
+    }
+</script>

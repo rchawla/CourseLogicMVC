@@ -1,0 +1,64 @@
+﻿@using CLFacadeLayer;
+@model CourseLogicWeb.Models.LoginModel
+<script type="text/javascript" src="../../Scripts/jquery-1.4.1.js"></script>
+<script type="text/javascript" src="../../Scripts/common.js"></script>
+<div class="register">
+    <div class="content">
+        <div class="splash">
+        </div>
+        <div class="signUp">
+            <h1>
+                Sign Up</h1>
+            <h2>
+                It's free and anyone can join</h2>
+            <div class="signupForm">
+                <div style=" width:300px; float:left; height:32px;"><span class="label" id="Label1">First Name:</span>
+                <input type="text" id="FirstName" class="text" value="@Model.FirstName" />
+                </div>
+                 <div style=" width:300px; float:left; height:32px;"><span class="label" id="Label2">Last Name:</span>
+                <input type="text" id="LastName" class="text" value="@Model.LastName" />
+                </div>
+                <div style=" width:300px; float:left; height:32px;">
+                <span class="label" id="Label3">School Email:</span>
+                <input type="text" id="SchoolEmail" class="text" value="@Model.Email" />
+                </div>
+                <div class="why">
+                    <p>
+                        <span class="hotspot" onmouseover="tooltip.show('We will send you a confirmation email to make sure that you are a student or professor with an active school email address.');"
+                            onmouseout="tooltip.hide();"><a href="#" class="why">Why do you need a school email?</a></span></p>
+                </div>
+                <span class="label" id="Label4">i am:</span>
+                <select class="select" id="Gender">
+                    <option selected="selected" value="0">Select Sex</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <a id="InvitationLink" onclick="javascript:CallInvitationRequest();">
+                    <img class="signupBTN" alt="Signup" src="../../Images/signup-BTN.gif" />
+                </a>
+            </div>
+           @* <div class="" id="undertaking">
+            </div>*@
+            <div class="undertaking">
+                <div class="horizontalRuler">
+                </div>
+                <p>
+                    By clicking Submit,you are indicating that you have read, understood, and agreed
+                    to CourseLogic <a title="Terms &amp; Conditions" onclick="javascript:CallTerms();" style="cursor:pointer;" href="#">Terms &amp; Conditions</a>.</p>
+            </div>
+            <div style="clear: both;">
+            </div>
+        @*    <div class="undertaking">
+            </div>*@
+            <div id="ErrorReport" class="validation">
+                <label id="lblErrorStatus">
+                </label>
+            </div>
+            <div id="InvitationSummaryDiv" class="validation">
+                <label id="lblStatus">
+                </label>
+            </div>
+            <span style="color: Red; font-weight: bold;" id="lblError"></span>
+        </div>
+    </div>
+</div>

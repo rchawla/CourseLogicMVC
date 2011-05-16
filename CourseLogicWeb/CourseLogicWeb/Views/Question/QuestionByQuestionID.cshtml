@@ -1,0 +1,322 @@
+﻿<div id="CourseItemDetailLoadPage">
+    <div class="rightPanel">
+        @using CLFacadeLayer
+        @using CourseLogicWeb.ConfigurationService
+        @model GenericBE
+        @using Systemobject = CLFacadeLayer.SystemObject;
+        @{
+            ViewBag.Title = "QuestionByQuestionID";
+            string IsCourseHomePage = "";
+            string SystemObjectID = "0";
+            if (Request.QueryString["IsLoadInRightPane"] != null)
+            {
+                if (Request.QueryString["IsLoadInRightPane"] == "1")
+                {
+            <link href="../../Content/courselogic_new.css" rel="stylesheet" type="text/css" />         
+            <link href="../../Content/itemdetails-home.css" rel="stylesheet" type="text/css" />
+            <script src="../../Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+            <script type="text/javascript" src="../../Scripts/common.js"></script>
+            <script type="text/javascript" src="../../Scripts/jwysiwyg/jquery.wysiwyg.js"></script>
+            <link rel="stylesheet" type="text/css" href="../../Scripts/jwysiwyg/jquery.wysiwyg.css" />
+        <script type="text/javascript" src="../../Scripts/jquery-ui-1.8.6.custom.min.js"></script>
+    <link rel="Stylesheet" type="text/css" href="../../Scripts/jquery-ui-1.8.6.custom.css" />
+                    IsCourseHomePage = "1";
+                }
+            }
+            else
+            {
+                if (Request.QueryString["IsEditedAddItem"] != null)
+                {
+                    if (Request.QueryString["IsEditedAddItem"] == "1")
+                    {
+                     <link href="../../Content/itemdetails.css" rel="stylesheet" type="text/css" />
+                        IsCourseHomePage = "0";
+                         <div class="QuestionTitle">Question</div>
+                    
+                    }
+                }
+                else
+                {
+                    Layout = "~/Views/Shared/_DetailsMaster.cshtml";
+                <link href="../../Content/itemdetails.css" rel="stylesheet" type="text/css" />
+                    IsCourseHomePage = "0";
+                <div class="QuestionTitle">
+                    Question</div>
+                }
+            }
+            string RootPath = "";
+            if (!string.IsNullOrEmpty(ConfigurationService.GetRoot().ToString()))
+            {
+                RootPath = ConfigurationService.GetRoot().ToString();
+            }
+            string DivVoteID = "DivVote" + Model.CourseItemID;
+            string DivComment1 = "DivCommentCtl" + Model.CourseItemID;
+            string DivComment2 = "DivCommentCtl1" + Model.CourseItemID;
+            string ActionURLLoadComment = @Url.Action("LoadComments", "Comment");
+            string ActionURLSaveComment = @Url.Action("SaveComment", "Comment");
+            string ActionEditItem = @Url.Action("LoadAddItem", "AddItem");
+            string ActionURLAnswer = @Url.Action("LoadEditor", "Editor");
+            string DivEditor = "DivEditor" + Model.CourseItemID;
+            string DivWriteCommentID = "DivWriteCommentID" + Model.CourseItemID;
+            string DivQuesCommentInput = "DivQuesCommentInput" + Model.CourseItemID;
+            string CourseItemDescription = "CourseItemDescription" + Model.CourseItemID;
+            string ActionURL = @Url.Action("CommentByCommentID", "Comment");
+            string DivAnswerID = "Answer" + @Model.CourseItemID;
+            string DivChildID = "Child" + @Model.CourseItemID;
+            //string ActionAnswerURL = @Url.Action("CommentByCommentID", "Comment");
+
+            if (!string.IsNullOrEmpty(Request.QueryString["SysObjectId"]))
+            {
+                SystemObjectID = Request.QueryString["SysObjectId"];
+            }
+
+
+            long LoginUserID = 0;
+            if (Request.Cookies["ID"] != null)
+            {
+                LoginUserID = Convert.ToInt64(Request.Cookies["ID"].Value.ToString());
+            }
+
+}
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                $("#lnkEdit").click(function () {
+                    if ($.browser.msie) {
+                        jQuery("#dialog").dialog({
+                            bgiframe: true, autoOpen: false, width: 590, height: 500, modal: true
+                        });
+                    }
+                    else {
+                        jQuery("#dialog").dialog({
+                            bgiframe: true, autoOpen: false, width: 590, height: 420, modal: true
+                        });
+                    }
+                    jQuery('#dialog').dialog('open');
+                    $("#lnkmyclose").click(function () {
+                        $(".NullValue").empty();
+                        CourseItemID = 0;
+                        var Data = "<div style='padding: 17px 132px;'><p><img src='../../Images/loading.gif' />Please Wait AddItem is Loading</p></div>";
+                        var DeleteConfrim = "<div style='padding: 14px 42px;'><p><img src='../../Images/loading.gif' />Loading...</p></div>";
+                        var DeleteCommentConfrim = "<div style='padding: 14px 42px;'><p><img src='../../Images/loading.gif' />Loading...</p></div>";
+                        $("#dialog").html(Data);
+                        $("#delete").dialog("destroy");
+                        $(".deleteConfrim").empty();
+                        $("#delete").html(DeleteConfrim);
+                        $("#dialog").dialog("destroy");
+                        $("#deleteComment").dialog("destroy");
+                        $(".deleteCommentConfrim").empty();
+                        $("#deleteComment").html(DeleteCommentConfrim);
+                    });
+                    return false;
+                });
+            });
+        </script>
+        <!-- left panel start -->
+        <div class="clear spac10px">
+        </div>
+        <div class="questionMain">
+            @{Html.RenderPartial("ConfirmPopup");}
+            <!-- right panel start -->
+            <div class="flaotr voteright">
+                <div style="display: none;" id="dialog" title="Note: This window can be moved and resized."
+                    class="NullValue">
+                    <div style="padding: 17px 132px;">
+                        <p>
+                            <img src="../../Images/loading.gif" />Please Wait AddItem is Loading</p>
+                    </div>
+                </div>
+                <h3>@Model.CourseItemTitle</h3>
+                <div class="queContent">
+                    @MvcHtmlString.Create(HttpUtility.HtmlDecode(Model.CourseItemDescription))
+                    
+                    <div class="tag flaotl">
+                        @if (@Model.Chapter > 0 && @Model.Chapter != null)
+                        {
+                            <a class="post-tag" href="#">Chapter : @Model.Chapter</a>
+                        }
+                        @if (@Model.Section > 0 && @Model.Section != null)
+                        {
+                            <a class="post-tag" href="#">Section : @Model.Section</a>
+                        }
+                        @if (@Model.PageNumber > 0 && @Model.PageNumber != null)
+                        {    
+                            <a class="post-tag" href="#">Page # : @Model.PageNumber</a>
+                        }
+                    </div>
+                    <div class="clear spac10px">
+                    </div>
+                    <!-- New -->
+                    <div class="ans-new">
+                        <div style="float: left; width: 6px; height: 54px;">
+                            <img src="../../Images/answer-box-left.png" alt="" border="0" />
+                        </div>
+                        <div class="ans-new-center">
+                            <div style="float: left; margin-top: 7px; line-height: 10px; color: #868687; text-align: center;
+                                width: 60px;">
+                                <div id="@DivChildID">
+                                    @{Html.RenderAction("LoadChildCount", "ChildCount", new { CourseItemID = Model.CourseItemID });}
+                                </div>
+                                <br />
+                                <div>
+                                    Answer
+                                </div>
+                            </div>
+                            @if (SystemObjectID != "0")
+                            {
+                                <div class="add-icon" onclick="javascript:AddChildDetails('@RootPath/Question/QuestionByQuestionID?QID=@Model.CourseItemID&CourseID=@Model.CourseID#@DivEditor');">
+                                    <a id="lnkframe" onclick="javascript:AddChildDetails('@RootPath/Question/QuestionByQuestionID?QID=@Model.CourseItemID&CourseID=@Model.CourseID#@DivEditor');">
+                                        Add Answer</a>
+                                </div>
+                            }
+                        </div>
+                        <div style="float: left; width: 6px; height: 54px;">
+                            <img src="../../Images/answer-box-right.png" alt="" border="0" />
+                        </div>
+                    </div>
+                </div>
+                <!-- completed -->
+                <div class="ans-new2">
+                    <div style="float: left; width: 6px; height: 54px;">
+                        <img src="../../Images/answer-box2-left.png" alt="" border="0" />
+                    </div>
+                    <div class="ans2-new-center">
+                        <div style="float: left; padding-top: 3px; width: 48px; height: 48px;">
+                            @if (!string.IsNullOrEmpty(Model.ProfileImage))
+                            {
+                                <img alt="" src="/images/ProfileImage/@Model.AccountID/@Model.ProfileImage" style="height:48px;width:48px;" />
+                            }
+                            else
+                            { 
+                                    <img alt="" src="/images/answerPic.jpg" style="height: 48px; width: 48px;" />
+                            }
+                        </div>
+                        <div style="float: left; width: 170px;">
+                            @if (@Model.AccountID == LoginUserID)
+                            {
+                                <div class="user-info-link">
+                                    @if (SystemObjectID != "0" && IsCourseHomePage == "1")
+                                    {
+                                        <a class="linkr"   id="lnkframe" onclick="javascript:AddChildDetails('@RootPath/Question/QuestionByQuestionID?QID=@Model.CourseItemID&CourseID=@Model.CourseID#@DivEditor');">
+                                            View Full Page</a>
+                                    }
+                                    @if (@Model.AccountID == LoginUserID)
+                                    {
+                                        if (IsCourseHomePage == "1")
+                                        {
+                                        <span>- </span>
+                                        }
+                                   <a class="linkr" id="lnkEdit" onclick="javascript:AddItem('@Model.CourseItemID','@ActionEditItem','@Model.CourseID','@LoginUserID','@SystemObject.Questions','@IsCourseHomePage');" >
+                                       Edit</a> <span> | </span>
+                                    <a id="lnkdelete" class="linkr">Delete</a>
+                                                                                                                                                                                            using (Html.BeginForm("DeleteItems", "DeleteItems", FormMethod.Post, new { name = "frm", id = "frm" }))
+                                                                                                                                                                                            {
+                                            <input type="hidden" id="hdnCourseItemID" name="hdnCourseItemID" value="@Model.CourseItemID"  />
+                                            <input type="hidden" id="hdnSystemObjectName" name="hdnSystemObjectName" value="@Model.SystemObjectName"  />
+                                            <input type="hidden" id = "hdnIsCourseHomePage" name="hdnIsCourseHomePage" value="@IsCourseHomePage" />
+                                            <input type="hidden" id="hdnCourseID" name="hdnCourseID" value="@Model.CourseID"  />
+                                            <input type="hidden" id="hdnCName" name="hdnCName" value="@ControllerNames.QuestionByQuestionID"  />
+                                                                                                                                                                                            }
+                                    }
+                               @* <span>| </span><a class="linkb" href="#">Flag</a>*@
+                                </div>
+                            }
+                            else
+                            {
+                                if (SystemObjectID != "0" && IsCourseHomePage == "1")
+                                {
+                            <div class="user-info-link">
+                                @if (SystemObjectID != "0" && IsCourseHomePage == "1")
+                                {
+                                    <a class="linkr"   id="lnkframe" onclick="javascript:AddChildDetails('@RootPath/Question/QuestionByQuestionID?QID=@Model.CourseItemID&CourseID=@Model.CourseID#@DivEditor');">
+                                        View Full Page</a>
+                                }
+                            </div>
+                                }
+                            }
+                        </div>
+                        @*<div style=" float:left; border-bottom:1px solid #cccccc; width:160px; margin:0px 0px 0px 2px;">&nbsp;</div>*@
+                        <div class="user-info-de">
+                            <div style="width: auto;">
+                                <a href="#" class="blue">@Model.UserName</a>
+                            </div>
+                            <div class="timeNew">
+                                @Model.PostedDate
+                            </div>
+                        </div>
+                    </div>
+                    <div style="float: left; width: 6px; height: 54px;">
+                        <img src="../../Images/answer-box2-right.png" alt="" border="0" />
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <!-- comment start -->
+                @if (SystemObjectID != "5")
+                {
+                    <div class="bluecomment-bg2">
+                        &nbsp;</div>
+                }
+                @if (Model.CommentCount > 2 && IsCourseHomePage == "1")
+                {
+                    if (SystemObjectID != "5")
+                    {
+                    <div class="questionComment">
+                        <div id="@DivComment1">
+                            <div class="bluecomment">
+                                <div class="commentright paddingtb">
+                                    <p>
+                                        <span><a id="lnkcomment @Model.CourseItemID"  class="linkb" onclick="Javascript:loadAllComments('@Model.CourseItemID','Comments','@LoginUserID','false','@ActionURLLoadComment','@Model.CourseID');">
+                                            View all @Model.CommentCount Comments</a></span></p>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            @{Html.RenderAction("LoadComments", "Comment", new { AssociatedID = Model.CourseItemID, SystemObjectName = Systemobject.Comments, AccountID = LoginUserID, CommentFlag = true, CourseID = Model.CourseID });}
+                        </div>
+                    </div>
+                    }
+                }
+                else
+                {
+                    if (SystemObjectID != "5" || IsCourseHomePage != "1")
+                    {
+                            <div class="questionComment">
+                                <div id="@DivComment2">
+                                    @{Html.RenderAction("LoadComments", "Comment", new { AssociatedID = Model.CourseItemID, SystemObjectName = Systemobject.Comments, AccountID = LoginUserID, CommentFlag = false, CourseID = Model.CourseID });}
+                                </div>
+                            </div>
+                    }
+                }
+                <!-- comment end -->
+            </div>
+            @*<div style="margin: 12px 0pt 0pt;" class="flaotr">
+            <a  class="blue" style="cursor:pointer;" onclick="javascript:EditChildItem('@Model.ParentCourseItemID','@Model.CourseItemID','@ActionURLAnswer','@Model.CourseID','@SystemObject.Answers');">
+                Add Answer</a> | <a class="blue" style="cursor:pointer;" onclick = "javascript:ViewChildDetail('@Model.CourseItemID');">
+                    View Answer</a></div>*@
+        </div>
+        <!-- right panel end -->
+        <!-- left panel start -->
+        <div class="flaotl vote">
+            <div id="@DivVoteID">
+                @{Html.RenderPartial("~/Views/Vote/Vote.cshtml", Model);}
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        @if (SystemObjectID == "0")
+        {
+            <!-- answer start -->
+        <div id="@DivAnswerID" >
+            @{Html.RenderAction("AnswerList", "Answer", new { ParentCourseItemID = Model.CourseItemID });}
+        </div>
+        <!-- answer end -->
+        <!-- Ask Question start  -->
+        <div class="ask">
+            <div id="@DivEditor">
+                @{Html.RenderAction("LoadEditor", "Editor", new { CID = Model.CourseItemID, ParentCID = Model.ParentCourseItemID, CourseID = Model.CourseID, SystemObjectName = Systemobject.Answers });}
+            </div>
+        </div>
+        <!-- Ask Question start  -->
+        }
+    </div>
+</div>

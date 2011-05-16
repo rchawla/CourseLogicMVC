@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+@using CLFacadeLayer
+@using CourseLogicWeb.ConfigurationService
+@model IEnumerable<GenericBE>
+@using Systemobject = CLFacadeLayer.SystemObject;
+@if (Request.Cookies["ID"] == null)
+{
+    string RootPath = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.GetRoot().ToString()))
+    {
+        RootPath = ConfigurationService.GetRoot().ToString();
+    }
+    string ApplicationKey = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.APPLICATION_KEY().ToString()))
+    {
+        ApplicationKey = ConfigurationService.APPLICATION_KEY().ToString();
+    }
+    Response.Redirect(Url.Action("Login", "Login"));
+
+    
+}
+else
+{
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    @{
+    long LoginUserID = 0;
+    if (Request.Cookies["ID"] != null)
+    {
+        LoginUserID = Convert.ToInt64(Request.Cookies["ID"].Value.ToString());
+    }
+    string ProfileImage = "";
+    if (Request.Cookies["PImage"] != null)
+    {
+        ProfileImage = Request.Cookies["PImage"].Value.ToString();
+    }
+    int CourseID = 0;
+    if (Request.QueryString["CourseID"] != null)
+    {
+        CourseID = Convert.ToInt32(Request.QueryString["CourseID"]);
+    }
+    string AccountTitle = "";
+    if (Request.Cookies["AccountTitle"] != null)
+    {
+        AccountTitle = Request.Cookies["AccountTitle"].Value.ToString();
+    }
+    string RootPath = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.GetRoot().ToString()))
+    {
+        RootPath = ConfigurationService.GetRoot().ToString();
+    }
+    string ApplicationKey = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.APPLICATION_KEY().ToString()))
+    {
+        ApplicationKey = ConfigurationService.APPLICATION_KEY().ToString();
+    }
+ }
+    <head>
+        <title>Profile</title>
+        <link href="@Url.Content("~/Content/courselogic_new.css")" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="../../Scripts/common.js"></script>
+        <script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"></script>
+        <script type="text/javascript">
+            function fBlogout() {
+                try {
+                    FB.Connect.ifUserConnected(function () {
+                        FB.Connect.logoutAndRedirect('@RootPath/Login/Login/');
+                    }, '@RootPath/Login/Login');
+
+                } catch (e) {
+                    location.href = '@RootPath/Login/Login';
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <!--header-->
+      @{Html.RenderPartial("../Common/Header");}
+        <!--header-end-->
+        <!--content-->
+        <div class="profile-main">
+            <!--left-menu-->
+            <!-- <div class="right-menu float-l">
+  <div class="right-menu-icon"><a href="#"><img src="images/overview.png" width="24" height="24" border="0" /></a></div>
+    <div class="right-menu-icon"><a href="#"><img src="images/assessment.png" width="24" height="24" border="0" /></a></div>
+    <div class="right-menu-icon"><a href="#"><img src="images/users.png" width="24" height="24" border="0" /></a></div>
+    <div class="right-menu-icon"><a href="#"><img src="images/star.png" width="24" height="24" border="0" /></a></div>
+  </div>-->
+            <!--left-menu-end-->
+            <!--right-content-area-->
+            <div class="profile-left">
+                <div class="profile-pic-2">
+                    <div class="profile-pic-in">
+                       @if (!string.IsNullOrEmpty(ProfileImage))
+                                   {
+                                  <img style="height:150px;width:190px;" alt="Image can not be displayed." src="/images/ProfileImage/@LoginUserID/@ProfileImage"   />
+                                   }
+                                   else
+                                   {
+
+                        <img src="../../Images/profile-newPic.png" width="190" alt="" height="150" border="0" />
+                           }
+
+                           
+                    </div>
+                </div>
+            </div>
+            <div class="profile-right">
+                <div class="ov-title">
+                    Profile Overview</div>
+                <!--form-row-->
+                <div class="ov-form-div">
+                    <div class="ov-edit-title">
+                        <div class="form-row-3">
+                            <div class="form-left-3">
+                                Prefix</div>
+                        </div>
+                        <div class="form-row-3">
+                            <div class="form-left-3">
+                                CourseTitle</div>
+                        </div>
+                        <div class="form-row-3">
+                            <div class="form-left-3">
+                                CourseNumber</div>
+                        </div>
+                    </div>
+                    <div style="width: 100%; height: 10px; float: left;">
+                        &nbsp;</div>
+                    @RenderBody()
+                    <div style="width: 100%; float: left; height: 10px;">
+                        &nbsp;</div>
+                    <!--content-right-end-->
+                </div>
+                <!--right-content-area-end-->
+                <div style="height:10%"></div>
+<div> @{Html.RenderAction("AssessmentList", "Assessment");}</div>
+           
+            </div>
+        </div>
+
+      @{Html.RenderPartial("../Common/Footer");}
+
+
+        <!--content-end-->
+    </body>
+    <script type="text/javascript">
+        FB.init("@ApplicationKey", "@RootPath/xd_receiver.htm");
+    </script>
+    <script type="text/javascript">
+        function GoToProfile() {
+            window.location.href = "../Profile/CurrentCourses";
+        }
+        function GoToSearch() {
+            window.location.href = "../Courses/SearchCourse";
+        }
+        function GoToEditProfile() {
+            window.location.href = "../Profile/EditProfile";
+        }
+
+    </script>
+    </html>
+}

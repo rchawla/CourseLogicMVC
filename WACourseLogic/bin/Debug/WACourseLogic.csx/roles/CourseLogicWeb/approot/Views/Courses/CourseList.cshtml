@@ -1,0 +1,87 @@
+﻿@model IEnumerable<CLFacadeLayer.GenericBE>
+@{
+    
+    string AccountID = "0";
+    if (Request.Cookies["ID"] != null)
+    {
+        AccountID = Request.Cookies["ID"].Value;
+    }
+
+    int ItemCount = @Model.Count();
+    int ForLoopCount = 0;  
+}
+
+<div id="DivSearchCourse">
+<div class="search-form-div" style="height:400px;">
+    <div class="search-title">
+        <div class="form-row-3">
+            <div class="form-left-3">
+                Prefix</div>
+        </div>
+        <div class="form-row-3">
+            <div class="form-left-3">
+                Course Number</div>
+        </div>
+        <div class="form-row-3">
+            <div class="form-left-3">
+                Course Title</div>
+        </div>
+        <div class="form-row-3">
+            <div class="form-left-3">
+                Course Section</div>
+        </div>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="search-title-2">
+            <div class="form-row-7">
+                <div class="form-left-5">
+                    @item.Prefix</div>
+                <div class="form-left-5">
+                    @item.CourseNumber</div>
+                <div class="form-left-5">
+                    @item.CourseTitle</div>
+                <div class="form-left-5">
+                    @item.Course_Section</div>
+                <div class="add-bt">
+                    <a style="cursor:pointer" onclick="javascript:AddCourse(@AccountID,@item.CourseID)">
+                        Add </a>
+                </div>
+            </div>
+        </div>
+        if (ItemCount - 1 == ForLoopCount)
+        {
+            <div class="SearchMainPaging">
+                <input type="hidden" id="SearchCoursePageNumber" value="@item.SearchCoursePageNumber" />
+                @if (@item.SearchCoursePageNumber * 10 < @item.TotalCourses)
+                {
+                    <div class="SearchPagin" style="float: right; padding-top: 10px; font-size: 14px; cursor: pointer;">
+                        <a onclick="SearchCourseNextPage('@AccountID','@item.SearchCoursePageNumber');">Next</a>
+                    </div>
+                }
+                @if (ItemCount > 0 && item.SearchCoursePageNumber != 1)
+                {
+                    <div class="SearchPagin" style="float: left; padding-left: 10px; padding-top: 10px; font-size: 14px; cursor: pointer;">
+                        <a onclick="SearchCoursePreviousPage('@AccountID','@item.SearchCoursePageNumber');">
+                            Previous</a>
+                    </div>
+                }
+            </div>
+        }
+        ForLoopCount++;
+    }
+    <div id="DivNoResult" style="font-size: 13px; color: black; font-weight: bold;
+        margin-top: 50px; text-align: center;">
+        @ViewData["Message"]
+    </div>
+       <div class="padd-20">
+                &nbsp;</div>
+    <!--search-area-end-->
+</div>
+</div>
+<div id="dialog" style="display: none" title="Confirm">    
+    <div style="padding: 20px 50px;">
+        <p>
+            <img alt="" src="../../Images/loading.gif" />Loading...</p>
+    </div>
+</div>

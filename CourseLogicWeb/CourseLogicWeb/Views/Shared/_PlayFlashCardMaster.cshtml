@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+@using CLFacadeLayer
+@using Systemobject = CLFacadeLayer.SystemObject;
+@using CourseLogicWeb.ConfigurationService
+@{
+    int CourseID = 0;
+    if (Request.QueryString["CourseID"] != null)
+    {
+        CourseID = Convert.ToInt32(Request.QueryString["CourseID"]);
+    }
+    if (CourseID == 0)
+    {
+        CourseID = @Model.CourseID;
+    }
+    string HomePageURL = "../CourseHome/CourseHome?CourseID=" + CourseID + "&IsTopVoted=0" + "&PageNumber=1";
+    string CourseTitle = "";
+    if (Request.QueryString["Title"] != null)
+    {
+        CourseTitle = Request.QueryString["Title"].ToString();
+    }
+    string AccountTitle = "";
+    if (Request.Cookies["AccountTitle"] != null)
+    {
+        AccountTitle = Request.Cookies["AccountTitle"].Value.ToString();
+    }
+    string RootPath = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.GetRoot().ToString()))
+    {
+        RootPath = ConfigurationService.GetRoot().ToString();
+    }
+    string ApplicationKey = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.APPLICATION_KEY().ToString()))
+    {
+        ApplicationKey = ConfigurationService.APPLICATION_KEY().ToString();
+    }
+}
+@if (Request.Cookies["ID"] == null)
+{
+    Response.Redirect(Url.Action("Login", "Login"));
+    if (Request.QueryString["CourseID"] == null)
+    {
+        Response.Redirect(Url.Action("Login", "Login"));
+    }
+}
+else
+{
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Course Logic</title>
+        <link href="../../Content/itemdetails.css" rel="stylesheet" type="text/css" />
+        <link href="../../Content/courselogic_new.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="../../Scripts/common.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"></script>
+        <script type="text/javascript">
+            function fBlogout() {
+                try {
+                    FB.Connect.ifUserConnected(function () {
+                        FB.Connect.logoutAndRedirect('@RootPath/Login/Login/');
+                    }, '@RootPath/Login/Login');
+
+                } catch (e) {
+                    location.href = '@RootPath/Login/Login';
+                }
+            }
+        </script>
+    </head>
+    @{Html.RenderPartial("../Common/Header");}
+    <div class="main">
+        <!--left-menu-->
+        <div class="right-menu float-l">
+            <div class="right-menu-icon">
+                <a href="@HomePageURL">
+                    <img src="/images/home.gif" alt="" width="24" border="0" height="24" /></a></div>
+            <div class="right-menu-icon">
+                <a style="cursor:pointer" onclick="javascript:GotoDetail(@CourseID)">
+                    <img src="/images/star.png" alt="" width="24" border="0" height="24" /></a></div>
+              <div class="right-menu-icon">
+                    <a style="cursor: pointer;" onclick="javascript:GoToFlashCard(@CourseID);">
+                        <img src="../../Images/study.png" alt="" border="0" height="24" width="24" />
+                    </a>
+                </div>
+        </div>
+        <!--left-menu-end-->
+        <!--right-content-area-->
+        <div class="left-content">
+            <!--content-center-->
+            <div class="content-area-new-1">
+                <div class="rightPanel">
+                   <div class="clear spac10px">
+                    </div>
+                    @RenderBody()
+                </div>
+            </div>
+            <div class="profileName" style="float: left; z-index: 1001; position: relative; top: -150px;
+                width: 900px;">
+                @CourseTitle</div>
+        </div>
+        <!--content-center-end-->
+        <!--content-right-->
+    </div>
+    @{Html.RenderPartial("../Common/Footer");}
+    </html>
+}
+<script type="text/javascript">
+    FB.init("@ApplicationKey", "@RootPath/xd_receiver.htm");
+</script>
+<script type="text/javascript">
+    function GoToProfile(CourseID) {
+        if (Get_Cookie("ID") != false && Get_Cookie("ID") != null) {
+            window.location.href = "../Profile/CurrentCourses";
+        }
+        else {
+            if ($("#LoginCheckAlert")) {
+                $("#LoginCheckAlert").remove();
+            }
+            $('body').append("<div id='LoginCheckAlert' title='Not Logged In'><table width='185' cellspacing='0' cellpadding='0' border='0' style='margin-top:15px;'><tbody><tr><td align='center'><span>Please log in to continue.</span></td></tr><tr><td align='center'><input style='margin-top:20px;' type='button' class='askquebtn' id='btnYesLoginCheck' value='Login'></td></tr></tbody></table></div>");
+            jQuery("#LoginCheckAlert").dialog({
+                bgiframe: true, autoOpen: false, width: 200, modal: true
+            });
+            jQuery('#LoginCheckAlert').dialog('open');
+            $("#btnYesLoginCheck").click(function () {
+                window.top.location.href = "@RootPath";
+            });
+            $("#lnkmyclose").click(function () {
+                jQuery('#LoginCheckAlert').dialog('close');
+                $("#LoginCheckAlert").dialog("destroy");
+                $("#LoginCheckAlert").remove();
+                return false;
+            });
+        }
+    }
+    function GoToSearch() {
+        if (Get_Cookie("ID") != false && Get_Cookie("ID") != null) {
+            window.location.href = "../Courses/SearchCourse";
+        }
+        else {
+            if ($("#LoginCheckAlert")) {
+                $("#LoginCheckAlert").remove();
+            }
+            $('body').append("<div id='LoginCheckAlert' title='Not Logged In'><table width='185' cellspacing='0' cellpadding='0' border='0' style='margin-top:15px;'><tbody><tr><td align='center'><span>Please log in to continue.</span></td></tr><tr><td align='center'><input style='margin-top:20px;' type='button' class='askquebtn' id='btnYesLoginCheck' value='Login'></td></tr></tbody></table></div>");
+            jQuery("#LoginCheckAlert").dialog({
+                bgiframe: true, autoOpen: false, width: 200, modal: true
+            });
+            jQuery('#LoginCheckAlert').dialog('open');
+            $("#btnYesLoginCheck").click(function () {
+                window.top.location.href = "@RootPath";
+            });
+            $("#lnkmyclose").click(function () {
+                jQuery('#LoginCheckAlert').dialog('close');
+                $("#LoginCheckAlert").dialog("destroy");
+                $("#LoginCheckAlert").remove();
+                return false;
+            });
+        }
+    }
+
+    function GotoDetail(CourseID) {
+        if (Get_Cookie("ID") != false && Get_Cookie("ID") != null) {
+            window.location.href = "@RootPath/Favorite/FavoriteList?CourseID=" + CourseID;
+        }
+        else {
+            if ($("#LoginCheckAlert")) {
+                $("#LoginCheckAlert").remove();
+            }
+            $('body').append("<div id='LoginCheckAlert' title='Not Logged In'><table width='185' cellspacing='0' cellpadding='0' border='0' style='margin-top:15px;'><tbody><tr><td align='center'><span>Please log in to continue.</span></td></tr><tr><td align='center'><input style='margin-top:20px;' type='button' class='askquebtn' id='btnYesLoginCheck' value='Login'></td></tr></tbody></table></div>");
+            jQuery("#LoginCheckAlert").dialog({
+                bgiframe: true, autoOpen: false, width: 200, modal: true
+            });
+            jQuery('#LoginCheckAlert').dialog('open');
+            $("#btnYesLoginCheck").click(function () {
+                window.top.location.href = "@RootPath";
+            });
+            $("#lnkmyclose").click(function () {
+                jQuery('#LoginCheckAlert').dialog('close');
+                $("#LoginCheckAlert").dialog("destroy");
+                $("#LoginCheckAlert").remove();
+                return false;
+            });
+        }
+    }
+    function GoToEditProfile() {
+        if (Get_Cookie("ID") != false && Get_Cookie("ID") != null) {
+            window.location.href = "../Profile/EditProfile";
+        }
+        else {
+            if ($("#LoginCheckAlert")) {
+                $("#LoginCheckAlert").remove();
+            }
+            $('body').append("<div id='LoginCheckAlert' title='Not Logged In'><table width='185' cellspacing='0' cellpadding='0' border='0' style='margin-top:15px;'><tbody><tr><td align='center'><span>Please log in to continue.</span></td></tr><tr><td align='center'><input style='margin-top:20px;' type='button' class='askquebtn' id='btnYesLoginCheck' value='Login'></td></tr></tbody></table></div>");
+            jQuery("#LoginCheckAlert").dialog({
+                bgiframe: true, autoOpen: false, width: 200, modal: true
+            });
+            jQuery('#LoginCheckAlert').dialog('open');
+            $("#btnYesLoginCheck").click(function () {
+                window.top.location.href = "@RootPath";
+            });
+            $("#lnkmyclose").click(function () {
+                jQuery('#LoginCheckAlert').dialog('close');
+                $("#LoginCheckAlert").dialog("destroy");
+                $("#LoginCheckAlert").remove();
+                return false;
+            });
+        }
+    }
+
+    function GoToFlashCard(CourseID) {
+        if (Get_Cookie("ID") != false && Get_Cookie("ID") != null) {
+            window.location.href = "@RootPath/FlashCard/getflashcardsets?CourseID=" + CourseID;
+        }
+        else {
+            if ($("#LoginCheckAlert")) {
+                $("#LoginCheckAlert").remove();
+            }
+            $('body').append("<div id='LoginCheckAlert' title='Not Logged In'><table width='185' cellspacing='0' cellpadding='0' border='0' style='margin-top:15px;'><tbody><tr><td align='center'><span>Please log in to continue.</span></td></tr><tr><td align='center'><input style='margin-top:20px;' type='button' class='askquebtn' id='btnYesLoginCheck' value='Login'></td></tr></tbody></table></div>");
+            jQuery("#LoginCheckAlert").dialog({
+                bgiframe: true, autoOpen: false, width: 200, modal: true
+            });
+            jQuery('#LoginCheckAlert').dialog('open');
+            $("#btnYesLoginCheck").click(function () {
+                window.top.location.href = "@RootPath";
+            });
+            $("#lnkmyclose").click(function () {
+                jQuery('#LoginCheckAlert').dialog('close');
+                $("#LoginCheckAlert").dialog("destroy");
+                $("#LoginCheckAlert").remove();
+                return false;
+            });
+        }
+    }
+    
+</script>

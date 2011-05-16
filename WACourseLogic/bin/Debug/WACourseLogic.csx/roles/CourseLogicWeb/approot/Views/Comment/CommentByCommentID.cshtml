@@ -1,0 +1,218 @@
+﻿<script type="text/javascript" src="../../Scripts/PrettyComments/prettyComments.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.classOnTextarea2').elastic();
+    });
+</script>
+<script type="text/javascript" src="../../Scripts/encoder.js"></script>
+@model CLFacadeLayer.GenericBE
+@{
+    long LoginUserID = 0;
+    string ActionLoadCommentURL = @Url.Action("LoadComments", "Comment");
+    string ActionURLSaveComment = @Url.Action("SaveComment", "Comment");
+    string ActionURL = @Url.Action("CommentByCommentID", "Comment");
+    string DivWriteCommentID = "";
+    string DivQuesCommentInput = "";
+    string CourseItemDescription = "";
+    Int32 CheckCourseItemID = Model.CourseItemID;
+    Int32 CheckParentCourseItemID = Model.ParentCourseItemID;
+    Int32 CheckFlagPageNumber = Model.PageNumber;
+
+    string CommentDescription = "";
+    if ((Model.CourseItemDescription).ToString() != "" && (Model.CourseItemDescription).ToString() != null)
+    {
+        CommentDescription = @HttpUtility.HtmlDecode(Model.CourseItemDescription).ToString().Replace("<br />", "\r\n");
+    }
+
+    if (Request.Cookies["ID"] != null)
+    {
+        LoginUserID = Convert.ToInt64(Request.Cookies["ID"].Value.ToString());
+    }
+    string PersonalImage = "commentPic.jpg";
+    if (Request.Cookies["PImage"] != null)
+    {
+        PersonalImage = Request.Cookies["PImage"].Value.ToString();
+    }
+    string AccountTitle = "";
+    if (Request.Cookies["AccountTitle"] != null)
+    {
+        AccountTitle = Request.Cookies["AccountTitle"].Value.ToString();
+    }
+}
+@using (Html.BeginForm())
+{
+@Html.ValidationSummary(true)
+if (CheckCourseItemID == 0 && CheckParentCourseItemID > 0)
+{
+    DivWriteCommentID = "DivWriteCommentID" + Model.ParentCourseItemID;
+    DivQuesCommentInput = "DivQuesCommentInput" + Model.ParentCourseItemID;
+    CourseItemDescription = "CourseItemDescription" + Model.ParentCourseItemID;
+    if (CheckFlagPageNumber == 1 && Model.IsBlankComment == 0)
+    {
+        @*<div id="OdlCode-1">
+        <div class="WriteQuesCommentInput padding3 bluecomment" style="display: block;" id="@DivWriteCommentID">
+            <textarea class="WriteComment" id="textfield" name="textfield" onfocus="ShowComment('@Model.ParentCourseItemID');">Write a comment...</textarea></div>
+         @*<textarea class="small" value="Write a comment..." id="textfield" name="textfield" onfocus="javascript:EditComment('0','Comments','@LoginUserID','@Model.ParentCourseItemID','@ActionURL','@Model.CourseID','0');">Write a comment...</textarea></div>*@
+    @*<div class="bluecomment padding3 QuesCommentInput" id="@DivQuesCommentInput" style="display: none;">
+        <textarea class="big classOnTextarea2" id="@CourseItemDescription"  name="@CourseItemDescription"  onmouseout="javascript:HideComment('0','Comments','@LoginUserID','@Model.ParentCourseItemID','@ActionURL','@Model.CourseID');"></textarea>
+        <div class="flaotr">
+            <input type="button" value="Comment" name="btnSave" class="askquebtn" runat="server" onclick="javascript:SaveComment('@Model.CourseItemID', '@Model.CourseID', '@LoginUserID', '12', 'Comments', '@Model.ParentCourseItemID', '@ActionURLSaveComment', '@ActionLoadCommentURL','Add');" /></div>
+        <div class="clear">
+        </div>
+    </div>
+    </div>*@
+    <div style="float: left; width: 590px; margin: 5px 0px 5px 60px;">
+        <div style="float: left; width: 40px; padding: 5px;">
+            &nbsp;
+        </div>
+        <div style="float: left; width: 540px; background: #FFFFFF;">
+            <div style="float: left; width: 90px; padding: 8px;">
+                @if (PersonalImage != "")
+                {
+                    <img style="height:40px; width:40px;" alt="" src="/images/ProfileImage/@LoginUserID/@PersonalImage" />
+                }
+                else
+                {
+                <img style="height: 40px; width: 40px;" alt="" src="/images/commentPic.jpg" />
+                }
+                <span class="ds-icon font-1" style="padding-left: 30px;">@AccountTitle</span>
+            </div>
+            <div style="float: left; width: 432px;">
+                <div style="clear: both">
+                </div>
+                <div style="padding: 3px 0px; min-height: 70px;">
+                    <textarea class="classOnTextarea2" id="@CourseItemDescription" style="width:395px; height:100px; margin-top:5px;" name="@CourseItemDescription"  onclick="javascript:EditComment('@Model.CourseItemID','@Model.SystemObjectName','@LoginUserID','@Model.ParentCourseItemID','@ActionURL','@Model.CourseID','1');">write a comment....</textarea>
+                </div>
+                <div style="clear: both">
+                </div>
+                <div style="padding: 0px 0px;">
+                    <div style="float: left; width: 400px;">
+                        <div style="float: left; margin-right: 15px; height: 18px; padding: 6px 0px;" class="font-2">
+                            Attach file to comment</div>
+                        <span style="float: right; width: 41px; height: 24px;">
+                            <img alt="" src="CourseHome_files/add-bt.png" />
+                           @* <input type="button" value="Comment" name="btnSave" class="askquebtn" runat="server" onclick="javascript:SaveComment('@Model.CourseItemID', '@Model.CourseID', '@LoginUserID', '12', 'Comments', '@Model.ParentCourseItemID', '@ActionURLSaveComment', '@ActionLoadCommentURL','Add');" />*@
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+    else
+    {
+     @*<div class="WriteQuesCommentInput padding3 bluecomment" style="display: none;" id="@DivWriteCommentID">
+         @* <textarea class="small" value="Write a comment..." id="textfield" name="textfield" onfocus="ShowComment('@Model.ParentCourseItemID');">Write a comment...</textarea></div>
+         <textarea class="WriteComment" id="textfield" name="textfield" onfocus="javascript:EditComment('0','Comments','@LoginUserID','@Model.ParentCourseItemID','@ActionURL','@Model.CourseID','0');">Write a comment...</textarea></div>*@
+    @*<div class="bluecomment padding3 QuesCommentInput" id="@DivQuesCommentInput" style="display: block;">
+        <textarea class="big classOnTextarea2" id="@CourseItemDescription" name="@CourseItemDescription"  onmouseout="javascript:HideComment('0','Comments','@LoginUserID','@Model.ParentCourseItemID','@ActionURL','@Model.CourseID');"></textarea>
+        <div class="flaotr">
+            <input type="button" value="Comment" name="btnSave" class="askquebtn" runat="server" onclick="javascript:SaveComment('@Model.CourseItemID', '@Model.CourseID', '@LoginUserID', '12', 'Comments', '@Model.ParentCourseItemID', '@ActionURLSaveComment', '@ActionLoadCommentURL','Add');" /></div>
+        <div class="clear">
+        </div>
+    </div>*@
+    
+    <div style="float: left; width: 590px; margin: 5px 0px 5px 60px;">
+        <div style="float: left; width: 40px; padding: 5px;">
+            &nbsp;
+        </div>
+        <div style="float: left; width: 540px; background: #FFFFFF;">
+            <div style="float: left; width: 90px; padding: 8px;">
+                @if (PersonalImage != "")
+                {
+                    <img style="height:40px; width:40px;" alt="" src="/images/ProfileImage/@LoginUserID/@PersonalImage" />
+                }
+                else
+                {
+                <img style="height: 40px; width: 40px;" alt="" src="/images/commentPic.jpg" />
+                }
+                <span class="ds-icon font-1" style="padding-left: 30px;">@AccountTitle</span>
+            </div>
+            <div style="float: left; width: 432px;">
+                <div style="clear: both">
+                </div>
+                <div style="padding: 3px 0px; min-height: 70px;">
+                    <textarea class="big classOnTextarea2" id="@CourseItemDescription" style="width:395px; height:100px; margin-top:5px;" name="@CourseItemDescription"  onmouseout="javascript:HideComment('0','Comments','@LoginUserID','@Model.ParentCourseItemID','@ActionURL','@Model.CourseID');"></textarea>
+                </div>
+                <div style="clear: both">
+                </div>
+                <div style="padding: 0px 0px;">
+                    <div style="float: left; width: 400px;">
+                        <div style="float: left; margin-right: 15px; height: 18px; padding: 6px 0px;" class="font-2">
+                            Attach file to comment</div>
+                        <span style="float: right; width: 41px; height: 24px;">
+                            <img alt="" src="CourseHome_files/add-bt.png" />
+                            <input type="button" value="Comment" name="btnSave" class="askquebtn" runat="server" onclick="javascript:SaveComment('@Model.CourseItemID', '@Model.CourseID', '@LoginUserID', '12', 'Comments', '@Model.ParentCourseItemID', '@ActionURLSaveComment', '@ActionLoadCommentURL','Add');" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+}
+else
+{
+   @* <div class="bluecomment padding3">
+        <textarea class="big" id="CourseItemDescription" name="CourseItemDescription">@Model.CourseItemDescription</textarea>
+        <div class="flaotr">
+            <input type="button" value="Comment" name="btnSave" class="askquebtn" runat="server" onclick="javascript:SaveComment('@Model.CourseItemID', '@Model.CourseID', '@LoginUserID', '@Model.SystemObjectID', '@Model.SystemObjectName', '@Model.ParentCourseItemID', '@ActionURLSaveComment', '@ActionLoadCommentURL','Edit');" /></div>
+        <div class="clear">
+        </div>
+    </div>*@
+    
+    DivWriteCommentID = "DivWriteCommentID" + Model.ParentCourseItemID;
+    DivQuesCommentInput = "DivQuesCommentInput" + Model.ParentCourseItemID;
+    CourseItemDescription = "CourseItemDescription" + Model.ParentCourseItemID;
+     @*<div class="WriteQuesCommentInput padding3 bluecomment" style="display: none;" id="@DivWriteCommentID">
+         @*<textarea class="small" value="Write a comment..." id="textfield" name="textfield" onfocus="ShowComment('@Model.ParentCourseItemID');">Write a comment...</textarea></div>
+         <textarea class="WriteComment" id="textfield" name="textfield" onfocus="javascript:EditComment('0','Comments','@LoginUserID','@Model.ParentCourseItemID','@ActionURL','@Model.CourseID');">Write a comment...</textarea></div>*@
+   @* <div class="bluecomment padding3 QuesCommentInput" id="@DivQuesCommentInput" style="display: block;">
+        <textarea class="big classOnTextarea2" id="@CourseItemDescription"  name="@CourseItemDescription"  onmouseout="javascript:HideComment('0','Comments','@LoginUserID','@Model.ParentCourseItemID','@ActionURL','@Model.CourseID');" >@CommentDescription</textarea>
+        <div class="flaotr">
+            <input type="button" value="Comment" name="btnSave" class="askquebtn" runat="server" onclick="javascript:SaveComment('@Model.CourseItemID', '@Model.CourseID', '@LoginUserID', '12', 'Comments', '@Model.ParentCourseItemID', '@ActionURLSaveComment', '@ActionLoadCommentURL','Edit');" /></div>
+        <div class="clear">
+        </div>
+    </div>*@
+    
+    <div style="float: left; width: 590px; margin: 5px 0px 5px 60px;">
+        <div style="float: left; width: 40px; padding: 5px;">
+            &nbsp;
+        </div>
+        <div style="float: left; width: 540px; background: #FFFFFF;">
+            <div style="float: left; width: 90px; padding: 8px;">
+                @if (PersonalImage != "")
+                {
+                    <img style="height:40px; width:40px;" alt="" src="/images/ProfileImage/@LoginUserID/@PersonalImage" />
+                }
+                else
+                {
+                <img style="height: 40px; width: 40px;" alt="" src="/images/commentPic.jpg" />
+                }
+                <span class="ds-icon font-1" style="padding-left: 30px;">@AccountTitle</span>
+            </div>
+            <div style="float: left; width: 432px;">
+                <div style="clear: both">
+                </div>
+                <div style="padding: 3px 0px; min-height: 70px;">
+                    <textarea class="big classOnTextarea2" id="@CourseItemDescription" style="width:395px; height:100px; margin-top:5px;" name="@CourseItemDescription"  onmouseout="javascript:HideComment('0','Comments','@LoginUserID','@Model.ParentCourseItemID','@ActionURL','@Model.CourseID');">@CommentDescription</textarea>
+                </div>
+                <div style="clear: both">
+                </div>
+                <div style="padding: 0px 0px;">
+                    <div style="float: left; width: 400px;">
+                        <div style="float: left; margin-right: 15px; height: 18px; padding: 6px 0px;" class="font-2">
+                            Attach file to comment</div>
+                        <span style="float: right; width: 41px; height: 24px;">
+                            <img alt="" src="CourseHome_files/add-bt.png" />
+                           <input type="button" value="Comment" name="btnSave" class="askquebtn" runat="server" onclick="javascript:SaveComment('@Model.CourseItemID', '@Model.CourseID', '@LoginUserID', '12', 'Comments', '@Model.ParentCourseItemID', '@ActionURLSaveComment', '@ActionLoadCommentURL','Edit');" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+}
+<div>
+</div>

@@ -1,0 +1,189 @@
+﻿@using CLFacadeLayer
+@model IEnumerable<CLFacadeLayer.GenericBE>
+@{    
+    int TotalCommentCount = 0;
+    int ParentCourseItemID = 0;
+    int CourseID = 0;
+    long LoginUserID = 0;
+    string DivCommentID = "";
+    string ActionURLDeleteComment = @Url.Action("DeleteComments", "Comment");
+
+    string ActionURLComment = @Url.Action("LoadComments", "Comment");
+    string ActionURL = @Url.Action("CommentByCommentID", "Comment");
+    string DivWriteCommentID = "";
+    string PersonalImage = "commentPic.jpg";
+    if (Request.Cookies["ID"] != null)
+    {
+        LoginUserID = Convert.ToInt64(Request.Cookies["ID"].Value.ToString());
+    }
+    if(Request.Cookies["PImage"] != null)
+    {
+        PersonalImage = Request.Cookies["PImage"].Value.ToString();
+    }
+    string AccountTitle = "";
+    if(Request.Cookies["AccountTitle"] != null)
+    {
+        AccountTitle = Request.Cookies["AccountTitle"].Value.ToString();
+    }
+}
+@foreach (var item in Model)
+{
+    string lnkDeleteID = "lnkdelete" + item.CourseItemID;
+    string FormName = "frm" + item.CourseItemID;
+    string DivVoteID = "DivVote" + item.CourseItemID;
+    DivCommentID = "DivCommentByCommentID" + item.ParentCourseItemID.ToString();
+    DivWriteCommentID = "DivWriteCommentID" + item.ParentCourseItemID;
+    ParentCourseItemID = item.ParentCourseItemID;
+    CourseID = item.CourseID;
+    TotalCommentCount = Model.Count();
+    string RankIcon = "ds_" + item.Discussion_Rank + "-icon font-1";
+@* <div class="answerComment">*@
+        <!-- start panel -->
+    if (@item.CourseItemID > 0)
+    {
+        @*<div class="bluecomment">
+            <div class="commentborder">
+                <!-- left vote start -->
+                <div class="comment">
+                    @if (!string.IsNullOrEmpty(item.ProfileImage))
+                    {
+                        <img align="right"class="pic" style="height:46px;width:50px;" alt="" src="/images/ProfileImage/@item.AccountID/@item.ProfileImage" />
+                    }
+                    else
+                    { 
+                        <img align="right" class="pic" style="height: 46px; width: 50px;" alt="" src="/images/commentPic.jpg" />
+                    }
+                    <div id="@DivVoteID">
+                        @{Html.RenderPartial("~/Views/Vote/Vote.cshtml", Model.Single(CID => CID.CourseItemID == @item.CourseItemID));}
+                    </div>
+                </div>
+                <!-- left vote end -->
+                <!-- right vote start -->
+                <div class="commentright">
+                    <p>
+                       <a href="#" class="blue">@item.UserName</a> @MvcHtmlString.Create(HttpUtility.HtmlDecode(item.CourseItemDescription))<br />
+                        <span>@item.PostedDate
+                            @if (@item.AccountID == LoginUserID)
+                            {
+                                <span>-</span><a class="linkb" onclick="javascript:EditComment('@item.CourseItemID','@item.SystemObjectName','@LoginUserID','@item.ParentCourseItemID','@ActionURL','@item.CourseID','0');">
+                                    Edit</a> <span>|</span> <a id="@lnkDeleteID" class="linkb" onclick="javascript:DeleteComment('@item.CourseItemID', '@item.CourseID', '@LoginUserID', '12', '@SystemObject.Comments', '@item.ParentCourseItemID', '@ActionURLDeleteComment', '@ActionURLComment');">Delete</a>
+                                                             
+                            }
+                        </span>
+                    </p>
+                </div>
+                <!-- right vote end -->
+                <div class="clear">
+                </div>
+            </div>
+            <!-- end panel -->
+        </div>*@
+      <div style="float: left; width: 590px; margin: 3px 0px 3px 60px;">
+          <div style="float: left; width: 40px; padding: 5px;">
+              <div id="@DivVoteID">
+                  @{Html.RenderPartial("~/Views/Vote/Vote.cshtml", Model.Single(CID => CID.CourseItemID == @item.CourseItemID));}
+              </div>
+          </div>
+          <div style="float: left; width: 540px; background: #FFFFFF;">
+              <div style="float: left; width: 90px; padding: 8px;">
+                  @if (!string.IsNullOrEmpty(item.ProfileImage))
+                  {
+                      <img style="height:40px; width:40px;" alt="" src="/images/ProfileImage/@item.AccountID/@item.ProfileImage" />
+                  }
+                  else
+                  { 
+                        <img style="height: 40px; width: 40px;" alt="" src="/images/commentPic.jpg" />
+                  }
+                  <span class="@RankIcon" style="padding-left: 30px;">@item.UserName </span>
+              </div>
+              <div style="float: left; width: 432px;">
+                  <div style="padding: 3px 0px 0px 0px;">
+                      <span style="float: left; width: 400px;">
+                          @if (@item.AccountID == LoginUserID)
+                          {
+                              <span style="float: right; height: 18px; padding: 0px 0px;" class="font-3"><a class="post-tag2" onclick="javascript:EditComment('@item.CourseItemID','@item.SystemObjectName','@LoginUserID','@item.ParentCourseItemID','@ActionURL','@item.CourseID','0');">
+                                  Edit</a> <a  id="@lnkDeleteID" class="post-tag2" onclick="javascript:DeleteComment('@item.CourseItemID', '@item.CourseID', '@LoginUserID', '12', '@SystemObject.Comments', '@item.ParentCourseItemID', '@ActionURLDeleteComment', '@ActionURLComment');" style="margin: 0px 15px 0px 30px;">
+                                      Delete </a></span>
+                          }
+                      </span>
+                  </div>
+                  <div style="clear: both">
+                  </div>
+                  <div style="padding: 0px 0px; min-height: 55px;">
+                      <span class="font-1-unbold" style="float: left; width: 450px;">@MvcHtmlString.Create(HttpUtility.HtmlDecode(item.CourseItemDescription))</span></div>
+                  <div style="clear: both">
+                  </div>
+                  <div style="padding: 0px 0px;">
+                      <div style="float: left; width: 400px;">
+                          <div style="float: right; margin-right: 15px; height: 18px; padding: 6px 0px;" class="font-3">
+                              @item.PostedDate</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    <div style="float: right; width: 590px; margin: 0px 0px 0px 10px; background: #000000;
+                    border-bottom: 1px solid #CCCCCC;">
+                </div>
+    }
+}
+<!-- Show hide comment start -->
+<div id="@DivCommentID">
+    <div style="float: left; width: 590px; margin: 5px 0px 5px 60px;">
+        <div style="float: left; width: 40px; padding: 5px;">
+            &nbsp;
+        </div>
+        @*<div style="float: left; width: 540px; background: #EDEFF4;">*@
+        <div style="float: left; width: 540px; background: #FFFFFF;">
+            <div style="float: left; width: 90px; padding: 8px;">
+            @if (PersonalImage != "")
+            {
+              <img style="height:40px; width:40px;" alt="" src="/images/ProfileImage/@LoginUserID/@PersonalImage" />
+            }
+            else
+            {
+                <img style="height: 40px; width: 40px;" alt="" src="/images/commentPic.jpg" />
+            }
+                <span class="ds-icon font-1" style="padding-left: 30px;">@AccountTitle</span>
+            </div>
+            <div style="float: left; width: 432px;">
+                <div style="clear: both">
+                </div>
+                <div style="padding: 3px 0px; min-height: 70px;">
+                    <textarea style="width:395px; height:100px; margin-top:5px;" class="WriteComment"  id="textfield" name="textfield" onfocus="javascript:EditComment('0','Comments','@LoginUserID','@ParentCourseItemID','@ActionURL','@CourseID','1');">Write a comment...</textarea>
+                </div>
+                <div style="clear: both">
+                </div>
+                <div style="padding: 0px 0px;">
+                    <div style="float: left; width: 400px;">
+                        <div style="float: left; margin-right: 15px; height: 18px; padding: 6px 0px;" class="font-2">
+                            Attach file to comment</div>
+                        <span style="float: right; width: 41px; height: 24px;">
+                            <img alt="" src="CourseHome_files/add-bt.png" /></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<div class="WriteQuesCommentInput padding3 bluecomment" style="display: block;" id="@DivWriteCommentID">
+        <textarea class="WriteComment"  id="textfield" name="textfield" onfocus="javascript:EditComment('0','Comments','@LoginUserID','@ParentCourseItemID','@ActionURL','@CourseID','1');">Write a comment...</textarea></div>*@
+</div>
+@*<div id="deleteComment" style="display: none" title="Confirm">
+    <div style="padding: 10px 6px;">
+        <p>
+            Are you sure you want to delete item ?</p>
+    </div>
+    <br />
+    <div style="padding: 10px 10px;">
+        <input type="button" class="askquebtn" id="btnYesComment" value="Yes" />
+        <input type="button" id="btnNoComment" class="askquebtn" value="No" />
+    </div>
+</div>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery("#deleteComment").dialog({
+            bgiframe: true, autoOpen: false, width: 200, modal: true
+        });
+    });
+</script>*@
+<!-- Show hide comment end -->

@@ -1,0 +1,19 @@
+﻿@model CLFacadeLayer.GenericBE
+@{
+  
+    string ActionLoadAnswerURL = @Url.Action("AnswerList", "Answer");
+    string ActionURLSaveAnswer = @Url.Action("SaveAnswer", "Answer");
+    string ActionURL = @Url.Action("QuestionByQuestionID", "Question");
+}
+@using (Html.BeginForm())
+@Html.ValidationSummary(true)
+<script type="text/javascript" src="../../Scripts/common.js"></script>
+<div>
+    @Html.Hidden("CourseItemID", Model.CourseItemID) @Html.Hidden("ParentCourseItemID", Model.ParentCourseItemID)
+</div>
+<div>
+    @Html.TextArea("Editor", HttpUtility.HtmlDecode(Model.CourseItemDescription))
+</div>
+<div>
+    
+</div>

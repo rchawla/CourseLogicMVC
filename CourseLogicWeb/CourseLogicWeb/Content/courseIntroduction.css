@@ -1,0 +1,176 @@
+.StepList		{ width:500px }
+.StepList ol { background:url(../images/Temp/stepbg.png) 0 center repeat-x; height:71px; list-style:none outside none; margin:0; padding:0 }
+.Step { display:inline; list-style-type:none }
+.Step .part { background:url(../images/Temp/arrow_new.png) repeat scroll 0 0 transparent; float:left; height:71px }
+.Step .back { background-position:-24px 0 }
+.Step .middle { background:url(../images/Temp/stepbg.png) 0 center repeat-x }
+.Step .point { background-position:-30px 0; width:21px }
+.Step .title { margin-bottom:1px }
+.Step .content { margin:20px 15px 0 }
+.StepFirst .content { margin-left:15px }
+.StepListSmallDescription .description{font-size:9px}
+.StepFirst .back { width:3px }
+.StepFirst .content{margin-left:15px}
+.StepSelected .back{background-position:-21px 0}
+.StepSelected .middle { background:url(../images/Temp/stepselectedbg.png) 0 10px repeat-x }
+.StepSelected .point{background-position:0 0}
+.StepNextSelected .point{background-position:-51px 0}
+.StepSelected .title,
+.StepSelected .description,
+.StepSelected a { color:#fff }
+.Step .title { margin-bottom:1px }
+.fcb { color:#333 }
+.fwb { font-weight:bold }
+.fsl { font-size:13px }
+
+
+.Stepcontainer 	{ margin:14px auto 20px; padding:20px 25px 15px; width:550px; min-height:210px; position:relative }
+.StepShade 		{ background-color:#eceff6; border-top:2px solid #cbd6ee }
+
+.StepShade h1		{ font-size:15px; color:#333; font-weight:700; font-family:Tahoma, Geneva, sans-serif; margin:0; padding:0}
+.StepShade p	 	{ margin:5px 0 0 0 }
+.StepShade p.gray 	{ color:#767676; margin:0 0 8px 0 }
+
+.StepShade .bottomlink	 		{ float:right; margin:15px 0 0 0; bottom:30px; right:25px; position:absolute }
+.StepShade .bottomlink img	 	{ margin:0 0 0 5px }
+.StepShade .bottomlink a 		{ color:#3b5998; font-size:12px; text-decoration:none }
+.StepShade .bottomlink a:hover 	{ text-decoration:underline }
+
+
+
+.new_menu { float:left; width:500px; height:50px; background:#ececec;}
+
+.new_menu1 { float:left;width:140px; height:50px;  background:url(../images/Temp/menu1.jpg); background-position:left top ; color:#ececec; }
+.new_menu1 a{width:140px; height:50px;  background:url(../images/Temp/menu1.jpg); background-position:top left; }
+.new_menu1 a:hover{width:140px; height:50px;  background:url(../images/Temp/menu-hover.jpg); background-position:top left; }
+
+.new_menu2 { float:left;width:180px; height:50px;  background:#203550 url(../images/Temp/menu2.jpg); background-position:left top; color:#ececec;  }
+.new_menu2 a{  width:180px; height:50px;  background:url(../images/Temp/menu2.jpg) background-position:top left; }
+.new_menu2 a:hover{  width:180px; height:50px;  background:url(../images/Temp/menu2-hover.jpg) background-position:top left; position:relative; left:-20px; }
+
+.new_menu3 { float:left;width:180px; height:50px;  background:#203550 url(../images/Temp/menu2.jpg); background-position:left top; color:#ececec;  }
+.new_menu3 a{  width:160px; height:50px;  background:url(../images/Temp/menu2.jpg) background-position:top left; }
+.new_menu3 a:hover{  width:180px; height:50px;  background:url(../images/Temp/menu2-hover.jpg) background-position:top left; position:relative; left:-20px; }
+
+
+
+.button { width:460px; height:19px; float:right; margin:5px 20px;}
+.button-1 { width:460px; height:19px; float:right; margin:0px 20px 0px 20px;}
+.button1 { width:80px; line-height:19px; float:right;  text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; margin-right:10px; background:transparent url(../images/Temp/dropcourse.gif); background-position:left top; }
+.button1 a{ width:80px; line-height:19px; float:right;  text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; background:transparent url(../images/Temp/dropcourse.gif); text-decoration:none; background-position:left top;  }
+.button1 a:focus { background: url(../images/Temp/dropcourse-1.gif);}
+.button1 a:hover { background: url(../images/Temp/dropcourse-1.gif);}
+.button1 a:active { background: url(../images/Temp/dropcourse-1.gif);}
+
+.button2 { width:49px; line-height:19px; float:right;  text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; margin-right:10px; background:url(../images/Temp/verify.gif); background-position:left top; }
+.button2 a{  width:49px; line-height:19px; float:right;   text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; background:url(../images/Temp/verify.gif); text-decoration:none; background-position:left top;}
+.button2 a:focus { background: url(../images/Temp/verify-1.gif);}
+.button2 a:hover { background: url(../images/Temp/verify-1.gif);}
+.button2 a:active { background: url(../images/verify-1.gif);}
+
+.button3 { width:55px; line-height:19px; float:right; text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; margin-right:5px; background:url(../images/Temp/btn-skipb.gif); background-position:left top; }
+.button3 a {  width:55px; line-height:19px; float:right;   text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; background:url(../images/Temp/skip.gif); text-decoration:none; background-position:left top;}
+.button3 a:focus {  background:url(../images/Temp/skip-1.gif);}
+.button3 a:hover {  background:url(../images/Temp/skip-1.gif);}
+.button3 a:active {  background:url(../images/Temp/skip-1.gif);}
+
+.button4 { width:150px; line-height:19px; float:right; margin-right:0px;  text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff;margin-right:10px;  background:url(../images/Temp/addtocalender.gif); background-position:left top; }
+.button4 a {  width:150px; line-height:19px; float:right;   text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; background:url(../images/addtocalender.gif); text-decoration:none; background-position:left top;}
+.button4 a:focus  { background:url(../images/Temp/addtocalender-1.gif);}
+.button4 a:hover { background:url(../images/Temp/addtocalender-1.gif);}
+.button4 a:active { background:url(../images/Temp/addtocalender-1.gif);}
+
+.button5 { width:55px; line-height:19px; float:right; margin-right:0px;  text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; margin-right:5px; background:url(../images/Temp/btn-skipb.gif); background-position:left top; }
+.button5 a {  width:55px; line-height:19px; float:right;   text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; background:url(../images/Temp/skip.gif); text-decoration:none; background-position:left top;}
+.button5 a:focus {  background:url(../images/Temp/skip-1.gif);}
+.button5 a:hover {  background:url(../images/Temp/skip-1.gif);}
+.button5 a:active {  background:url(../images/skip-1.gif);}
+
+
+.button6 { width:109px; line-height:19px; float:right;   text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; margin-right:10px; background:url(../images/Temp/add-assessment.gif); background-position:left top; }
+.button6 a {  width:109px; line-height:19px; float:right;   text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; background:url(../images/Temp/add-assessment.gif); text-decoration:none; background-position:left top;}
+.button6 a:focus  {  background:url(../images/Temp/add-assessment-1.gif);}
+.button6 a:hover {  background:url(../images/Temp/add-assessment-1.gif);}
+.button6 a:active{  background:url(../images/Temp/add-assessment-1.gif);}
+
+
+
+.button7 { width:55px; height:19px; float:right;  text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; margin-right:10px; background:url(../images/Temp/btn-skipb.gif); background-position:left top; }
+.button7 input {  width:55px; height:19px; float:right; border:none;   text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; background:url(../images/Temp/skip.gif); text-decoration:none; background-position:left top;}
+.button7 input:focus {  background:url(../images/Temp/skip-1.gif);}
+.button7 input:hover {  background:url(../images/Temp/skip-1.gif);}
+.button7 input:active {  background:url(../images/Temp/skip-1.gif);}
+
+
+.button8 { width:55px; line-height:19px; float:right;  text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; margin-right:5px; background:url(../images/Temp/btn-skipb.gif); background-position:left top; }
+.button8 a {  width:55px; line-height:19px; float:right;   text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; background:url(../images/Temp/skip.gif); text-decoration:none; background-position:left top;}
+.button8 a:focus  { background:url(../images/Temp/skip-1.gif);}
+.button8 a:hover { background:url(../images/Temp/skip-1.gif);}
+.button8 a:active { background:url(../images/Temp/skip-1.gif);}
+
+.button9 { width:150px; line-height:19px; float:right; text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; margin-right:10px;  background:url(../images/Temp/addtocalender.gif); background-position:left top; }
+.button9 a {  width:150px; line-height:19px; float:right;   text-align:center;  font-size:8pt; font-weight:bold; color:#ffffff; background:url(../images/Temp/addtocalender.gif); text-decoration:none; background-position:left top;}
+.button9 a:focus { background:url(../images/Temp/addtocalender-1.gif);}
+.button9 a:hover { background:url(../images/Temp/addtocalender-1.gif);}
+.button9 a:active { background:url(../images/Temp/addtocalender-1.gif);}
+.step div.inner1 { color:#585858; float:left; font-family:Arial,Tahoma,Geneva,sans-serif; font-size:12px; line-height:17px; margin:0px 20px; padding:6px 0; width:460px;}
+.step div.inner2 { color:#585858; float:left; font-family:Arial,Tahoma,Geneva,sans-serif; font-size:12px; line-height:17px; width:458px;}
+.new-area { width:444px; float:left;}
+.new-area1  { width:20px; float:left;}
+.new-area2  { width:50px; float:left; margin-top:6px; }
+.new-area3  { width:200px; float:left; padding:0px; text-align:left; margin-left:5px;}
+.new-area4  { width:130px; float:left; display:block; margin-left:10px; }
+.new-area5  { width:20px; float:left; border:1px solid #CCC;}
+.flaotpanleft		{ float:left }
+.h4-1{ width:50px;   text-align:center; }
+.h4-1 h4 span{color:#000000; font-family:Arial,Tahoma; font-size:11px; font-size-adjust:none; font-stretch:normal; font-style:normal; font-variant:normal;
+font-weight:bold; line-height:normal; text-align:center; border:1px solid #CCC; padding:2px 3px;}
+.h4-2 {color:#20364E; font-family:Arial; font-size:12px; font-size-adjust:none; font-stretch:normal; font-style:normal; font-variant:normal;  line-height:normal;  padding:0px 0px 3px 0px;}
+p { margin:0; padding:0; color:#2D2F55; font-size:12px }
+
+
+
+/* Course Walkthrough css */
+
+br			{ clear:both }
+.borderbm	{ border-bottom:1px solid #CCC; margin:0 0 20px 0; padding:0 0 10px 0 }
+
+.step h1				{ margin:0; padding:4px 10px; background:#FFC; font-size:13px; color:#232323; font-family:Tahoma, Geneva, sans-serif }
+.step h3				{ margin:0; font-size:13px; color:#232323; font-family:Tahoma, Geneva, sans-serif }
+.step h4				{ margin:0; font-size:15px; color:#232323; font-family:Tahoma, Geneva, sans-serif }
+
+.step div.currentg		{ float:left; width:60px; padding:0 0 3px 5px; background-color:#4f9900; font-family:tahoma; font-size:17px; font-weight:700; color:#FFF }
+.step div.gray			{ float:left; width:60px; padding:0 0 3px 5px; background-color:#ececec; font-family:tahoma; font-size:17px; font-weight:700; color:#232323 }
+
+
+.step div.inner			{ float:right; width:430px; margin:5px 0; padding:6px 0; font-size:12px; color:#585858; line-height:17px; font-family:Arial, Tahoma, Geneva, sans-serif }
+.step .label			{ margin:5px 0; width:120px; float:left; font-size:12px; font-weight:700; color:#203550 }
+.step .radio			{ padding:5px 0 0 0; margin:7px 0 0 0; }
+.step textarea.textarea	{ border:1px solid #96a6c5; padding:0; margin:0; height:60px; width:390px }
+.textarea1	{border:1px solid #96a6c5; height:60px; width:458px; margin-left:20px; }
+
+.step p.p				{ margin:3px 0; padding:0 }
+.mar5					{ margin:0 0 5px 0 }
+
+ul.pagination				{ margin:0; padding:0; list-style:none; float:right; line-height:20px }
+ul.pagination li			{ float:left; display:block; margin:0 2px }
+ul.pagination li a			{ font-size:13px; font-weight:700; color:#8c8c8c; padding:0 3px }
+ul.pagination li a.black	{ font-size:13px; font-weight:100; color:#000; padding:0 3px; text-decoration:none }
+ul.pagination li a:hover	{ text-decoration:none; color:#333; }
+ul.pagination li a.current	{ color:#000; padding:0 3px; text-decoration:none }
+ul.pagination li a.none		{ padding:0 3px; border:none }
+
+
+h5 {
+    background: url("../images/Temp/header-true.png") no-repeat scroll 0 0 transparent;
+    border-bottom: 1px solid #CCCCCC;
+    color: #203550;
+    font-family: "Trebuchet MS",Arial;
+    font-size: 20px;
+    font-weight: 100;
+    margin: 0 25px 0 20px;
+    padding: 0 0 3px;
+    text-indent: 30px;
+    text-transform: capitalize;
+}
+/* Course Walkthrough css end */

@@ -1,0 +1,115 @@
+﻿@model IEnumerable<CLFacadeLayer.GenericBE>
+@{
+    View.Title = "Favorite";
+    Layout = "~/Views/Shared/_DetailsMaster.cshtml";
+
+    string DetailPageURL = "";
+    string ItemImageURL = "";
+
+    int CourseID = 0;
+    if (Request.QueryString["CourseID"] != null)
+    {
+        CourseID = Convert.ToInt32(Request.QueryString["CourseID"]);
+    }
+    string CourseTitle = "";
+    if (Request.QueryString["Title"] != null)
+    {
+        CourseTitle = Request.QueryString["Title"].ToString();
+    }
+    int RecordCount = Model.Count();
+    
+}
+<div class="FavoriteTitle">
+    Favorite</div>
+<script type="text/javascript">
+    function GoToDetails(DetailPageURL) {
+        window.location.href = DetailPageURL;
+    }
+</script>
+<div id="DivFavorite">
+    @if (RecordCount == 0)
+    {
+        <div style="padding: 20px 15px 12px 20px; font-size: 12px;">
+            <b>@ViewData["Message"]</b>
+        </div>
+    }
+    @foreach (var item in Model)
+    {
+
+        switch (item.SystemObjectID)
+        {
+            case 4: DetailPageURL = "../Question/QuestionByQuestionID?QID=" + @item.CourseItemID + "&CourseID=" + CourseID + "&Title=" + Server.UrlEncode(CourseTitle);
+                ItemImageURL = "../../Images/question.gif";
+                break;
+            case 5: DetailPageURL = "../Answer/GetChildByCourseItemID?AnswerID=" + @item.CourseItemID + "&SysObjectId=" + @item.SystemObjectID + "&IsDetail=1" + "&CourseID=" + CourseID + "&Title=" + Server.UrlEncode(CourseTitle) + "&IsEditedAddItem=1";
+                ItemImageURL = "../../Images/answer.gif";
+                break;
+            case 7: DetailPageURL = "../Discussion/DiscussionByDiscussionID?DID=" + @item.CourseItemID + "&CourseID=" + CourseID + "&Title=" + Server.UrlEncode(CourseTitle);
+                ItemImageURL = "../../Images/discussion.png";
+                break;
+            case 8: DetailPageURL = "../Terms/TermByTermID?TID=" + @item.CourseItemID + "&CourseID=" + CourseID + "&Title=" + Server.UrlEncode(CourseTitle);
+                ItemImageURL = "../../Images/term.png";
+                break;
+            case 9: DetailPageURL = "../Answer/GetChildByCourseItemID?AnswerID=" + @item.CourseItemID + "&SysObjectId=" + @item.SystemObjectID + "&IsDetail=1" + "&CourseID=" + CourseID + "&Title=" + Server.UrlEncode(CourseTitle) + "&IsEditedAddItem=1";
+                ItemImageURL = "../../Images/definition.png";
+                break;
+            case 10: DetailPageURL = "../Note/NoteByNoteID?NID=" + @item.CourseItemID + "&CourseID=" + CourseID + "&Title=" + Server.UrlEncode(CourseTitle);
+                ItemImageURL = "../../Images/notes.png";
+                break;
+            case 14: DetailPageURL = "../Summary/SummarybySummaryID?SID=" + @item.CourseItemID + "&CourseID=" + CourseID + "&Title=" + Server.UrlEncode(CourseTitle);
+                ItemImageURL = "../../Images/summary.png";
+                break;
+            default: DetailPageURL = "#";
+                ItemImageURL = "";
+                break;
+        }
+        <div class="favorite-row" id="@item.CourseItemID">
+            <div class="favorite-content">
+                <div>
+                    <div style="float: left; padding: 5px 0px 0px 5px; width: 30px;" class="icon-1">
+                        <img src="@ItemImageURL" alt="" border="0"/></div>
+                    <div class="favorite-box-in">
+                        @if ((@item.SystemObjectID != 5) && (@item.SystemObjectID != 9))
+                        {
+                            <div class="favorite-title">
+                                <a onclick="javascript:GoToDetails('@DetailPageURL');">@item.CourseItemTitle</a></div>
+                        }
+                        <span style="visibility: hidden;" class="arrow"></span>
+                        <div class="answer-img">
+                            @if (!string.IsNullOrEmpty(item.ProfileImage))
+                            {
+                                <img align="middle" class="pic" style="height:58px;width:62px;" alt="" src="/images/ProfileImage/@item.AccountID/@item.ProfileImage" />
+                            }
+                            else
+                            { 
+                                    <img align="middle" style="height:58px;width:62px;" class="pic" alt="" src="/images/answerPic.jpg" />
+                            }
+                        </div>
+                        @if ((@item.CourseItemDescription != "") && (@item.CourseItemDescription != null))
+                        {
+                            if ((@item.SystemObjectID != 5) && (@item.SystemObjectID != 9))
+                            {
+                            <div class="favorite-text">@item.CourseItemDescription
+                            </div>
+                            }
+                            else
+                            {
+                                <div class="favorite-text">
+                                    <a style="color:#3b5998;" onclick="javascript:GoToDetails('@DetailPageURL');">@item.CourseItemDescription</a>
+                                </div>
+                            }
+                        }
+                        <div class="favorite-time">@item.PostedDate
+                        </div>
+                        @*Commented on 22-1-2011 because client want Tile should have redirected link not external link*@
+                        @*<div class="linkb" style="float: right;">
+                            <a style="cursor:pointer" onclick="javascript:GoToDetails('@DetailPageURL');">Go to
+                                details</a></div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+  
+    }
+</div>

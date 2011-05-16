@@ -1,0 +1,26 @@
+﻿@model CLFacadeLayer.UsersBE
+<div class="profile-pic">
+    <div class="change-pic">
+        Change Picture</div>
+    <div class="profile-pic-in">
+        @if (!string.IsNullOrEmpty(Model.ProfileImage))
+        {
+            <img align="middle" style="height:150px;width:190px;" alt="Image can not be displayed." src="/images/ProfileImage/@Model.AccountID/@Model.ProfileImage" />
+        }
+        else
+        { 
+            <img border="1" style="height:150px;width:190px;" alt="" src="../../Images/profile-newPic.png" />
+        }
+    </div>
+    @using (Html.BeginForm("Index", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <div class="input-file-div">
+            <input type="file" name="file" id="file" style="width:100%;" />
+            <br/><br/>
+            <input type="submit" value="Upload" class="btnUpload"/>
+        </div>
+     }
+
+    <div><label class="ErrorLabel">Only .bmp,.jpg,.gif,.png,.jpeg files are allowed.</label></div>
+</div>

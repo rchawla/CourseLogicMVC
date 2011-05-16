@@ -1,0 +1,499 @@
+﻿@using CLFacadeLayer;
+@model IEnumerable<GenericBE>
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_PlayFlashCardMaster.cshtml";
+    int TotalCount = @Model.Count();
+    GenericBE Temp = new GenericBE();
+    Temp = @Model.First();
+    int Course = Temp.CourseID;
+    int ForLoop = 0;
+    }
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TempPlay</title>
+</head>
+<style type="text/css">
+    .QuestionTitle-2
+    {
+        background: url(../../Images/question-big.gif) no-repeat scroll 5px 10px;
+        font-size: 20px;
+        font-weight: 200;
+        height: 30px;
+        margin-bottom: 3px;
+        margin-left: 13px;
+        color: #ffffff;
+        font-family: Helvetica,Arial,sans-serif;
+        text-align: left;
+        height: 44px;
+        line-height: 44px;
+    }
+    
+    .TermTitle-2
+    {
+        background: url(./../Images/term-big.png) no-repeat scroll 5px 10px;
+        font-size: 20px;
+        font-weight: 200;
+        height: 30px;
+        margin-bottom: 3px;
+        margin-left: 13px;
+        color: #ffffff;
+        font-family: Helvetica,Arial,sans-serif;
+        text-align: left;
+        height: 44px;
+        line-height: 44px;
+    }
+    
+    .NoteTitle-2
+    {
+        background: url(../../Images/notes-big.png) no-repeat scroll 5px 10px;
+        font-size: 20px;
+        font-weight: 200;
+        height: 30px;
+        margin-bottom: 3px;
+        margin-left: 13px;
+        color: #ffffff;
+        font-family: Helvetica,Arial,sans-serif;
+        text-align: left;
+        height: 44px;
+        line-height: 44px;
+    }
+    
+    .SummaryTitle-2
+    {
+        background: url(../../Images/summary-big.png) no-repeat scroll 5px 10px;
+        font-size: 20px;
+        font-weight: 200;
+        height: 30px;
+        margin-bottom: 3px;
+        margin-left: 13px;
+        color: #ffffff;
+        font-family: Helvetica,Arial,sans-serif;
+        text-align: left;
+        height: 44px;
+        line-height: 44px;
+    }
+    .ImagePrevious_Active
+    {
+        /*background: url(../../Images/prv-bt.jpg) no-repeat scroll;*/
+        background: url(../../Images/prv-bt.jpg) no-repeat scroll;
+        height: 70px;
+        color: #ffffff;
+        text-align: right;
+        position: relative;
+        text-align: left;
+        top: -5px;
+        left: 10px;
+    }
+    .ImageNext_Active
+    {
+        /*background: url(../../Images/next-bt.jpg) no-repeat scroll;*/
+        background: url(../../Images/next-bt.jpg) no-repeat scroll;
+        height: 70px;
+        color: #ffffff;
+        text-align: left;
+    }
+    .ImagePrevious_InActive
+    {
+        /*background: url(../../Images/prv-bt.jpg) no-repeat scroll;*/
+        background: url(../../Images/prv-InActive-bt.jpg) no-repeat scroll;
+        height: 70px;
+        color: #808080;
+        text-align: right;
+        position: relative;
+        text-align: left;
+        top: -5px;
+        left: 10px;
+    }
+    .ImageNext_InActive
+    {
+        /*background: url(../../Images/next-bt.jpg) no-repeat scroll;*/
+        background: url(../../Images/next-InActive-bt.jpg) no-repeat scroll;
+        height: 70px;
+        color: #808080;
+        text-align: left;
+    }
+</style>
+<script type="text/javascript" src="../../Scripts/jquery-1.4.1.js"></script>
+<script type="text/javascript">
+(function($) {
+    $(document).ready(function() {
+    $('.ImagePrevious_Active').live('click', function () {
+          var FlashCard = $("#Previous").html();
+          var LastPage = $("#LastID").text();
+          if(UserID == 0)
+          {
+             Page = parseInt(FlashCard) - parseInt(1);
+          }
+          else
+          {
+              Page = parseInt(UserID) - parseInt(1);
+          }
+        if(Page >= FlashCard)
+        {
+            var IsBoth = $("#BothCheck").is(':checked');
+            var Question = $("#Question" + Page).html();
+            var Answer = $("#Answer" + Page).html();
+            $("#Question").html("");
+            $("#Answer").html("");
+            if ($("#BothCheck").is(':checked')) {
+            }
+            else{
+                $("#Answer").attr("style","display:none; width: 760px; margin: 20px auto; font-size: 30px; font-weight: 700; color: #000000; text-align: center;");
+                 $("#Question").attr("style","display: block; width: 760px; font-size: 30px; font-weight: 700; color: #000000; text-align: center;")
+            }
+            $("#Question").html(Question);
+            $("#Answer").html(Answer);
+            UserID = Page;
+             var ActuallCount = parseInt(UserID) - parseInt(FlashCard);
+            var SysID = $("#System"+Page).val();
+            SetSystemObject(SysID,ActuallCount);
+            if(Page == FlashCard)
+            {
+                $("#Previous").removeClass();
+                $("#Previous").addClass("ImagePrevious_InActive");
+            }
+                $("#Next").removeClass();
+                $("#Next").addClass("ImageNext_Active");
+        }
+        else
+        {
+            $("#Previous").removeClass();
+            $("#Previous").addClass("ImagePrevious_InActive");
+        }
+     });
+
+     $('.ImageNext_Active').live('click', function () {
+        var FlashCard = $("#Previous").html();
+        var Page = "0";
+        var LastPage = $("#LastID").text();
+        if(UserID == 0)
+        {
+             Page = parseInt(FlashCard) + parseInt(1);
+        }
+        else
+        {
+            Page = parseInt(UserID) + parseInt(1);
+        }
+        if(Page <= LastPage)
+        {
+            var IsBoth = $("#BothCheck").is(':checked');
+            var Question = $("#Question" + Page).html();
+            var Answer = $("#Answer" + Page).html();
+            $("#Question").html("");
+            $("#Answer").html("");
+             if ($("#BothCheck").is(':checked')) {
+            }
+            else{
+                 $("#Answer").attr("style","display:none; width: 760px; margin: 20px auto; font-size: 30px; font-weight: 700; color: #000000; text-align: center;");
+                 $("#Question").attr("style","display: block; width: 760px; font-size: 30px; font-weight: 700; color: #000000; text-align: center;")
+            }
+            $("#Question").html(Question);
+            $("#Answer").html(Answer);
+             UserID = Page;
+            var ActuallCount = parseInt(UserID) - parseInt(FlashCard);
+            var SysID = $("#System"+Page).val();
+            SetSystemObject(SysID,ActuallCount);
+            if(Page == LastPage)
+            {
+                 $("#Next").removeClass();
+                 $("#Next").addClass("ImageNext_InActive");
+            }
+           $("#Previous").removeClass();
+           $("#Previous").addClass("ImagePrevious_Active");
+       }
+       else
+       {
+            $("#Next").removeClass();
+            $("#Next").addClass("ImageNext_InActive");
+       }
+     });
+    });
+})(jQuery);
+
+    var TotalCount = @TotalCount;
+    var UserCount = 1;
+    var UserID = 0;
+    $(function () {
+     $('#FlipButton').live('click', function () {
+        //$('#FlipButton').click(function () {
+            $("#Question").toggle();
+            $("#Answer").toggle();
+        });
+    });
+
+    $(function () {
+    $('#BothCheck').live('click', function () {
+        //$('#BothCheck').click(function () {
+            if (document.getElementById("Question").style.display == "block") {
+               //alert("Question is block");
+                //alert("answer toggle");
+                if ($("#BothCheck").is(':checked')) {
+                    $("#Answer").toggle();
+                    $("#FlipButton").toggle();
+                }
+                else {
+                    $("#Answer").toggle();
+                    $("#FlipButton").toggle();
+                }
+                return;
+            }
+
+            if (document.getElementById("Answer").style.display == "block") {
+                //alert("answer is block");
+                //alert("question toggle");
+                if ($("#BothCheck").is(':checked')) {
+                    $("#Question").toggle();
+                    $("#FlipButton").toggle();
+                }
+                else {
+                    $("#Question").toggle();
+                    $("#FlipButton").toggle();
+                }
+                return;
+            }
+        });
+    });
+
+    function GetRootPathJS() {
+        var url = document.location.toString(); //url
+        var e_url = ''; //edited url
+        var p = 0; //position
+        var p2 = 0; //position 2
+        p = url.indexOf("//");
+        e_url = url.substring(p + 2);
+        p2 = e_url.indexOf("/");
+        var root_url = url.substring(0, p + p2 + 3);
+        return root_url;
+    }
+
+    function GoToHomePage() {
+        window.top.location.href = GetRootPathJS() + "flashcard/getflashcardsets?CourseID=" +@Course;
+    }
+
+    function SetSystemObject(ID,PageIndex)
+    {
+        var ActiveFiled = new String(ID); 
+         ActiveFiled = MyTrim(ActiveFiled); 
+ 
+            switch (ActiveFiled) {
+
+            case "4":
+            $("#ItemIcon").removeClass();
+            $("#ItemIcon").addClass("QuestionTitle-2");
+            var TempID = parseInt(PageIndex) + parseInt(1)  + "&nbsp;/&nbsp;" + TotalCount;
+            $("#PageCount").html(TempID);
+            var CheckBoxValue = "<span style='margin-top: 12px; float: left;'><input id='BothCheck' type='checkbox' /></span><span style='float: left; margin: 12px 0px 0px 10px; font-size: 12px; color: rgb(255, 255, 255);font-weight: 700;'>Both Side</span>";
+            if ($("#BothCheck").is(':checked')) {
+                 Chec = "checked";
+                 $("#FlipButton").attr("style","display:none;");
+                 CheckBoxValue = "<span style='margin-top: 12px; float: left;'><input id='BothCheck' type='checkbox' checked='" + Chec + "'/></span><span style='float: left; margin: 12px 0px 0px 10px; font-size: 12px; color: rgb(255, 255, 255);font-weight: 700;'>Both Side</span>";
+            }
+            else{
+            $("#FlipButton").attr("style","display:block;");
+            }
+            $("#BothCheckBox").html();
+            $("#BothCheckBox").html(CheckBoxValue);
+            break;
+
+            case "8" :
+            $("#ItemIcon").removeClass();
+            $("#ItemIcon").addClass("TermTitle-2");
+            var TempID =  parseInt(PageIndex) + parseInt(1) + "&nbsp;/&nbsp;" + TotalCount;
+            $("#PageCount").html(TempID);
+            var CheckBoxValue = "<span style='margin-top: 12px; float: left;'><input id='BothCheck' type='checkbox' /></span><span style='float: left; margin: 12px 0px 0px 10px; font-size: 12px; color: rgb(255, 255, 255);font-weight: 700;'>Both Side</span>";
+            if ($("#BothCheck").is(':checked')) {
+                 Chec = "checked";
+                  $("#FlipButton").attr("style","display:none;");
+                 CheckBoxValue = "<span style='margin-top: 12px; float: left;'><input id='BothCheck' type='checkbox' checked='" + Chec + "'/></span><span style='float: left; margin: 12px 0px 0px 10px; font-size: 12px; color: rgb(255, 255, 255);font-weight: 700;'>Both Side</span>";
+            }
+             else{
+            $("#FlipButton").attr("style","display:block;");
+            }
+            $("#BothCheckBox").html();
+            $("#BothCheckBox").html(CheckBoxValue);
+            break;
+
+            case "10" :
+            $("#ItemIcon").removeClass();
+            $("#ItemIcon").addClass("NoteTitle-2");
+            var TempID =  parseInt(PageIndex) + parseInt(1) + "&nbsp;/&nbsp;" + TotalCount;
+            $("#PageCount").html(TempID);
+            $("#BothCheckBox").html("");
+            $("#Answer").attr("style","display:block; width: 760px; margin: 20px auto; font-size: 30px; font-weight: 700; color: #000000; text-align: center;");
+            $("#FlipButton").attr("style","display:none;");
+            break;
+
+            case "14" :
+            $("#ItemIcon").removeClass();
+            $("#ItemIcon").addClass("SummaryTitle-2");
+            var TempID =  parseInt(PageIndex) + parseInt(1) + "&nbsp;/&nbsp;" + TotalCount;
+            $("#PageCount").html(TempID);
+            $("#BothCheckBox").html("");
+             $("#Answer").attr("style","display:block; width: 760px; margin: 20px auto; font-size: 30px; font-weight: 700; color: #000000; text-align: center;");
+            $("#FlipButton").attr("style","display:none;");
+            break;
+
+            }
+    }
+
+</script>
+<body>
+    @foreach (var item in Model)
+    {
+        if (ForLoop == 0)
+        {
+        <div class="flash-card">
+            <!--add-new-area-->
+            <div style="float: left; width: 900px; padding: 0px; min-height: 250px; background: none repeat scroll 0% 0% rgb(0, 0, 0);
+                margin: 25px;">
+                <div style="float: right; height: 50px; width: 900px;">
+                    @if (item.SystemObjectID == Convert.ToInt32(SystemObject.Questions))
+                    {
+                        <div id="ItemIcon" class="QuestionTitle-2" style="float: left; padding-left: 50px;
+                            width: 700px;">
+                            &nbsp;</div>
+                    }
+                    @if (item.SystemObjectID == Convert.ToInt32(SystemObject.Terms))
+                    {
+                        <div id="ItemIcon" class="TermTitle-2" style="float: left; padding-left: 50px; width: 700px;">
+                            &nbsp;</div>
+                    }
+                    @if (item.SystemObjectID == Convert.ToInt32(SystemObject.Notes))
+                    {
+                        <div id="ItemIcon" class="NoteTitle-2" style="float: left; padding-left: 50px; width: 700px;">
+                            &nbsp;</div>
+                    }
+                    @if (item.SystemObjectID == Convert.ToInt32(SystemObject.Summary))
+                    {
+                        <div id="ItemIcon" class="SummaryTitle-2" style="float: left; padding-left: 50px;
+                            width: 700px;">
+                            &nbsp;</div>
+                    }
+                    <div id="BothCheckBox" style="float: left; width: 100px; height: 30px;">
+                        @if ((item.SystemObjectID == Convert.ToInt32(SystemObject.Questions)) || (item.SystemObjectID == Convert.ToInt32(SystemObject.Terms)))
+                        {
+                            <span style="margin-top: 12px; float: left;">
+                                <input id="BothCheck" type="checkbox" />
+                            </span>
+                        <span style="float: left; margin: 12px 0px 0px 10px; font-size: 12px; color: rgb(255, 255, 255);
+                            font-weight: 700;">Both Side</span>
+                        }
+                    </div>
+                    <div style="float: right; width: 24px; height: 24px; margin: 5px;">
+                        <img alt="" border="0" src="../../Images/FlashCard-close.png" onclick="GoToHomePage('@item.CourseID');" /></div>
+                </div>
+                <div style="float: left; width: 50px; padding-top: 170px;">
+                    &nbsp
+                    <div class="ImagePrevious_InActive" id="Previous" style="float: right; width: 50px;">
+                        @item.FlashCardSetID
+                    </div>
+                </div>
+                <div style="float: left; min-height: 400px; width: 800px;">
+                    <div style="float: left; width: 780px; min-height: 380px; background: #ffffff; margin: 10px;
+                        border: 1px solid rgb(184, 184, 184);">
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%" align="center">
+                            <tr>
+                                <td valign="middle" align="center" style="height: 380px;">
+                                    @if ((item.SystemObjectID == Convert.ToInt32(SystemObject.Questions)) || (item.SystemObjectID == Convert.ToInt32(SystemObject.Terms)))
+                                    {
+                                        <div id="Question" style="display: block; width: 760px; font-size: 30px; font-weight: 700;
+                                            color: #000000; text-align: center;">
+                                            @MvcHtmlString.Create(HttpUtility.HtmlDecode(item.CourseItemTitle))
+                                        </div>
+                                        <br />
+                                        <div id="Answer" style="display: none; width: 760px; margin: 20px auto; font-size: 30px;
+                                            font-weight: 700; color: #000000; text-align: center;">
+                                            @MvcHtmlString.Create(HttpUtility.HtmlDecode(item.CourseItemDescription))
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div id="Question" style="display: block; width: 760px; font-size: 30px; font-weight: 700;
+                                            color: #000000; text-align: center;">
+                                            @MvcHtmlString.Create(HttpUtility.HtmlDecode(item.CourseItemTitle))
+                                        </div>
+                                        <br />
+                                        <div id="Answer" style="display: block; width: 760px; margin: 20px auto; font-size: 30px;
+                                            font-weight: 700; color: #000000; text-align: center;">
+                                            @MvcHtmlString.Create(HttpUtility.HtmlDecode(item.CourseItemDescription))
+                                        </div>
+                                    }
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div style="float: left; width: 50px; padding-top: 170px;">
+                    &nbsp
+                    @if (@Model.Count() == 1)
+                    {
+                        <div class="ImageNext_InActive" id="Next" style="float: left; width: 50px;">
+                            @item.FlashCardSetID
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="ImageNext_Active" id="Next" style="float: left; width: 50px;">
+                            @item.FlashCardSetID
+                        </div>
+                    }
+                </div>
+                <div style="float: right; height: 50px; width: 900px; color: rgb(255, 255, 255);">
+                    <div style="float: right; margin: 8px 57px;">
+                        @if ((item.SystemObjectID == Convert.ToInt32(SystemObject.Questions)) || (item.SystemObjectID == Convert.ToInt32(SystemObject.Terms)))
+                        {
+                            <a id="FlipButton">
+                                <img border="0" alt="" src="../../Images/flip-bt.png" /></a>
+                        }
+                        else
+                        {
+                        <a id="FlipButton" style="display: none;">
+                            <img border="0" alt="" src="../../Images/flip-bt.png" /></a>
+                        }
+                    </div>
+                    <div id="PageCount" style="color: White; float: left; margin: 17px 20px;">
+                        1&nbsp;/&nbsp;@Model.Count()
+                    </div>
+                </div>
+                <!--row1-->
+                <!--row1-end-->
+                <!--add-new-area-->
+            </div>
+            @*<input type="hidden" id="@SystemObjectCheck" value="@item.SystemObjectID" />*@
+        </div>
+        }
+        if (ForLoop == 0)
+        {
+            <table cellpadding="0" cellspacing="0" border="0" width="100%" align="center" style="display: none;">
+                @foreach (var items in Model)
+                {
+                    string Question = "Question" + @items.FlashCardSetID;
+                    string Answer = "Answer" + @items.FlashCardSetID;
+                    string SystemObjectCheck = "System" + @items.FlashCardSetID;
+                    <tr id="@items.FlashCardSetID">
+                        <td valign="middle" align="center" style="height: 380px;">
+                            <div id="@Question" style="display: none; width: 760px; font-size: 30px; font-weight: 700;
+                        color: #000000; text-align: center;">
+                                @MvcHtmlString.Create(HttpUtility.HtmlDecode(items.CourseItemTitle))
+                            </div>
+                        </td>
+                        <td>
+                            <div id="@Answer" style="display: none; width: 760px; margin: 20px auto; font-size: 30px;
+                        font-weight: 700; color: #000000; text-align: center;">
+                                @MvcHtmlString.Create(HttpUtility.HtmlDecode(items.CourseItemDescription))
+                            </div>
+                            <input type="hidden" id="@SystemObjectCheck" value="@items.SystemObjectID" />
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        if (@TotalCount - 1 == ForLoop)
+        {
+        <label id="LastID" style="display: none;">@item.FlashCardSetID</label>
+        } ForLoop++;
+    }
+</body>
+</html>

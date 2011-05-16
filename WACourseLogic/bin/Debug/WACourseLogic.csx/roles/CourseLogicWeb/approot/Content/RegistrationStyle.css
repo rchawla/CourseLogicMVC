@@ -1,0 +1,773 @@
+body {
+font-family:Helvetica, Arial, sans-serif;
+font-size:12px;
+margin:0;
+padding:0;
+overflow-x:auto;
+overflow-y:auto;
+}
+div.why			{ margin:0 0 5px 100px; width:200px; clear:both}
+a.why			{ color:#00349c; font-size:11px; font-family:Arial; text-decoration:none }
+a:hover.why		{ text-decoration:underline }
+
+/*original
+.loginHeader {
+background:none repeat scroll 0 0 #203550;
+display:block;
+float:left;
+height:auto;
+width:100%;
+}
+changed
+*/
+.loginHeader {
+background:none repeat scroll 0 0 #203550;
+display:block;
+float:left;
+height:auto;
+width:100%;
+
+}
+/*end of changes*/
+
+.loginHeader .content {
+display:block;
+float:none;
+height:auto;
+margin:auto;
+width:980px;
+}
+.loginHeader .content .logo {
+border:medium none;
+display:inline;
+float:left;
+margin-bottom:15px;
+margin-left:20px;
+margin-top:14px;
+vertical-align:middle;
+}
+.loginHeader .content .fbconnect {
+display:inline;
+float:right;
+height:auto;
+margin-right:0;
+width:560px;
+}
+.loginleft { width:357px; float:left; background:url(../../Images/login-line.jpg) right bottom no-repeat }
+.fbconnectbtn	{ float:right; margin:33px 0 0 0 }
+.loginHeader .content .fbconnect .topLinks {
+display:block;
+float:left;
+height:15px;
+line-height:15px;
+margin-top:18px;
+vertical-align:middle;
+width:370px;
+}
+/*margin changed from 0 15 0 0 to  0 0 0 0*/
+.loginHeader .content .fbconnect .topLinks p {
+color:#FFFFFF;
+display:block;
+float:left;
+font-size:100%;
+margin:0 0 0 0;
+padding:0;
+vertical-align:middle;
+width:145px;
+}
+/*margin changed from 0 5 0 0 to  0 0 0 0*/
+.loginHeader .content .fbconnect .topLinks p .check {
+display:block;
+float:left;
+margin:0 0 0 0;
+padding:0;
+}
+.loginHeader .content .fbconnect .TextBoxes {
+display:block;
+float:left;
+margin-top:6px;
+width:370px;
+}
+.loginHeader .content .fbconnect .TextBoxes .text {
+border:1px solid #203550;
+color:#666666;
+display:block;
+float:left;
+font-size:100%;
+margin:0 10px 0 0;
+padding:5px;
+vertical-align:middle;
+width:134px;
+}
+.loginHeader .content .fbconnect .TextBoxes .login-BTN {
+background:none repeat scroll 0 0 #3F5D84;
+border:medium none;
+color:#FFFFFF;
+display:block;
+float:left;
+height:25px;
+line-height:23px;
+margin:0;
+text-align:center;
+text-transform:capitalize;
+width:50px;
+}
+
+/* Changes on 25/1/2011 */
+/* original:
+.register {
+background-image:url("../../images/register-BG.gif");
+background-position:left top;
+background-repeat:repeat-x;
+display:block;
+float:left;
+height:358px;
+width:100%;
+}
+
+
+end
+-----------------------
+new start
+*/
+
+.register {
+/*background-image:url("../../images/register-BG.gif");
+background-position:left top;
+background-repeat:repeat-x;*/
+display:block;
+float:left;
+height:358px;
+clear:both;
+margin:auto;
+width:100%;
+}
+
+/* end of change */
+.register .content {
+display:block;
+float:none;
+height:358px;
+margin:auto;
+width:100%;
+}
+.register .content .splash {
+background-image:url(../../Images/cl-splash.jpg);
+background-position:left center;
+background-repeat:no-repeat;
+display:block;
+float:left;
+height:358px;
+margin-left:20px;
+width:554px;
+}
+/* original
+.register .content .signUp {
+display:block;
+float:right;
+height:251px;
+margin-right:20px;
+margin-top:44px;
+width:375px;
+}
+
+changed:
+*/
+.register .content .signUp {
+display:block;
+float:right;
+height:251px;
+margin-right:90px;
+margin-top:44px;
+width:375px;
+
+}
+
+
+/*end of changes */
+.register .content .signUp h1 {
+color:#203550;
+display:block;
+float:left;
+font-size:150%;
+font-weight:bold;
+margin:0;
+padding:0;
+width:375px;
+}
+.register .content .signUp h2 {
+color:#203550;
+display:block;
+float:left;
+font-size:150%;
+font-weight:normal;
+margin:0;
+padding:0;
+width:375px;
+}
+
+/*float changed from right to left*/
+.register .content .signUp .signupForm {
+display:block;
+float:left;
+margin-top:10px;
+width:300px;
+}
+
+.register .content .signUp .signupForm .label {
+color:#203550;
+display:block;
+float:left;
+font-size:120%;
+font-weight:normal;
+height:22px;
+line-height:22px;
+margin:0 0 5px;
+padding:0;
+text-transform:capitalize;
+vertical-align:middle;
+width:100px;
+}
+.register .content .signUp .signupForm .text {
+border:1px solid #96A6C5;
+color:#203550;
+display:block;
+float:left;
+font-size:100%;
+font-weight:normal;
+margin:0 0 5px;
+padding:4px;
+width:184px;
+}
+.register .content .signUp .signupForm .select {
+border:1px solid #96A6C5;
+color:#203550;
+display:block;
+float:left;
+font-size:90%;
+font-weight:normal;
+margin:0 0 5px;
+padding:1px 1px 1px 0;
+width:82px;
+}
+.register .content .signUp .signupForm .signupBTN {
+border:medium none;
+clear:left;
+display:block;
+float:left;
+margin-left:100px;
+}
+.register .content .signUp .undertaking {
+display:block;
+float:left;
+width:375px;
+}
+.register .content .signUp .undertaking .horizontalRuler {
+background:none repeat scroll 0 0 #666666;
+display:block;
+float:left;
+height:1px;
+margin:5px 0;
+width:375px;
+}
+.register .content .signUp .undertaking p {
+color:#666666;
+display:block;
+float:left;
+font-size:90%;
+line-height:15px;
+margin:0;
+padding:0;
+vertical-align:middle;
+width:375px;
+}
+.register .content .signUp .undertaking p a {
+color:#666666;
+font-weight:bold;
+text-decoration:underline;
+}
+.register .content .signUp .undertaking p a:hover {
+color:#666666;
+font-weight:bold;
+text-decoration:none;
+}
+.register .content .signUp .validation {
+background:none repeat scroll 0 0 #FFD9D9;
+border:1px solid #FF0000;
+color:#000000;
+display:none;
+float:left;
+font-size:125%;
+font-weight:normal;
+height:29px;
+line-height:29px;
+margin-top:10px;
+text-align:center;
+vertical-align:middle;
+width:373px;
+}
+.footer {
+clear:both;
+display:block;
+float:none;
+height:50px;
+margin:auto;
+width:980px;
+}
+.footer p {
+color:#203550;
+font-size:90%;
+line-height:15px;
+margin:5px 0 0;
+padding:0;
+}
+.footer p a {
+color:#203550;
+text-decoration:none;
+}
+.footer p a:hover {
+color:#203550;
+text-decoration:underline;
+}
+.footer p.copyRights {
+display:block;
+float:left;
+margin-left:20px;
+}
+.footer p.links {
+display:block;
+float:right;
+margin-right:20px;
+}
+
+/*changed 25/1/11 */
+body {
+font-family: Helvetica, Arial, sans-serif
+margin:0;
+padding:0;
+}
+
+/* Old
+body {
+font-family:Tahoma,Geneva,sans-serif;
+margin:0;
+padding:0;
+}
+*/
+.pagecontents {
+clear:both;
+float:left;
+height:auto;
+margin:auto;
+width:auto;
+}
+.header {
+background:url("../images/NewLayout/LoginTop.jpg") no-repeat scroll 0 0 transparent;
+clear:both;
+float:left;
+height:111px;
+width:966px;
+}
+.contentarea {
+background:url("../images/NewLayout/LoginContentArea.jpg") no-repeat scroll 0 0 transparent;
+clear:both;
+float:left;
+height:406px;
+width:966px;
+}
+.signin-contents {
+clear:both;
+float:right;
+height:auto;
+margin-right:5px;
+margin-top:45px;
+padding-right:20px;
+width:420px;
+}
+.signin-input {
+border:1px solid #A5ACB2;
+font-size:1em;
+height:17px;
+padding-left:5px;
+padding-top:3px;
+text-align:left;
+width:120px;
+}
+.LoginImage {
+background:url("../images/NewLayout/LoginDisplayImage.jpg") no-repeat scroll 0 0 transparent;
+clear:both;
+float:left;
+height:275px;
+margin:40px 0 0 20px;
+width:485px;
+}
+.MembershipImage {
+background:url("../images/NewLayout/LoginContentText.jpg") no-repeat scroll 0 0 transparent;
+float:left;
+height:83px;
+margin:30px 0 0 55px;
+width:340px;
+}
+.InvitationArea {
+float:left;
+margin:20px 0 0 60px;
+}
+.Status-div {
+color:Maroon;
+float:left;
+font-family:Geneva,sans-serif;
+font-size:0.8em;
+font-weight:bold;
+height:25px;
+margin:0 0 0 30px;
+padding-top:10px;
+width:100%;
+}
+.regheader {
+background:url("../images/NewLayout/RegistrationHeader.jpg") no-repeat scroll 0 0 transparent;
+clear:both;
+float:left;
+height:65px;
+width:1000px;
+}
+.regContentArea {
+float:left;
+margin:10px 0 10px 10px;
+}
+.footerContents {
+background:url("../images/NewLayout/footerbar.jpg") no-repeat scroll 0 0 transparent;
+clear:both;
+float:left;
+height:44px;
+width:1000px;
+}
+.table-Top {
+background:url("../images/NewLayout/ContentAreaTop.png") no-repeat scroll 0 0 transparent;
+}
+.table-left {
+background:url("../images/NewLayout/ContentAreaLeft.png") repeat-y scroll 0 0 transparent;
+}
+.table-right {
+background:url("../images/NewLayout/ContentAreaRight.png") repeat-y scroll 0 0 transparent;
+width:8px;
+}
+.table-Bottom {
+background:url("../images/NewLayout/ContentAreaBottom.png") no-repeat scroll 0 0 transparent;
+}
+.Form_div {
+display:none;
+float:left;
+font-family:Tahoma,Geneva,sans-serif;
+height:auto;
+position:absolute;
+vertical-align:top;
+width:450px;
+z-index:200;
+}
+.Form_div heading {
+color:#333333;
+font-size:15px;
+font-weight:bold;
+text-align:center;
+}
+.Form_div fieldset {
+border:medium none;
+left:5px;
+padding-top:1em;
+text-align:left;
+}
+.Form_div label {
+display:block;
+font-size:1.1em;
+padding-bottom:5px;
+padding-top:5px;
+}
+.Form_div-TextBox {
+border:1px solid #A5ACB2;
+display:block;
+font-size:1em;
+height:18px;
+margin:0 0;
+padding-left:5px;
+text-align:left;
+width:200px;
+}
+.Form_div select {
+border:1px solid #A5ACB2;
+display:block;
+font-size:1em;
+height:20px;
+margin:0 0;
+padding-left:5px;
+text-align:left;
+width:200px;
+}
+.Form_div links {
+clear:both;
+color:#666666;
+float:left;
+font-size:12px;
+margin:0 auto;
+}
+.Form_div hyper-link {
+float:left;
+font-size:12px;
+padding-right:15px;
+}
+.Form_buttondiv {
+clear:both;
+margin:10px auto;
+}
+.Form_div buttons {
+float:left;
+padding-right:15px;
+}
+.fieldset-div {
+clear:both;
+float:left;
+font-family:Tahoma,Geneva,sans-serif;
+font-weight:normal;
+height:auto;
+vertical-align:top;
+width:100%;
+}
+.fieldset-heading {
+border-bottom:1px solid #A5ACB2;
+color:#333333;
+display:block;
+font-size:15px;
+font-weight:bold;
+margin-bottom:10px;
+padding:10px;
+text-align:left;
+width:auto;
+}
+.fieldset-div heading {
+color:#333333;
+font-size:15px;
+font-weight:bold;
+text-align:center;
+}
+.fieldset-div fieldset {
+border:medium none;
+left:5px;
+padding-top:1em;
+text-align:left;
+}
+.fieldset-div span {
+text-align:left;
+}
+.fieldset-div label {
+display:block;
+font-size:0.9em;
+font-weight:500;
+padding-top:5px;
+}
+.fieldset-div-span {
+height:17px;
+padding-top:8px;
+text-align:left;
+}
+.fieldset-div-label {
+display:block;
+font-size:1.2em;
+font-weight:500;
+padding-left:20px;
+padding-top:5px;
+}
+.fieldset-div-input {
+border:1px solid #A5ACB2;
+font-size:0.8em;
+height:17px;
+margin:0 0;
+padding-left:5px;
+padding-top:3px;
+text-align:left;
+width:200px;
+}
+.fieldset-div-inputblock {
+border:1px solid #A5ACB2;
+display:block;
+font-size:1em;
+height:17px;
+margin:0 0;
+padding-left:5px;
+padding-top:3px;
+text-align:left;
+width:200px;
+}
+.fieldset-div select {
+border:1px solid #A5ACB2;
+display:block;
+font-size:1em;
+height:20px;
+margin:0 0;
+padding-left:5px;
+text-align:left;
+width:200px;
+}
+.fieldset-div links {
+clear:both;
+color:#666666;
+float:left;
+font-size:12px;
+margin:0 auto;
+}
+.fieldset-div hyper-link {
+float:left;
+font-size:12px;
+padding-right:15px;
+}
+.fieldset-button {
+clear:both;
+margin:10px auto;
+}
+.fieldset-div buttons {
+float:left;
+padding-right:15px;
+}
+ul.arrow {
+font-size:0.7em;
+list-style:none outside none;
+}
+.star1 {
+color:#FF0000;
+}
+.Popup_div {
+display:none;
+float:left;
+font-family:Tahoma,Geneva,sans-serif;
+height:auto;
+position:absolute;
+vertical-align:top;
+width:300px;
+z-index:100;
+}
+.ModelPopup_div {
+display:none;
+float:left;
+font-family:Tahoma,Geneva,sans-serif;
+position:absolute;
+vertical-align:top;
+z-index:100;
+}
+.Heading-div {
+color:#7AB006;
+display:block;
+float:left;
+font-family:sans-serif;
+font-size:1.3em;
+font-weight:bold;
+height:25px;
+width:100%;
+}
+.closebutton-div {
+float:right;
+}
+.Status-div {
+clear:both;
+color:Maroon;
+display:none;
+float:left;
+font-family:Geneva,sans-serif;
+font-size:0.8em;
+font-weight:bold;
+height:auto;
+padding-top:10px;
+width:auto;
+}
+.Popup_Form_Heading {
+color:#333333;
+font-size:15px;
+font-weight:bold;
+text-align:center;
+}
+.popupfieldset {
+border:medium none;
+margin:0;
+padding-left:5px;
+padding-top:1em;
+text-align:left;
+}
+.popuplabel {
+font-size:1.1em;
+}
+.popuptextfield {
+border:1px solid #A5ACB2;
+font-size:0.8em;
+height:20px;
+margin:0 0 5px;
+padding-left:5px;
+text-align:left;
+width:200px;
+}
+.popup-links {
+clear:both;
+color:#666666;
+float:left;
+font-size:12px;
+margin:0 auto;
+}
+.popup-hyper-link {
+float:left;
+font-size:12px;
+padding-right:15px;
+}
+.popuplogin_buttondiv {
+clear:both;
+float:left;
+margin:0 auto 5px 10px;
+}
+.popup-buttons {
+float:left;
+padding-right:15px;
+}
+.ErrorSummary_div {
+display:none;
+float:left;
+font-family:Tahoma,Geneva,sans-serif;
+height:auto;
+position:absolute;
+top:5px;
+vertical-align:top;
+width:100%;
+z-index:100;
+}
+.Errorfieldset {
+border:medium none;
+margin:0 0 0.5em;
+padding-left:0.8em;
+padding-top:1em;
+text-align:left;
+}
+.Errorlabel {
+clear:both;
+color:Maroon;
+font-size:0.7em;
+text-align:left;
+}
+#backgroundPopup, .backgroundPopupOverlay {
+background:none repeat scroll 0 0 #000000;
+border:1px solid #CECECE;
+display:none;
+height:100%;
+left:0;
+position:fixed;
+top:0;
+width:100%;
+z-index:10;
+}
+#resultContainer {
+background:url("../images/alert.gif") no-repeat scroll 0 0 transparent;
+display:none;
+height:174px;
+left:40%;
+top:40%;
+width:435px;
+z-index:100;
+}
+
+.ValidationText
+{
+    color: Red;
+    }

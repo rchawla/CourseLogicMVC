@@ -1,0 +1,478 @@
+﻿@model IEnumerable<CLFacadeLayer.GenericBE>
+@{
+    View.Title = "GetFlashCardSets";
+    Layout = "~/Views/Shared/_DetailsMaster.cshtml";
+
+    long LoginUserID = 0;
+    if (Request.Cookies["ID"] != null)
+    {
+        LoginUserID = Convert.ToInt64(Request.Cookies["ID"].Value.ToString());
+    }
+
+    int CourseID = 0;
+    if (Request.QueryString["CourseID"] != null)
+    {
+        CourseID = Convert.ToInt32(Request.QueryString["CourseID"]);
+    }
+
+    int FlashCardID = 0;
+
+    string ActionURL = @Url.Action("SaveFlashCardSet", "FlashCard");
+    string EditActionURL = @Url.Action("GetFlashCardByFlashCardID", "FlashCard");
+    string DeleteFlashCard = @Url.Action("DeleteFlashCard", "FlashCard");
+}
+<script src="../../Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+<script src="../../Scripts/common.js" type="text/javascript"></script>
+<script type="text/javascript" src="../../Scripts/jquery-ui-1.8.6.custom.min.js"></script>
+<link rel="Stylesheet" type="text/css" href="../../Scripts/jquery-ui-1.8.6.custom.css" />
+<script type="text/javascript">
+    $(function () {
+        $('#chkChapter').click(function () {
+            $("#ChapterTextBox").toggle();
+        });
+    });
+</script>
+<style type="text/css">
+    .dse
+    {
+        float: left;
+        width: 450px;
+    }
+    .bt-div
+    {
+        float: left;
+        width: 71px;
+        margin: 4px 14px;
+    }
+    .flash-card-title h2
+    {
+        color: #1C2A47;
+        float: left;
+        font-size: 13px;
+        line-height: 30px;
+    }
+    .flash-card-input
+    {
+        width: 800px;
+        background: #F9F9F9;
+        border: 1px solid #cccccc;
+        padding: 10px 0px;
+        /*color: #cccccc;*/
+        color: #666666;
+    }
+    .flash-card-textarea
+    {
+        width: 800px;
+        background: #F9F9F9;
+        border: 1px solid #cccccc;
+        height: 150px;
+        line-height: 24px;
+        color: #cccccc;
+    }
+    .bt-font
+    {
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 28px;
+        text-decoration: none;
+        text-transform: capitalize;
+        color: #ffffff;
+        background: url(../../Images/askque-btn-high.gif) no-repeat;
+        float: right;
+        width: 90px;
+        padding: 0px 5px;
+        height: 24px;
+        margin-left: 10px;
+        line-height: 24px;
+        text-align: center;
+    }
+    /* Old */
+    
+    a.DeleteImage
+    {
+        background: url(../../Images/delet_02.png);
+        width: 71px;
+        height: 24px;
+        float: left;
+    }
+    
+    a.PLayImage
+    {
+        background: url(../../Images/play_02.png);
+        width: 71px;
+        height: 24px;
+        float: left;
+    }
+    
+    .content-flash-card
+    {
+        float: left;
+        width: 474px;
+        padding: 25px 0px 0px 23px;
+    }
+    .flash-card-title h3
+    {
+        color: #20364E;
+        font-family: "Trebuchet MS" ,Arial;
+        font-size: 18px;
+        font-size-adjust: none;
+        font-stretch: normal;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: normal;
+        line-height: normal;
+        margin: 25px;
+        padding: 0 0 3px;
+    }
+    .flash-card-input
+    {
+        width: 800px;
+        background: #F9F9F9;
+        border: 1px solid #cccccc;
+        padding: 10px 0px;
+       /*color: #cccccc;*/
+        color: #666666;
+    }
+    .flash-card-textarea
+    {
+        width: 800px;
+        background: #F9F9F9;
+        border: 1px solid #cccccc;
+        height: 150px;
+        line-height: 24px;
+        color: #cccccc;
+    }
+    .input-span
+    {
+        color: #000000;
+        font-size: 12px;
+        font-weight: 100;
+    }
+    .bt-font a
+    {
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 28px;
+        text-decoration: none;
+        text-transform: capitalize;
+        color: #ffffff;
+        text-align: center;
+    }
+    .flash-card
+    {
+        float: left;
+    }
+</style>
+<div id="DivFlashCardList">
+    <div class="FlashCard-left-content">
+        <div class="flash-card">
+            <div class="flash-card-title">
+                <h3>
+                    Choose Flash Cardset</h3>
+            </div>
+            <div style="float: left; width: 880px; min-height: 350px; border: 1px solid rgb(204, 204, 204);
+                margin: 0px 0px 0px 25px;">
+                @if (ViewData["Message"] != "" && @ViewData["Message"] != null)
+                {
+                    <div id="CourseHomeContent" style="font-size: 13px; color: black; font-weight: bold;
+                        margin-top: 150px; float: left; text-align: center; width: 750px;">
+                        @ViewData["Message"]
+                    </div>
+                }
+                @foreach (var item in Model)
+                {
+                    <div style="float: left; width: 850px; padding: 0px 15px; height: 32px; line-height: 28px;
+                        background: none repeat scroll 0% 0% rgb(255, 255, 255);">
+                        <div class="dse flash-card-title ">
+                            <h2>
+                                @item.FlashCardTitle
+                            </h2>
+                        </div>
+                        <div class="bt-div">
+                            @item.TotalItems &nbsp; Items
+                        </div>
+                        @if (LoginUserID == @item.AccountID)
+                        {
+                            <div class="bt-div ">
+                                <a class="linkr" id="lnkEditFlashcardset" onclick="javascript:CreateFlashCardSet('@CourseID','@LoginUserID','@item.FlashCardID','@EditActionURL');" >
+                                    <img alt="" border="0" src="../../Images/edit_02.png" /></a>
+                            </div>
+                        <div class="bt-div ">
+                            @*@Html.ActionLink("`", "DeleteFlashCard", new { CourseID = @CourseID, FlashCard = @item.FlashCardID }, new { Class = "DeleteImage", onclick="CheckdeleteConfrim();" })*@
+                            <a class="DeleteImage" onclick="DeleteFlashCard('@CourseID','@item.FlashCardID','@DeleteFlashCard');">
+                            </a>
+                        </div>
+                        }
+                        <div class="bt-div" style="float: right;">
+                            @Html.ActionLink("`", "PlayFlashCard", new { CourseID = @CourseID, FlashCard = @item.FlashCardID, PageNumber = "1", IsBoth = false }, new { Class = "PLayImage" })
+                            @* @Html.ActionLink("`", "TempPlay", new { FlashCard = @item.FlashCardID }, new { Class = "PLayImage" })*@
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="flash-card-title" style="float: left; width: 880px; min-height: 30px;
+                text-align: center; margin: 25px 0px 0px 25px;">
+                <h3>
+                    Or
+                    <input type="hidden" id="FlashCardEditUpdateID" />
+                </h3>
+            </div>
+            <div align="center" class="flash-card-title"  style="float: left; width: 880px; min-height: 30px;
+                text-align: center; margin: 0px 0px 0px 25px;" onclick="javascript:CreateFlashCardSet('@CourseID','@LoginUserID','0','@EditActionURL');">
+                <img alt="" border="0" src="../../Images/big-button.png" /></div>
+        </div>
+    </div>
+</div>
+<div id="DivFlashCardDetails" style="display: none;">
+    @*   <div class="flash-card">
+        <div class="flash-card-title">
+            <h3>
+                About You flash Card Set
+            </h3>
+        </div>
+        <div style="float: left; width: 800px; padding: 0px 40px; min-height: 200px; border: 1px solid rgb(204, 204, 204);
+            margin: 0px 0px 0px 25px;">
+            <div style="float: left; width: 800px; line-height: 28px; background: none repeat scroll 0% 0% rgb(255, 255, 255);">
+                <div style="float: left; width: 800px; margin-top: 10px;">
+                </div>
+                <div style="float: left; width: 800px; margin: 10px 0px;">
+                    <span class="input-span" style="padding-left: 10px;">Title</span>
+                    <input type="text" id="FlashCardTitle" class="flash-card-input" name="12" />
+                    <span id="ErrorTitle" style="display:none;"></span>
+                </div>
+                <div style="float: left; width: 800px; margin: 10px 0px;">
+                    <span class="input-span" style="padding-left: 10px;">Description</span>
+                    <textarea id="FlashCardDesc" class="flash-card-textarea" rows="5"></textarea>
+                    <span id="ErrorDescription" style="display:none;"></span>
+                </div>
+                <div style="float: left; width: 800px; margin: 10px 0px;">
+                    <span class="input-span" style="padding-left: 10px;">Subject optinal</span>
+                    <input id="FlashCardSubject" type="text" class="flash-card-input" name="12" />
+                </div>
+                <div style="float: left; width: 800px; margin-top: 0px;">
+                    <h2>
+                        Creat a New Flash Card Set</h2>
+                </div>
+                <div style="float: left; width: 500px; clear: both; margin: 10px 0px;">
+                    <div style="float: left; width: 250px; margin: 10px 0px;">
+                        <input id="chkVotedUp" type="checkbox" style="float: left; margin: 8px 0px 0px;" />
+                        <span class="input-span" style="padding-left: 10px;">Voted Up</span>
+                    </div>
+                    <div style="float: left; width: 250px; margin: 10px 0px;">
+                        <input id="chkQA" type="checkbox" style="float: left; margin: 8px 0px 0px;" />
+                        <span class="input-span" style="padding-left: 10px;">Question</span>
+                    </div>
+                    <div style="float: left; width: 250px; margin: 10px 0px;">
+                        <input id="chkFavorite" type="checkbox" style="float: left; margin: 8px 0px 0px;" />
+                        <span class="input-span" style="padding-left: 10px;">Favorited</span>
+                    </div>
+                    <div style="float: left; width: 250px; margin: 10px 0px;">
+                        <input id="chkNotes" type="checkbox" style="float: left; margin: 8px 0px 0px;" />
+                        <span class="input-span" style="padding-left: 10px;">Notes</span>
+                    </div>
+                    <div style="float: left; width: 250px; margin: 10px 0px;">
+                        <input id="chkYourAdded" type="checkbox" style="float: left; margin: 8px 0px 0px;" />
+                        <span class="input-span" style="padding-left: 10px;">Your Added</span>
+                    </div>
+                    <div style="float: left; width: 250px; margin: 10px 0px;">
+                        <input id="chkTD" type="checkbox" style="float: left; margin: 8px 0px 0px;" />
+                        <span class="input-span" style="padding-left: 10px;">Term</span>
+                    </div>
+                    <div style="float: left; width: 250px; margin: 10px 0px;">
+                        <input id="chkChapter" type="checkbox" style="float: left; margin: 8px 0px 0px;" />
+                        <span class="input-span" style="padding-left: 10px;">Chapter</span>
+                        <div id="ChapterTextBox" style="display:none;">
+                            <input type="text" id="commaseperatedchapters" class="FlashCard-input-2" />
+                            <span>(Comma seperated chapter values.)</span>
+                        </div>
+                    </div>
+                    <div style="float: left; width: 250px; margin: 10px 0px;">
+                        <input id="chkSummary" type="checkbox" style="float: left; margin: 8px 0px 0px;" />
+                        <span class="input-span" style="padding-left: 10px;">Summary</span>
+                    </div>
+                    <div style="float: left; width: 250px; margin: 10px 0px;">
+                        <input id="chkAssessment" type="checkbox" style="float: left; margin: 8px 0px 0px;" />
+                        <span class="input-span" style="padding-left: 10px;">Assessment</span>
+                    </div>
+                </div>
+                <div style="float: left; width: 800px; clear: both; margin: 10px 0px;">
+                    <div class="bt-font">
+                        <a onclick="javascript:SaveFlashCardSet('@CourseID','@LoginUserID','@FlashCardID','@ActionURL');">
+                            Select Items</a></div>
+                    <div class="bt-font">
+                        View All</div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+</div>
+<div id="FlashCardSet">
+</div>
+@*<div id="DivFlashCardList">
+    <table>
+        <tr>
+            <th>
+                FlashCardTitle
+            </th>
+            <th>
+                FlashCardSubject
+            </th>
+            <th>
+                FlashCardDescription
+            </th>
+            <th>
+                TotalItems
+            </th>
+            <th>
+                FlashCardID
+            </th>
+            <th>
+                FlashCardSetCreateDateTime
+            </th>
+            <th>
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.FlashCardTitle
+                </td>
+                <td>
+                    @item.FlashCardSubject
+                </td>
+                <td>
+                    @item.FlashCardDescription
+                </td>
+                <td>
+                    @item.TotalItems
+                </td>
+                <td>
+                    @item.FlashCardID
+                </td>
+                <td>
+                    @String.Format("{0:g}", item.FlashCardSetCreateDateTime)
+                </td>
+                <td>
+                    <a class="linkr" id="lnkEditFlashcardset" onclick="javascript:CreateFlashCardSet('@CourseID','@LoginUserID','@item.FlashCardID','@EditActionURL');" >
+                        Edit</a> | @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    | @Html.ActionLink("Play", "PlayFlashCard", new { CourseID = @CourseID, FlashCard = @item.FlashCardID, PageNumber = "1", IsBoth = false })
+                </td>
+            </tr>
+        }
+        <tr>
+            <td height="10px">
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+                OR
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" value="Make FlashCard" onclick="javascript:CreateFlashCardSet('@CourseID','@LoginUserID','0','@EditActionURL');" />
+            </td>
+        </tr>
+    </table>
+</div>*@@*<div id="DivFlashCardDetails" style="display: none;">
+    <table>
+        <tr>
+            <td>
+                Titlte:
+                <input type="text" id="FlashCardTitle" class="FlashCard-input-2" />
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Description:
+                <textarea id="FlashCardDesc" rows="5"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Subject:
+                <input type="text" id="FlashCardSubject" class="FlashCard-input-2" />
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+                <input type="checkbox" id="chkVotedUp" />Voted Up
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+                <input type="checkbox" id="chkFavorite" />Favorite
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+                <input type="checkbox" id="chkYourAdded" />Your Added
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+                <input type="checkbox" id="chkAssessment" />Assessment
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+                <input type="checkbox" id="chkChapter" />Chapter
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+                <input type="text" id="commaseperatedchapters" class="FlashCard-input-2" />
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+                <input type="checkbox" id="chkNotes" />Notes
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+                <input type="checkbox" id="chkQA" />Question
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+                <input type="checkbox" id="chkTD" />Term
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+                <input type="checkbox" id="chkSummary" />Summary
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+                <input type="button" id="btnSelectItems" value="Select Items" onclick="javascript:SaveFlashCardSet('@CourseID','@LoginUserID','@FlashCardID','@ActionURL');"/>
+            </td>
+        </tr>
+        <tr>
+            <td height="10px">
+            </td>
+        </tr>
+    </table>
+</div>*@

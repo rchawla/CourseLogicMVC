@@ -1,0 +1,14 @@
+﻿@model IEnumerable<CLFacadeLayer.GenericBE>
+
+@foreach (var item in Model)
+{
+    string HomePageURL = "../CourseHome/CourseHome?CourseID=" + @item.CourseID + "&IsTopVoted=0" + "&PageNumber=1";
+    <li><a onclick="javascript:GoToHome('@HomePageURL');" style="cursor: pointer">@item.Prefix  @item.CourseNumber  @item.CourseTitle</a></li>        
+}
+<script type="text/javascript">
+    function GoToHome(HomePageURL) {
+        window.location.href = HomePageURL;
+    }
+</script>
+
+      

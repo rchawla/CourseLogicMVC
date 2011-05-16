@@ -1,0 +1,733 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+@using CLFacadeLayer
+@model IEnumerable<GenericBE>
+@using Systemobject = CLFacadeLayer.SystemObject;
+@using CourseLogicWeb.ConfigurationService
+@if (Request.Cookies["ID"] == null)
+{
+    string RootPath = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.GetRoot().ToString()))
+    {
+        RootPath = ConfigurationService.GetRoot().ToString();
+    }
+    string ApplicationKey = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.APPLICATION_KEY().ToString()))
+    {
+        ApplicationKey = ConfigurationService.APPLICATION_KEY().ToString();
+    }
+    Response.Redirect(Url.Action("Login", "Login"));
+}
+else
+{
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    @{
+    long LoginUserID = 0;
+    if (Request.Cookies["ID"] != null)
+    {
+        LoginUserID = Convert.ToInt64(Request.Cookies["ID"].Value);
+    }
+    string Type = "";
+    int WID = 0;
+    if (Request.QueryString["Type"] != null)
+    {
+        Type = Request.QueryString["Type"].ToString();
+    }
+    if (Request.QueryString["WID"] != null)
+    {
+        WID = Convert.ToInt32(Request.QueryString["WID"].ToString());
+    }
+    string ActionEditItem = @Url.Action("LoadAddItem", "AddItem");
+    string NewDsicussion = @Url.Action("DiscussionListingCourseHome", "CourseHome");
+    int CourseID = 0;
+    if (Request.QueryString["CourseID"] != null)
+    {
+        CourseID = Convert.ToInt32(Request.QueryString["CourseID"]);
+    }
+    string AccountTitle = "";
+    if (Request.Cookies["AccountTitle"] != null)
+    {
+        AccountTitle = Request.Cookies["AccountTitle"].Value.ToString();
+    }
+    string HomePageURL = "CourseHome?CourseID=" + CourseID + "&IsTopVoted=0" + "&PageNumber=1";
+    string RootPath = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.GetRoot().ToString()))
+    {
+        RootPath = ConfigurationService.GetRoot().ToString();
+    }
+    string ApplicationKey = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.APPLICATION_KEY().ToString()))
+    {
+        ApplicationKey = ConfigurationService.APPLICATION_KEY().ToString();
+    }
+ }
+    <head>
+        <title>Course Home</title>
+        <link href="@Url.Content("~/Content/courselogic_new.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/coursehome.css")" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="../../Scripts/common.js"></script>
+        @*<script type="text/javascript" src="../../Scripts/coursehome.js"></script>*@
+        <script type="text/javascript" src="../../Scripts/jwysiwyg/jquery.wysiwyg.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../Scripts/jwysiwyg/jquery.wysiwyg.css" />
+        @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>*@
+        <script type="text/javascript" src="../../Scripts/jquery-ui-1.8.6.custom.min.js"></script>
+        <link rel="Stylesheet" type="text/css" href="../../Scripts/jquery-ui-1.8.6.custom.css" />
+        @*   <script type="text/javascript">
+            jQuery(document).ready(function () {
+                
+                $("#lnkEdit").click(function () {
+                jQuery("#dialog").dialog({
+                    bgiframe: true, autoOpen: false, width: 590, modal: true
+                });
+
+                 $("#lnkmyclose").click(function () {
+                    $(".NullValue").empty();
+                    var Data = "<div style='padding: 17px 132px;'><p><img src='../../Images/loading.gif' />Please Wait AddItem is Loading</p></div>";
+                    $("#dialog").html(Data);
+                    if ($("#lnkEdit").hasClass("tab-link-active")) {
+                        $("#lnkEdit").removeClass("tab-link-active");
+                        $("#lnkEdit").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit1").hasClass("tab-link-active")) {
+                        $("#lnkEdit1").removeClass("tab-link-active");
+                        $("#lnkEdit1").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit2").hasClass("tab-link-active")) {
+                        $("#lnkEdit2").removeClass("tab-link-active");
+                        $("#lnkEdit2").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit3").hasClass("tab-link-active")) {
+                        $("#lnkEdit3").removeClass("tab-link-active");
+                        $("#lnkEdit3").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit4").hasClass("tab-link-active")) {
+                        $("#lnkEdit4").removeClass("tab-link-active");
+                        $("#lnkEdit4").addClass("tab-link-normal");
+                    }
+                    jQuery('#dialog').dialog('close');
+                    $("#dialog").dialog("destroy");
+                });
+
+                    if ($("#lnkEdit").hasClass("tab-link-normal")) {
+                        $("#lnkEdit").removeClass("tab-link-normal");
+                        $("#lnkEdit").addClass("tab-link-active");
+                    }
+                    jQuery('#dialog').dialog('open'); return false;
+                });
+
+                $("#lnkEdit1").click(function () {
+
+                jQuery("#dialog").dialog({
+                    bgiframe: true, autoOpen: false, width: 590, modal: true
+                });
+
+                 $("#lnkmyclose").click(function () {
+                    $(".NullValue").empty();
+                    var Data = "<div style='padding: 17px 132px;'><p><img src='../../Images/loading.gif' />Please Wait AddItem is Loading</p></div>";
+                    $("#dialog").html(Data);
+                    if ($("#lnkEdit").hasClass("tab-link-active")) {
+                        $("#lnkEdit").removeClass("tab-link-active");
+                        $("#lnkEdit").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit1").hasClass("tab-link-active")) {
+                        $("#lnkEdit1").removeClass("tab-link-active");
+                        $("#lnkEdit1").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit2").hasClass("tab-link-active")) {
+                        $("#lnkEdit2").removeClass("tab-link-active");
+                        $("#lnkEdit2").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit3").hasClass("tab-link-active")) {
+                        $("#lnkEdit3").removeClass("tab-link-active");
+                        $("#lnkEdit3").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit4").hasClass("tab-link-active")) {
+                        $("#lnkEdit4").removeClass("tab-link-active");
+                        $("#lnkEdit4").addClass("tab-link-normal");
+                    }
+                    jQuery('#dialog').dialog('close');
+                    $("#dialog").dialog("destroy");
+                });
+
+                    if ($("#lnkEdit1").hasClass("tab-link-normal")) {
+                        $("#lnkEdit1").removeClass("tab-link-normal");
+                        $("#lnkEdit1").addClass("tab-link-active");
+                    }
+                    jQuery('#dialog').dialog('open'); return false;
+                });
+
+                $("#lnkEdit2").click(function () {
+
+                jQuery("#dialog").dialog({
+                    bgiframe: true, autoOpen: false, width: 590, modal: true
+                });
+
+                 $("#lnkmyclose").click(function () {
+                    $(".NullValue").empty();
+                    var Data = "<div style='padding: 17px 132px;'><p><img src='../../Images/loading.gif' />Please Wait AddItem is Loading</p></div>";
+                    $("#dialog").html(Data);
+                    if ($("#lnkEdit").hasClass("tab-link-active")) {
+                        $("#lnkEdit").removeClass("tab-link-active");
+                        $("#lnkEdit").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit1").hasClass("tab-link-active")) {
+                        $("#lnkEdit1").removeClass("tab-link-active");
+                        $("#lnkEdit1").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit2").hasClass("tab-link-active")) {
+                        $("#lnkEdit2").removeClass("tab-link-active");
+                        $("#lnkEdit2").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit3").hasClass("tab-link-active")) {
+                        $("#lnkEdit3").removeClass("tab-link-active");
+                        $("#lnkEdit3").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit4").hasClass("tab-link-active")) {
+                        $("#lnkEdit4").removeClass("tab-link-active");
+                        $("#lnkEdit4").addClass("tab-link-normal");
+                    }
+                    jQuery('#dialog').dialog('close');
+                    $("#dialog").dialog("destroy");
+                });
+
+                    if ($("#lnkEdit2").hasClass("tab-link-normal")) {
+                        $("#lnkEdit2").removeClass("tab-link-normal");
+                        $("#lnkEdit2").addClass("tab-link-active");
+                    }
+                    jQuery('#dialog').dialog('open'); return false;
+                });
+
+                $("#lnkEdit3").click(function () {
+
+                jQuery("#dialog").dialog({
+                    bgiframe: true, autoOpen: false, width: 590, modal: true
+                });
+
+                 $("#lnkmyclose").click(function () {
+                    $(".NullValue").empty();
+                    var Data = "<div style='padding: 17px 132px;'><p><img src='../../Images/loading.gif' />Please Wait AddItem is Loading</p></div>";
+                    $("#dialog").html(Data);
+
+                    if ($("#lnkEdit").hasClass("tab-link-active")) {
+                        $("#lnkEdit").removeClass("tab-link-active");
+                        $("#lnkEdit").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit1").hasClass("tab-link-active")) {
+                        $("#lnkEdit1").removeClass("tab-link-active");
+                        $("#lnkEdit1").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit2").hasClass("tab-link-active")) {
+                        $("#lnkEdit2").removeClass("tab-link-active");
+                        $("#lnkEdit2").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit3").hasClass("tab-link-active")) {
+                        $("#lnkEdit3").removeClass("tab-link-active");
+                        $("#lnkEdit3").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit4").hasClass("tab-link-active")) {
+                        $("#lnkEdit4").removeClass("tab-link-active");
+                        $("#lnkEdit4").addClass("tab-link-normal");
+                    }
+                    jQuery('#dialog').dialog('close');
+                    $("#dialog").dialog("destroy");
+                });
+
+                    if ($("#lnkEdit3").hasClass("tab-link-normal")) {
+                        $("#lnkEdit3").removeClass("tab-link-normal");
+                        $("#lnkEdit3").addClass("tab-link-active");
+                    }
+                    jQuery('#dialog').dialog('open'); return false;
+                });
+
+                $("#lnkEdit4").click(function () {
+
+                jQuery("#dialog").dialog({
+                    bgiframe: true, autoOpen: false, width: 590, modal: true
+                });
+
+                 $("#lnkmyclose").click(function () {
+                    $(".NullValue").empty();
+                    var Data = "<div style='padding: 17px 132px;'><p><img src='../../Images/loading.gif' />Please Wait AddItem is Loading</p></div>";
+                    $("#dialog").html(Data);
+
+                    if ($("#lnkEdit").hasClass("tab-link-active")) {
+                        $("#lnkEdit").removeClass("tab-link-active");
+                        $("#lnkEdit").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit1").hasClass("tab-link-active")) {
+                        $("#lnkEdit1").removeClass("tab-link-active");
+                        $("#lnkEdit1").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit2").hasClass("tab-link-active")) {
+                        $("#lnkEdit2").removeClass("tab-link-active");
+                        $("#lnkEdit2").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit3").hasClass("tab-link-active")) {
+                        $("#lnkEdit3").removeClass("tab-link-active");
+                        $("#lnkEdit3").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit4").hasClass("tab-link-active")) {
+                        $("#lnkEdit4").removeClass("tab-link-active");
+                        $("#lnkEdit4").addClass("tab-link-normal");
+                    }
+                    jQuery('#dialog').dialog('close');
+                    $("#dialog").dialog("destroy");
+                });
+
+                    if ($("#lnkEdit4").hasClass("tab-link-normal")) {
+                        $("#lnkEdit4").removeClass("tab-link-normal");
+                        $("#lnkEdit4").addClass("tab-link-active");
+                    }
+                    jQuery('#dialog').dialog('open'); return false;
+                });
+
+                /*
+                $("#lnkmyclose").click(function () {
+                    $(".NullValue").empty();
+                    var Data = "<div style='padding: 17px 132px;'><p><img src='../../Images/loading.gif' />Please Wait AddItem is Loading</p></div>";
+                    $("#dialog").html(Data);
+
+                    if ($("#lnkEdit").hasClass("tab-link-active")) {
+                        $("#lnkEdit").removeClass("tab-link-active");
+                        $("#lnkEdit").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit1").hasClass("tab-link-active")) {
+                        $("#lnkEdit1").removeClass("tab-link-active");
+                        $("#lnkEdit1").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit2").hasClass("tab-link-active")) {
+                        $("#lnkEdit2").removeClass("tab-link-active");
+                        $("#lnkEdit2").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit3").hasClass("tab-link-active")) {
+                        $("#lnkEdit3").removeClass("tab-link-active");
+                        $("#lnkEdit3").addClass("tab-link-normal");
+                    }
+                    if ($("#lnkEdit4").hasClass("tab-link-active")) {
+                        $("#lnkEdit4").removeClass("tab-link-active");
+                        $("#lnkEdit4").addClass("tab-link-normal");
+                    }
+                });
+                */
+                $("#lnkTopVoted").click(function () {
+                  if(Get_Cookie("ID") != false && Get_Cookie("ID") != null)
+                  {
+                   if (document.getElementById("CourseHomePageNumber") != undefined) {
+                    var PageNumber = document.getElementById("CourseHomePageNumber").value;
+                    }
+                    else {
+                        var PageNumber = "1";
+                    }
+                    if ($("#lnkTopVoted").hasClass("faceblack")) {
+                    }
+                    else {
+                        ActionReloadURL = "/CourseHome/CourseHome?CourseID=" + @CourseID + "&IsEditedAddItem= 1" + "&IsTopVoted=1" + "&PageNumber=" + PageNumber;
+                        $.post(
+                url = ActionReloadURL,
+                 function (data) {
+                     $("#CourseHomePage").html(data);
+                     if ($("#lnkTopVoted").hasClass("faceblue")) {
+                         $("#lnkTopVoted").removeClass("faceblue");
+                         $("#lnkTopVoted").addClass("faceblack");
+
+                         if ($("#lnkMostRecent").hasClass("faceblack")) {
+                             $("#lnkMostRecent").removeClass("faceblack");
+                             $("#lnkMostRecent").addClass("faceblue");
+                             document.getElementById("lnkTopVoted").style.cursor = "";
+                             document.getElementById("lnkMostRecent").style.cursor = "pointer";
+                         }
+                     }
+                 }
+                );
+                        return false;
+                    }
+                    }
+                    else
+                    {
+                        if ($("#LoginCheckAlert")) {
+                            $("#LoginCheckAlert").remove();
+                        }
+                        $('body').append("<div id='LoginCheckAlert' title='Not Logged In'><table width='185' cellspacing='0' cellpadding='0' border='0' style='margin-top:15px;'><tbody><tr><td align='center'><span>Please log in to continue.</span></td></tr><tr><td align='center'><input style='margin-top:20px;' type='button' class='askquebtn' id='btnYesLoginCheck' value='Login'></td></tr></tbody></table></div>");
+                        jQuery("#LoginCheckAlert").dialog({
+                            bgiframe: true, autoOpen: false, width: 200, modal: true
+                        });
+                        jQuery('#LoginCheckAlert').dialog('open');
+                        $("#btnYesLoginCheck").click(function () {
+                            window.top.location.href = "@RootPath";
+                        });
+                        $("#lnkmyclose").click(function () {
+                            jQuery('#LoginCheckAlert').dialog('close');
+                            $("#LoginCheckAlert").dialog("destroy");
+                            $("#LoginCheckAlert").remove();
+                            return false;
+                        });
+                    }
+                });
+
+                $("#lnkMostRecent").click(function () {
+                 if(Get_Cookie("ID") != false && Get_Cookie("ID") != null)
+                  {
+                if (document.getElementById("CourseHomePageNumber") != undefined) {
+                var PageNumber = document.getElementById("CourseHomePageNumber").value;
+                    }
+                    else {
+                        var PageNumber = "1";
+                    }
+                    if ($("#lnkMostRecent").hasClass("faceblack")) {
+                    }
+                    else {
+                         ActionReloadURL = "/CourseHome/CourseHome?CourseID=" + @CourseID + "&IsEditedAddItem= 1" + "&IsTopVoted=0" + "&PageNumber=" + PageNumber;
+                        $.post(
+                url = ActionReloadURL,
+                 function (data) {
+                     $("#CourseHomePage").html(data);
+                     if ($("#lnkMostRecent").hasClass("faceblue")) {
+                         $("#lnkMostRecent").removeClass("faceblue");
+                         $("#lnkMostRecent").addClass("faceblack");
+
+                         if ($("#lnkTopVoted").hasClass("faceblack")) {
+                             $("#lnkTopVoted").removeClass("faceblack");
+                             $("#lnkTopVoted").addClass("faceblue");
+                             document.getElementById("lnkMostRecent").style.cursor = "";
+                             document.getElementById("lnkTopVoted").style.cursor = "pointer";
+                         }
+                     }
+                 }
+                );
+                        return false;
+                    }
+                     }
+                    else
+                    {
+                        if ($("#LoginCheckAlert")) {
+                            $("#LoginCheckAlert").remove();
+                        }
+                         $('body').append("<div id='LoginCheckAlert' title='Not Logged In'><table width='185' cellspacing='0' cellpadding='0' border='0' style='margin-top:15px;'><tbody><tr><td align='center'><span>Please log in to continue.</span></td></tr><tr><td align='center'><input style='margin-top:20px;' type='button' class='askquebtn' id='btnYesLoginCheck' value='Login'></td></tr></tbody></table></div>");
+                        jQuery("#LoginCheckAlert").dialog({
+                            bgiframe: true, autoOpen: false, width: 200, modal: true
+                        });
+                        jQuery('#LoginCheckAlert').dialog('open');
+                        $("#btnYesLoginCheck").click(function () {
+                            window.top.location.href = "@RootPath";
+                        });
+                        $("#lnkmyclose").click(function () {
+                            jQuery('#LoginCheckAlert').dialog('close');
+                            $("#LoginCheckAlert").dialog("destroy");
+                            $("#LoginCheckAlert").remove();
+                            return false;
+                        });
+                    }
+                });
+
+            });
+
+        </script>*@
+        <script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"></script>
+        <script type="text/javascript">
+            function fBlogout() {
+                try {
+                    FB.Connect.ifUserConnected(function () {
+                        FB.Connect.logoutAndRedirect('@RootPath/Login/Login/');
+                    }, '@RootPath/Login/Login');
+
+                } catch (e) {
+                    location.href = '@RootPath/Login/Login';
+                }
+            }
+        </script>
+        <script type="text/javascript">
+            function LoadNewDiscussion(urldetail, course, systeid, topvoted, myadded, pagenumber) {
+                jQuery.post(
+                url = urldetail,
+                { CourseID: course, SystemobjectID: systeid, PageNumber: pagenumber, TopVoted: topvoted, MyAdded: myadded },
+                function (data) {
+                    jQuery("#DivRightPaneStaticContent").html(data);
+                }
+                );
+            }
+        </script>
+    </head>
+    <body>
+        <!--header-->
+        @{Html.RenderPartial("../Common/Header");}
+        <!--header-end-->
+        <!--content-->
+        <div class="main">
+            <!--left-menu-->
+            <div class="right-menu float-l">
+                <div class="right-menu-icon">
+                    <a onclick="javascript:GoToHome('@HomePageURL');">
+                        <img src="../../Images/home.png" alt="" width="31" height="31" border="0" /></a></div>
+                @*  <div class="right-menu-icon">
+                <a href="#">
+                    <img src="../../Images/assessment.png" width="24" height="24" border="0" /></a></div>
+            <div class="right-menu-icon">
+                <a href="#">
+                    <img src="../../Images/users.png" width="24" height="24" border="0" /></a></div>*@
+                <div class="right-menu-icon">
+                    <a style="cursor:pointer" onclick="javascript:GotoStar(@CourseID);">
+                        <img src="../../Images/staar.png" alt="" width="31" height="31" border="0" />
+                    </a>
+                </div>
+                <div class="right-menu-icon">
+                    <a style="cursor:pointer" onclick="javascript:GoToCalendar(@LoginUserID,@CourseID);">
+                        <img src="../../Images/calendar.png" width="24" height="24" border="0" /></a>
+                </div>
+                <div class="right-menu-icon">
+                    <a style="cursor: pointer;" onclick="javascript:GoToFlashCard(@CourseID);">
+                        <img src="../../Images/study.png" alt="" border="0" height="24" width="24" />
+                    </a>
+                </div>
+            </div>
+            <!--left-menu-end-->
+            <!--right-content-area-->
+            <div class="left-content">
+                <!--content-center-->
+                @*<div class="content-area">*@@*<div class="header float-l">
+                        <div class="float-l">
+                            <h1 class="h1-background" style="padding-left: 28px;">
+                                Home</h1>
+                        </div>
+                        <div class="float-r" style="margin-top: 2px;">
+                            <a id="lnkTopVoted" class="faceblue" style="cursor: pointer;">Top Voted</a> <a id="lnkMostRecent"
+                                class="faceblack">Most Recent</a>
+                        </div>
+                    </div>*@
+                <!--tab-menu-->
+                <!--new-tab-menu-->
+                <div style="float: left; width: 306px; border-right: 1px solid rgb(204, 204, 204);">
+                    @{Html.RenderAction("CourseByCourseID", "Courses", new { CourseDetail = 0 });}
+                    <div style="float: left; width: 280px; border-bottom: 1px solid rgb(204, 204, 204);
+                        margin-left: 13px;">
+                    </div>
+                    <div class="new-menu">
+                        <ul>
+                            <li onclick="javascript:LoadNewDiscussion('@NewDsicussion','@CourseID','@Convert.ToInt32(@Systemobject.Discussion)','0','0','1');">
+                                <span class="bg-1"></span><a>Discussion</a></li>
+                            <li><span class="bg-2"></span><a href="#">Notes</a></li>
+                            <li><span class="bg-3"></span><a href="#">Question &amp; Answer</a></li>
+                            <li><span class="bg-4"></span><a href="#">Summary</a></li>
+                            <li><span class="bg-5"></span><a href="#">Term &amp; Definition</a></li>
+                        </ul>
+                    </div>
+                    <div style="float: left; width: 280px; border-bottom: 1px solid rgb(204, 204, 204);
+                        margin-left: 13px;">
+                    </div>
+                    @* <div class="middlePaneMenu">
+                        <div class="header-icon float-l" style="border-right: none;">
+                            Share:
+                        </div>
+                        <div class="header-icon float-l">
+                            <a class="tab-link-normal" id="lnkEdit" onclick="javascript:AddItem('0','@ActionEditItem','@CourseID','@LoginUserID','@Systemobject.Discussion','1');">
+                                Discussion</a></div>
+                        <div class="header-icon float-l">
+                            <a class="tab-link-normal" id="lnkEdit1"  onclick="javascript:AddItem('0','@ActionEditItem','@CourseID','@LoginUserID','@Systemobject.Notes','1');">
+                                Note</a></div>
+                        <div class="header-icon float-l">
+                            <a class="tab-link-normal" id="lnkEdit2"  onclick="javascript:AddItem('0','@ActionEditItem','@CourseID','@LoginUserID','@Systemobject.Questions','1');" >
+                                Q&amp;A</a></div>
+                        <div class="header-icon float-l">
+                            <a class="tab-link-normal" id="lnkEdit3"  onclick="javascript:AddItem('0','@ActionEditItem','@CourseID','@LoginUserID','@Systemobject.Terms','1');">
+                                T&amp;D</a></div>
+                        <div class="header-icon float-l" style="border-right: none;">
+                            <a class="tab-link-normal" id="lnkEdit4"  onclick="javascript:AddItem('0','@ActionEditItem','@CourseID','@LoginUserID','@Systemobject.Summary','1');">
+                                Summary</a></div>
+                    </div>*@
+                    <div style="display: none;" id="dialog" title="Note: This window can be moved and resized."
+                        class="NullValue">
+                        <div style="padding: 17px 132px;">
+                            <p>
+                                <img alt="" src="../../Images/loading.gif" />Please Wait AddItem is Loading</p>
+                        </div>
+                    </div>
+                    <div id="updateTweets">
+                        @RenderBody()
+                    </div>
+                </div>
+                <!--content-center-end-->
+                <!--content-right-->
+                <div id="panel-frame">
+                    <div class="panel_right">
+                        <div class="head">
+                            <a href="#" class="close"></a>
+                        </div>
+                        <div class="data" style="padding: 20px 0px">
+                        </div>
+                    </div>
+                </div>
+                <div id="DivRightPaneStaticContent">
+                    @*@{Html.RenderAction("CourseByCourseID", "Courses", new { CourseDetail = 1 });}*@
+                    @if (Type != "")
+                    {
+                        if (WID <= 0)
+                        {
+@MvcHtmlString.Create(@Html.Action("DiscussionListingCourseHome", "CourseHome", new { CourseID = @CourseID, SystemobjectID = Convert.ToInt32(SystemObject.Discussion), PageNumber = 1, TopVoted = 0, MyAdded = 0 }).ToString())
+                        }
+                        else
+                        {
+                            @MvcHtmlString.Create(@Html.Action("DiscussionByDiscussionID", "Discussion", new { DID = @WID }).ToString())
+                        }
+                    }
+                    else
+                    {
+                        @MvcHtmlString.Create(@Html.Action("CourseByCourseID", "Courses", new { CourseDetail = 1 }).ToString())
+                    }
+                    <!--content-right-end-->
+                </div>
+                <!--right-content-area-end-->
+            </div>
+            <!--content-end-->
+        @{Html.RenderPartial("../Common/Footer");}
+    </body>
+    <script type="text/javascript">
+        FB.init("@ApplicationKey", "@RootPath/xd_receiver.htm");
+    </script>
+    <script type="text/javascript">
+        function GoToProfile(CourseID) {
+            if (Get_Cookie("ID") != false && Get_Cookie("ID") != null) {
+                window.location.href = "../Profile/CurrentCourses";
+            }
+            else {
+                if ($("#LoginCheckAlert")) {
+                    $("#LoginCheckAlert").remove();
+                }
+                $('body').append("<div id='LoginCheckAlert' title='Not Logged In'><table width='185' cellspacing='0' cellpadding='0' border='0' style='margin-top:15px;'><tbody><tr><td align='center'><span>Please log in to continue.</span></td></tr><tr><td align='center'><input style='margin-top:20px;' type='button' class='askquebtn' id='btnYesLoginCheck' value='Login'></td></tr></tbody></table></div>");
+                jQuery("#LoginCheckAlert").dialog({
+                    bgiframe: true, autoOpen: false, width: 200, modal: true
+                });
+                jQuery('#LoginCheckAlert').dialog('open');
+                $("#btnYesLoginCheck").click(function () {
+                    window.top.location.href = "@RootPath";
+                });
+                $("#lnkmyclose").click(function () {
+                    jQuery('#LoginCheckAlert').dialog('close');
+                    $("#LoginCheckAlert").dialog("destroy");
+                    $("#LoginCheckAlert").remove();
+                    return false;
+                });
+            }
+        }
+        function GoToHome(HomePageURL) {
+            if (Get_Cookie("ID") != false && Get_Cookie("ID") != null) {
+                window.location.href = HomePageURL;
+            }
+            else {
+                if ($("#LoginCheckAlert")) {
+                    $("#LoginCheckAlert").remove();
+                }
+                $('body').append("<div id='LoginCheckAlert' title='Not Logged In'><table width='185' cellspacing='0' cellpadding='0' border='0' style='margin-top:15px;'><tbody><tr><td align='center'><span>Please log in to continue.</span></td></tr><tr><td align='center'><input style='margin-top:20px;' type='button' class='askquebtn' id='btnYesLoginCheck' value='Login'></td></tr></tbody></table></div>");
+                jQuery("#LoginCheckAlert").dialog({
+                    bgiframe: true, autoOpen: false, width: 200, modal: true
+                });
+                jQuery('#LoginCheckAlert').dialog('open');
+                $("#btnYesLoginCheck").click(function () {
+                    window.top.location.href = "@RootPath";
+                });
+                $("#lnkmyclose").click(function () {
+                    jQuery('#LoginCheckAlert').dialog('close');
+                    $("#LoginCheckAlert").dialog("destroy");
+                    $("#LoginCheckAlert").remove();
+                    return false;
+                });
+            }
+        }
+        function GoToSearch() {
+            if (Get_Cookie("ID") != false && Get_Cookie("ID") != null) {
+                window.location.href = "../Courses/SearchCourse";
+            }
+            else {
+                if ($("#LoginCheckAlert")) {
+                    $("#LoginCheckAlert").remove();
+                }
+                $('body').append("<div id='LoginCheckAlert' title='Not Logged In'><table width='185' cellspacing='0' cellpadding='0' border='0' style='margin-top:15px;'><tbody><tr><td align='center'><span>Please log in to continue.</span></td></tr><tr><td align='center'><input style='margin-top:20px;' type='button' class='askquebtn' id='btnYesLoginCheck' value='Login'></td></tr></tbody></table></div>");
+                jQuery("#LoginCheckAlert").dialog({
+                    bgiframe: true, autoOpen: false, width: 200, modal: true
+                });
+                jQuery('#LoginCheckAlert').dialog('open');
+                $("#btnYesLoginCheck").click(function () {
+                    window.top.location.href = "@RootPath";
+                });
+                $("#lnkmyclose").click(function () {
+                    jQuery('#LoginCheckAlert').dialog('close');
+                    $("#LoginCheckAlert").dialog("destroy");
+                    $("#LoginCheckAlert").remove();
+                    return false;
+                });
+            }
+        }
+        function GotoStar(CourseID) {
+            if (Get_Cookie("ID") != false && Get_Cookie("ID") != null) {
+                window.location.href = "@RootPath/Favorite/FavoriteList?CourseID=" + CourseID;
+            }
+            else {
+                if ($("#LoginCheckAlert")) {
+                    $("#LoginCheckAlert").remove();
+                }
+                $('body').append("<div id='LoginCheckAlert' title='Not Logged In'><table width='185' cellspacing='0' cellpadding='0' border='0' style='margin-top:15px;'><tbody><tr><td align='center'><span>Please log in to continue.</span></td></tr><tr><td align='center'><input style='margin-top:20px;' type='button' class='askquebtn' id='btnYesLoginCheck' value='Login'></td></tr></tbody></table></div>");
+                jQuery("#LoginCheckAlert").dialog({
+                    bgiframe: true, autoOpen: false, width: 200, modal: true
+                });
+                jQuery('#LoginCheckAlert').dialog('open');
+                $("#btnYesLoginCheck").click(function () {
+                    window.top.location.href = "@RootPath";
+                });
+                $("#lnkmyclose").click(function () {
+                    jQuery('#LoginCheckAlert').dialog('close');
+                    $("#LoginCheckAlert").dialog("destroy");
+                    $("#LoginCheckAlert").remove();
+                    return false;
+                });
+            }
+        }
+        function GoToEditProfile() {
+            if (Get_Cookie("ID") != false && Get_Cookie("ID") != null) {
+                window.location.href = "../Profile/EditProfile";
+            }
+            else {
+                if ($("#LoginCheckAlert")) {
+                    $("#LoginCheckAlert").remove();
+                }
+                $('body').append("<div id='LoginCheckAlert' title='Not Logged In'><table width='185' cellspacing='0' cellpadding='0' border='0' style='margin-top:15px;'><tbody><tr><td align='center'><span>Please log in to continue.</span></td></tr><tr><td align='center'><input style='margin-top:20px;' type='button' class='askquebtn' id='btnYesLoginCheck' value='Login'></td></tr></tbody></table></div>");
+                jQuery("#LoginCheckAlert").dialog({
+                    bgiframe: true, autoOpen: false, width: 200, modal: true
+                });
+                jQuery('#LoginCheckAlert').dialog('open');
+                $("#btnYesLoginCheck").click(function () {
+                    window.top.location.href = "@RootPath";
+                });
+                $("#lnkmyclose").click(function () {
+                    jQuery('#LoginCheckAlert').dialog('close');
+                    $("#LoginCheckAlert").dialog("destroy");
+                    $("#LoginCheckAlert").remove();
+                    return false;
+                });
+            }
+        }
+
+        function GoToFlashCard(CourseID) {
+            if (Get_Cookie("ID") != false && Get_Cookie("ID") != null) {
+                window.location.href = "@RootPath/FlashCard/getflashcardsets?CourseID=" + CourseID;
+            }
+            else {
+                if ($("#LoginCheckAlert")) {
+                    $("#LoginCheckAlert").remove();
+                }
+                $('body').append("<div id='LoginCheckAlert' title='Not Logged In'><table width='185' cellspacing='0' cellpadding='0' border='0' style='margin-top:15px;'><tbody><tr><td align='center'><span>Please log in to continue.</span></td></tr><tr><td align='center'><input style='margin-top:20px;' type='button' class='askquebtn' id='btnYesLoginCheck' value='Login'></td></tr></tbody></table></div>");
+                jQuery("#LoginCheckAlert").dialog({
+                    bgiframe: true, autoOpen: false, width: 200, modal: true
+                });
+                jQuery('#LoginCheckAlert').dialog('open');
+                $("#btnYesLoginCheck").click(function () {
+                    window.top.location.href = "@RootPath";
+                });
+                $("#lnkmyclose").click(function () {
+                    jQuery('#LoginCheckAlert').dialog('close');
+                    $("#LoginCheckAlert").dialog("destroy");
+                    $("#LoginCheckAlert").remove();
+                    return false;
+                });
+            }
+        }
+    </script>
+    </html>
+}

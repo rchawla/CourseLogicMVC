@@ -1,0 +1,138 @@
+﻿@model CLFacadeLayer.UsersBE
+@{
+    ViewBag.Title = "EditProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript" src="../../Scripts/common.js"></script>
+<div class="profile-main">
+    <div class="profile-left" style="position:relative;top:15px;">
+        @{Html.RenderAction("ProfilePictureUpload", "FileUpload");}
+    </div>
+    <div class="profile-right">
+       @if (Model.IsFacebookID == true)
+       { 
+             <div style="height: 18px;line-height:18px; width:auto;Font-Size:13px;display:inline;padding-left:220px;font-weight:600;vertical-align:top;position:absolute;">
+             <img src="../../Images/facebook.png" alt="" align="center" style="height:18px;width:20px;vertical-align:top;"  /> 
+             You are logged in through your facebook account.
+             </div>
+           <br />
+       }
+     
+        <b>
+            <label style="color: Green; padding-left: 50px;position:absolute;height:15px;line-height:15px;" id="lblmsg">
+            </label>
+        </b>
+       
+
+
+        <form method="post" action="dad">
+        <!--form-row-->
+        <div class="edit-form-div" style="margin-top:25px;">
+            <div class="edit-title">
+                Personal Details</div>
+            <div style="width: 100%; float: left; height: 10px;">
+                &nbsp;</div>
+            <div class="form-row">
+                <div class="form-left">
+                    First name :*</div>
+                <div class="form-right">
+                    <input id="txtFirstName" type="text" class="form-input" value=@Model.FirstName  />
+                    <b>
+                        <label style="color: Red" id="lblFirstName">
+                        </label>
+                    </b>
+                </div>
+            </div>
+            <div class="form-row-2">
+                <div class="form-left">
+                    Last name :*</div>
+                <div class="form-right">
+                    <input id="txtLastName" type="text" class="form-input" value=@Model.LastName  /><b><label
+                        style="color: Red" id="lblLastName"></label></b></div>
+            </div>
+            <div style="width: 100%; float: left; height: 15px;">
+                &nbsp;</div>
+            <div class="edit-title">
+                Communication Details</div>
+            <div style="width: 100%; float: left; height: 15px;">
+                &nbsp;</div>
+            <div class="form-row-2">
+                <div class="form-left">
+                    Communication Email:*</div>
+                <div class="form-right">
+                    <input id="txtPrimaryEmail" type="text" class="form-input" value=@Model.PrimaryEmail  /><b><label
+                        style="color: Red" id="lblPrimaryEmail"></label></b></div>
+            </div>
+            <div class="form-row-2">
+                <div class="form-left">
+                    School Email:</div>
+                <div class="form-right">
+                    <input id="txtSecondaryEmail" type="text" class="form-input" value=@Model.SecondaryEmail />
+                    <b>
+                        <label style="color: Red" id="lblSecondaryEmail">
+                        </label>
+                    </b>
+                </div>
+            </div>
+            @*   <div class="form-row-2">
+                <div class="form-left">
+                    Cell Phone Number :</div>
+                <div class="form-right">
+                    <input type="text" class="form-input" value="" name="sds"></div>
+            </div>
+            <div class="form-row-2">
+                <div class="form-left">
+                    Carrier Name :</div>
+                <select class="form-input-3">
+                    <option>2342</option>
+                    <option>2424</option>
+                    <option>242</option>
+                    <option>242</option>
+                    <option>2424</option>
+                </select>
+            </div>*@
+            <div style="width: 100%; float: left; height: 10px;">
+                &nbsp;</div>
+            @if (Model.IsFacebookID == false)
+            {          
+                <div class="edit-title">
+                    Change Password</div>
+            <div style="width: 100%; float: left; height: 10px;">
+                &nbsp;</div>
+            <b>
+                <label style="color: Red; padding-left: 50px;" id="lblnomatch">
+                </label>
+            </b>
+        @*    <div class="form-row">
+                <div class="form-left">
+                    Old Password :</div>
+                <div class="form-right">
+                    <input id="txtOldPassword" type="password" class="form-input" value="" name="sds"><b><label
+                        style="color: Red" id="lbloldpassword"></label></b></div>
+            </div>*@
+            <div class="form-row">
+                <div class="form-left">
+                    New Password :</div>
+                <div class="form-right">
+                    <input id="txtNewPassword" type="password" class="form-input" value="" name="sds"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-left">
+                    Confirm Password :</div>
+                <div class="form-right">
+                    <input id="txtConfirmPassword" type="password" class="form-input" value="" name="sds"></div>
+            </div>
+            }
+            <div style="width: 100%; float: left; height: 15px;">
+                &nbsp;</div>
+            <div style="width: 100%; height: 24px; float: left;">
+                <input type="button" class="save-changes-bt" name="save-changes" value="Save changes"
+                    onclick="javascript:EditProfile('@Model.IsFacebookID');"><input type="button" class="cancel-bt"
+                        name="cancel" value="Cancel" onclick="javascript:CancelEditProfile();"></div>
+            <div style="width: 100%; float: left; height: 15px;">
+                &nbsp;</div>
+        </div>
+        </form>
+    </div>
+    <!--content-right-end-->
+</div>

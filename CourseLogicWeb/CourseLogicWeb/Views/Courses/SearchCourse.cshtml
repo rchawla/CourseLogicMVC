@@ -1,0 +1,75 @@
+﻿@using CourseLogicWeb.Models
+@model CLFacadeLayer.GenericBE
+@{
+    ViewBag.Title = "CourseList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string AccountID = "0";
+    if (Request.Cookies["ID"] != null)
+    {
+        AccountID = Request.Cookies["ID"].Value;
+    }
+}
+
+<div class="search-form-div">
+<div class="search-title">Filter criteria:</div>
+
+<div class="form-row-8">
+<div class="form-left-2">Prefix :</div>
+<div class="form-right-2"><input type="text" id="txtPrefix"" class="form-input-2" /></div>
+</div>
+<div class="form-row-8">
+<div class="form-left-2">Course Number :</div>
+<div class="form-right-2"><input type="text" id="txtCourseNumber" class="form-input-2" /></div>
+</div>
+<div class="form-row-8">
+<div class="form-left-2">Course Title :</div>
+<div class="form-right-2"><input type="text" id="txtCourseTitle" class="form-input-2" /></div>
+</div>
+<div class="form-row-8">
+<div class="form-left-2">Course Section :</div>
+<div class="form-right-2"><input type="text" id="txtCourseSection" class="form-input-2" /></div>
+</div>
+
+<div class="form-row-8">
+<div class="form-left-2">School :</div>
+<div class="form-right-2">  <select class="form-input-2" id="ddlSchoolName">
+                <option selected="selected" value="0">Select</option>
+                <option value="2">	University of south florida</option>
+            </select></div>
+</div>
+
+<div class="form-row-8">
+<div class="form-left-2">Term :</div>
+<div class="form-right-2">
+ <select class="form-input-2" id="ddlTerm">
+                <option selected="selected" value="0">Select</option>
+                <option value="1">Fall</option>
+                <option value="2">Summer</option>
+                <option value="3">Spring</option>
+            </select>
+</div>
+</div>
+<div class="form-row-8">
+<div class="form-left-2">Year :</div>
+<div class="form-right-2">
+	 <select class="form-input-2" id="ddlYear">
+                <option selected="selected" value="0">Select</option>
+                <option value="2010">2010</option>
+                <option value="2011">2011</option>
+            </select>
+</div>
+</div>
+<div class="form-row-4">
+<!--<input type="reset" name="ddad" value="" class="reset-bt" />-->
+<div align="center" class="go-bt"> <a style="cursor:pointer"  onclick="javascript:SearchCourse(@AccountID);"> go </a></div>
+</div>
+<div class="reset-bt"><a onclick = "javascript:ResetField('@AccountID');">Reset</a></div>
+<div class="padd-20">&nbsp;</div>
+</div>
+
+
+<div id="divCouselist">
+    @{Html.RenderAction("CourseList", "Courses", new { StudentAccountID = AccountID, Prefix = @Model.Prefix, CourseNumber = @Model.CourseNumber, CourseTitle = @Model.CourseTitle, CourseSection = @Model.Course_Section, SchoolID = @Model.SchoolID, TermID = @Model.TermID, Year = @Model.Year, IsSearch = false });}
+</div>
+
+<div class="profile-right"></div>

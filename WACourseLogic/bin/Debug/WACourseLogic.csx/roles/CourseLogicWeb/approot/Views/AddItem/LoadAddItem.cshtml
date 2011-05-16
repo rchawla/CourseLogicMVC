@@ -1,0 +1,386 @@
+﻿<div class="rightPanel">
+    @using Systemobject = CLFacadeLayer.SystemObject
+    @model CLFacadeLayer.GenericBE
+    @{     
+        Layout = "~/Views/Shared/_DetailsMaster.cshtml";
+        string ActionURLSaveAddItem = @Url.Action("SaveAddItem", "AddItem");
+        string ActionReloadURL = "";
+        long LoginUserID = 0;
+        int SaveCourseID = Model.CourseID;
+        string SaveSystemObjecName = Model.SystemObjectName;
+        bool SaveIsAdded = Model.IsAddItem;
+        int SaveIsCourseHome = Model.IsCourseHomePage;
+        int SaveCourseItemID = Model.CourseItemID;
+        if (Request.Cookies["ID"] != null)
+        {
+            LoginUserID = Convert.ToInt64(Request.Cookies["ID"].Value.ToString());
+        }
+
+        if (Model.SystemObjectName == Systemobject.Questions.ToString())
+        {
+            ActionReloadURL = Url.Action("QuestionByQuestionID", "Question");
+            ActionReloadURL = ActionReloadURL + "?IsEditedAddItem=1";
+            if (Model.IsCourseHomePage == 1)
+            {
+                ActionReloadURL = Url.Action("QuestionByQuestionID", "Question");
+                ActionReloadURL = ActionReloadURL + "?IsEditedAddItem=1&IsLoadInRightPane=1";
+            }
+        }
+        if (Model.SystemObjectName == Systemobject.Notes.ToString())
+        {
+            ActionReloadURL = Url.Action("NoteByNoteID", "Note");
+            ActionReloadURL = ActionReloadURL + "?IsEditedAddItem=1";
+            if (Model.IsCourseHomePage == 1)
+            {
+                ActionReloadURL = Url.Action("NoteByNoteID", "Note");
+                ActionReloadURL = ActionReloadURL + "?IsEditedAddItem=1&IsLoadInRightPane=1";
+            }
+        }
+        if (Model.SystemObjectName == Systemobject.Discussion.ToString())
+        {
+            ActionReloadURL = Url.Action("DiscussionByDiscussionID", "Discussion");
+            ActionReloadURL = ActionReloadURL + "?IsEditedAddItem=1";
+            if (Model.IsCourseHomePage == 1)
+            {
+                ActionReloadURL = Url.Action("DiscussionByDiscussionID", "Discussion");
+                ActionReloadURL = ActionReloadURL + "?IsEditedAddItem=1&IsLoadInRightPane=1";
+            }
+        }
+        if (Model.SystemObjectName == Systemobject.Terms.ToString())
+        {
+            ActionReloadURL = Url.Action("TermByTermID", "Terms");
+            ActionReloadURL = ActionReloadURL + "?IsEditedAddItem=1";
+            if (Model.IsCourseHomePage == 1)
+            {
+                ActionReloadURL = Url.Action("TermByTermID", "Terms");
+                ActionReloadURL = ActionReloadURL + "?IsEditedAddItem=1&IsLoadInRightPane=1";
+            }
+        }
+
+        if (Model.SystemObjectName == Systemobject.Summary.ToString())
+        {
+            ActionReloadURL = Url.Action("SummaryBySummaryID", "Summary");
+            ActionReloadURL = ActionReloadURL + "?IsEditedAddItem=1";
+            if (Model.IsCourseHomePage == 1)
+            {
+                ActionReloadURL = Url.Action("SummaryBySummaryID", "Summary");
+                ActionReloadURL = ActionReloadURL + "?IsEditedAddItem=1&IsLoadInRightPane=1";
+            }
+        }
+  }
+    <script type="text/javascript" src="../../Scripts/common.js"></script>
+    <script type="text/javascript" src="../../Scripts/encoder.js"></script>
+    <script type="text/javascript">
+        function CuteWebUI_AjaxUploader_OnPostback() {
+            //submit the form after the file have been uploaded:
+            //alert("submit call");
+            SaveAddItem('@SaveCourseItemID', '@SaveCourseID', '@ActionURLSaveAddItem', '@ActionReloadURL', '@SaveSystemObjecName', '@LoginUserID', '@SaveIsAdded', '@SaveIsCourseHome');
+            //document.forms[0].submit();
+        }
+        function Temp_Click(CourseItemID, CourseID, ActionURL, ActionReloadURL, systemobjectName, AccountID, IsAdded, IsCourseHomePage) {
+            //alert("");
+            var uploadobj = document.getElementById('myuploader');
+            //alert(uploadobj.nodeValue);
+            if (uploadobj.getqueuecount() > 0) {
+                uploadobj.startupload();
+            }
+            else {
+                //alert("Please browse files for upload");
+                SaveAddItem('@SaveCourseItemID', '@SaveCourseID', '@ActionURLSaveAddItem', '@ActionReloadURL', '@SaveSystemObjecName', '@LoginUserID', '@SaveIsAdded', '@SaveIsCourseHome');
+            }
+        }
+
+        function CuteWebUI_AjaxUploader_OnStart() {
+            //alert("Star");
+        }
+
+        function CuteWebUI_AjaxUploader_OnFileUploaded() {
+            //alert("file uploaded completed");
+        }
+    </script>
+    @using (Html.BeginForm("LoadAddItem", "AddItem", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+@Html.ValidationSummary(true)
+
+if (@Model.SystemObjectName == Systemobject.Questions.ToString())
+{
+    <div class="tab-box">
+        <div class="tab-arrow">
+            <img alt="" src="/images/aa.png" width="9" height="6" border="0" />
+        </div>
+        <div style="margin: 10px 76px;">
+            <b>
+                <label id="ResultsSucess" style="display: none; color: Green">
+                </label>
+            </b>
+        </div>
+        <div class="tab-box-title">
+            Question Title</div>
+        @Html.HiddenFor(m => m.SystemObjectName)
+        <div>
+            <textarea id="CourseItemTitle" class="textarea-2 fontEditTextArea">@Model.CourseItemTitle</textarea>
+            <label id="ErrorCourseItemTitle" class="ErrorLabel">
+            </label>
+        </div>
+        <div class="tab-box-title-2">
+            Description</div>
+        <div style="width: 100%;">
+            <textarea id="CourseItemDescription" rows="3" class="textarea-1">@HttpUtility.HtmlDecode(Model.CourseItemDescription)</textarea>
+            <label id="ErrorCourseItemDescription" class="ErrorLabel">
+            </label>
+        </div>
+        <div class="more-input" align="left">
+            <span>Chapter</span><textarea id="Chapter" class="textarea-3">@Model.Chapter</textarea>
+            <span>Section</span><textarea id="Section" class="textarea-3">@Model.Section</textarea>
+            <span>Page #</span><textarea id="PageNumber" class="textarea-3">@Model.PageNumber</textarea>
+            <div class="bt-1">
+                @*<input type="submit" value="SHARE" class="bt-1-2" />*@
+                <input id="AddItemShare" type="button" name="btnSubmit" id="btnSubmit" value="SHARE" class="bt-1-2" onclick="javascript:SaveAddItem('@Model.CourseItemID', '@Model.CourseID','@ActionURLSaveAddItem', '@ActionReloadURL','@Model.SystemObjectName','@LoginUserID','@Model.IsAddItem','@Model.IsCourseHomePage');" />
+            </div>
+        </div>
+        <div>
+            <label id="ErrorChapter" class="ErrorLabel">
+            </label>
+        </div>
+        <div class="title-1" style="display: none;">
+            Assessment</div>
+    </div>
+}
+else if (@Model.SystemObjectName == Systemobject.Notes.ToString())
+{
+    <div class="tab-box">
+        <div class="tab-arrow">
+            <img alt="" src="/images/aa.png" width="9" height="6" border="0" />
+        </div>
+        <div style="margin: 10px 76px;">
+            <b>
+                <label id="ResultsSucess" style="display: none; color: Green">
+                </label>
+            </b>
+        </div>
+        <div class="tab-box-title">
+            Note Title</div>
+        @Html.HiddenFor(m => m.SystemObjectName)
+        <div>
+            <textarea id="CourseItemTitle" class="textarea-2 fontEditTextArea">@Model.CourseItemTitle</textarea>
+            <label id="ErrorCourseItemTitle" class="ErrorLabel">
+            </label>
+        </div>
+        <div class="tab-box-title-2">
+            Description</div>
+        <div style="width: 100%;">
+            <textarea id="CourseItemDescription" rows="3" class="textarea-1">@HttpUtility.HtmlDecode(Model.CourseItemDescription)</textarea>
+            <label id="ErrorCourseItemDescription" class="ErrorLabel">
+            </label>
+        </div>
+        <div class="more-input" align="left">
+            <span>Chapter</span><textarea id="Chapter" class="textarea-3">@Model.Chapter</textarea>
+            <span>Section</span><textarea id="Section" class="textarea-3">@Model.Section</textarea>
+            <span>Page #</span><textarea id="PageNumber" class="textarea-3">@Model.PageNumber</textarea>
+            <div class="bt-1">
+                @*<input type="submit" value="SHARE" class="bt-1-2" />*@
+                <input id="AddItemShare" type="button" name="btnSubmit" id="btnSubmit" value="SHARE" class="bt-1-2" onclick="javascript:SaveAddItem('@Model.CourseItemID', '@Model.CourseID','@ActionURLSaveAddItem', '@ActionReloadURL','@Model.SystemObjectName','@LoginUserID','@Model.IsAddItem','@Model.IsCourseHomePage');" />
+            </div>
+        </div>
+        <div>
+            <label id="ErrorChapter" class="ErrorLabel">
+            </label>
+        </div>
+        <div class="title-1" style="display: none;">
+            Assessment</div>
+    </div>
+}
+else if (@Model.SystemObjectName == Systemobject.Discussion.ToString())
+{
+    <div class="tab-boxDiscussion">
+        <div class="tab-arrow" style="top: -6px;">
+            <img alt="" src="/images/aa.png" width="9" height="6" border="0" />
+        </div>
+        <div style="margin: 10px 76px;">
+            <b>
+                <label id="ResultsSucess" style="display: none; color: Green">
+                </label>
+            </b>
+        </div>
+        <div class="tab-box-title">
+            Topic</div>
+        @Html.HiddenFor(m => m.SystemObjectName)
+        <div>
+            <textarea id="CourseItemTitle" class="textarea-2 fontEditTextArea">@Model.CourseItemTitle</textarea>
+            <label id="ErrorCourseItemTitle" class="ErrorLabel">
+            </label>
+        </div>
+        <label id="ErrorCourseItemDescription" class="ErrorLabel">
+        </label>
+        <div class="more-input" align="left">
+            <span>Chapter</span><textarea id="Chapter" class="textarea-3">@Model.Chapter</textarea>
+            <span>Section</span><textarea id="Section" class="textarea-3">@Model.Section</textarea>
+            <span>Page #</span><textarea id="PageNumber" class="textarea-3">@Model.PageNumber</textarea>
+            <div class="bt-1">
+                @*<input type="submit" value="SHARE" class="bt-1-2" />*@
+                <input id="AddItemShare" type="button" name="btnSubmit"  value="SHARE" class="bt-1-2" onclick="javascript:Temp_Click('@Model.CourseItemID', '@Model.CourseID','@ActionURLSaveAddItem', '@ActionReloadURL','@Model.SystemObjectName','@LoginUserID','@Model.IsAddItem','@Model.IsCourseHomePage');" />
+            </div>
+        </div>
+        <div>
+            <label id="ErrorChapter" class="ErrorLabel">
+            </label>
+        </div>
+        <br />
+        <div id="TempCheckLoader">
+            @* @{Html.RenderAction("Attachment", "AddItem");}*@@MvcHtmlString.Create(@ViewData["uploaderhtml"].ToString())
+            <br />
+            @*<input type="button" value="Submit" onclick="Temp_Click('@Model.CourseItemID', '@Model.CourseID','@ActionURLSaveAddItem', '@ActionReloadURL','@Model.SystemObjectName','@LoginUserID','@Model.IsAddItem','@Model.IsCourseHomePage');" />*@
+        </div>
+        <div class="title-1" style="display: none;">
+            Assessment</div>
+    </div>
+}
+else if (@Model.SystemObjectName == Systemobject.Terms.ToString())
+{
+    <div class="tab-box">
+        <div class="tab-arrow">
+            <img alt="" src="/images/aa.png" width="9" height="6" border="0" />
+        </div>
+        <div style="margin: 10px 76px;">
+            <b>
+                <label id="ResultsSucess" style="display: none; color: Green">
+                </label>
+            </b>
+        </div>
+        <div class="tab-box-title">
+            Term Title</div>
+        @Html.HiddenFor(m => m.SystemObjectName)
+        <div>
+            <textarea id="CourseItemTitle" class="textarea-2 fontEditTextArea">@Model.CourseItemTitle</textarea>
+            <label id="ErrorCourseItemTitle" class="ErrorLabel">
+            </label>
+        </div>
+        <div class="tab-box-title-2">
+            Defination</div>
+        <div style="width: 100%;">
+            <textarea id="CourseItemDescription" rows="3" class="textarea-1 ">@HttpUtility.HtmlDecode(Model.CourseItemDescription)</textarea>
+            <label id="ErrorCourseItemDescription" class="ErrorLabel">
+            </label>
+        </div>
+        <div class="more-input" align="left">
+            <span>Chapter</span><textarea id="Chapter" class="textarea-3">@Model.Chapter</textarea>
+            <span>Section</span><textarea id="Section" class="textarea-3">@Model.Section</textarea>
+            <span>Page #</span><textarea id="PageNumber" class="textarea-3">@Model.PageNumber</textarea>
+            <div class="bt-1">
+                @*<input type="submit" value="SHARE" class="bt-1-2" />*@
+                <input id="AddItemShare" type="button" name="btnSubmit" id="btnSubmit" value="SHARE" class="bt-1-2" onclick="javascript:SaveAddItem('@Model.CourseItemID', '@Model.CourseID','@ActionURLSaveAddItem', '@ActionReloadURL','@Model.SystemObjectName','@LoginUserID','@Model.IsAddItem','@Model.IsCourseHomePage');" />
+            </div>
+        </div>
+        <div>
+            <label id="ErrorChapter" class="ErrorLabel">
+            </label>
+        </div>
+        <div class="title-1" style="display: none;">
+            Assessment</div>
+    </div>
+}
+else if (@Model.SystemObjectName == Systemobject.Summary.ToString())
+{
+    <div class="tab-box">
+        <div class="tab-arrow">
+            <img alt="" src="/images/aa.png" width="9" height="6" border="0" />
+        </div>
+        <div style="margin: 10px 76px;">
+            <b>
+                <label id="ResultsSucess" style="display: none; color: Green">
+                </label>
+            </b>
+        </div>
+        <div class="tab-box-title">
+            Summary Title</div>
+        @Html.HiddenFor(m => m.SystemObjectName)
+        <div>
+            <textarea id="CourseItemTitle" class="textarea-2 fontEditTextArea">@Model.CourseItemTitle</textarea>
+            <label id="ErrorCourseItemTitle" class="ErrorLabel">
+            </label>
+        </div>
+        <div class="tab-box-title-2">
+            Description</div>
+        <div style="width: 100%;">
+            <textarea id="CourseItemDescription" rows="3" class="textarea-1">@HttpUtility.HtmlDecode(Model.CourseItemDescription)</textarea>
+            <label id="ErrorCourseItemDescription" class="ErrorLabel">
+            </label>
+        </div>
+        <div class="more-input" align="left">
+            <span>Chapter</span><textarea id="Chapter" class="textarea-3">@Model.Chapter</textarea>
+            <span>Section</span><textarea id="Section" class="textarea-3">@Model.Section</textarea>
+            <span>Page #</span><textarea id="PageNumber" class="textarea-3">@Model.PageNumber</textarea>
+            <div class="bt-1">
+                @*<input type="submit" value="SHARE" class="bt-1-2" />*@
+                <input id="AddItemShare" type="button" name="btnSubmit" id="btnSubmit" value="SHARE" class="bt-1-2" onclick="javascript:SaveAddItem('@Model.CourseItemID', '@Model.CourseID','@ActionURLSaveAddItem', '@ActionReloadURL','@Model.SystemObjectName','@LoginUserID','@Model.IsAddItem','@Model.IsCourseHomePage');" />
+            </div>
+        </div>
+        <div>
+            <label id="ErrorChapter" class="ErrorLabel">
+            </label>
+        </div>
+        <div class="title-1" style="display: none;">
+            Assessment</div>
+    </div>
+}
+else
+{
+       <div class="tab-box">
+           <div class="tab-arrow">
+               <img alt="" src="/images/aa.png" width="9" height="6" border="0" />
+           </div>
+           <div style="margin: 10px 76px;">
+               <b>
+                   <label id="ResultsSucess" style="display: none; color: Green">
+                   </label>
+               </b>
+           </div>
+           <div class="tab-box-title">
+               Note Title</div>
+           <input type="text" name="asa" class="textarea-2 fontEditTextArea" />
+           <label id="ErrorCourseItemTitle" class="ErrorLabel">
+           </label>
+           <div class="tab-box-title-2">
+               Note Discussion</div>
+           <textarea class="textarea-1" rows="3"></textarea>
+           <label id="ErrorCourseItemDescription" class="ErrorLabel">
+           </label>
+           <div class="more-input" align="left">
+               <span>Chapter</span>
+               <input type="text" name="jf" class="textarea-3" />
+               <span>Section</span>
+               <input type="text" name="jf" class="textarea-3" />
+               <span>Page #</span>
+               <input type="text" name="jf" class="textarea-4" />
+               <div class="bt-1">
+                   @*
+               <input type="submit" value="SHARE" class="bt-1-2" />*@
+                   <input id="AddItemShare" type="button" name="btnSubmit" id="btnSubmit" value="SHARE" class="bt-1-2" onclick="javascript:SaveAddItem('@Model.CourseItemID', '@Model.CourseID','@ActionURLSaveAddItem', '@ActionReloadURL','@Model.SystemObjectName','@LoginUserID','@Model.IsAddItem','@Model.IsCourseHomePage');" />
+               </div>
+           </div>
+           <div>
+               <label id="ErrorChapter" class="ErrorLabel">
+               </label>
+           </div>
+           <div class="title-1" style="display: none;">
+               Assessment</div>
+       </div>
+}
+    }
+    <script type="text/javascript">
+        (function ($) {
+            $('#CourseItemDescription').wysiwyg({
+                controls: {
+                    strikeThrough: { visible: true },
+                    underline: { visible: true },
+                    separator00: { visible: true },
+                    justifyLeft: { visible: true },
+                    justifyCenter: { visible: true },
+                    justifyRight: { visible: true },
+                    justifyFull: { visible: true },
+                    resizeOptions: {}
+                }
+            });
+        })(jQuery);
+    </script>
+</div>

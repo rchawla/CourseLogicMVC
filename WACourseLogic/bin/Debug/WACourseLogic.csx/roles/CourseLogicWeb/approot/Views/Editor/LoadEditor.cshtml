@@ -1,0 +1,49 @@
+﻿@using Systemobject = CLFacadeLayer.SystemObject
+@model CLFacadeLayer.GenericBE
+@{  
+    string ActionLoadAnswerURL;
+    if(@Model.SystemObjectName == Systemobject.Answers.ToString())
+    {
+     ActionLoadAnswerURL = @Url.Action("AnswerList", "Answer");
+    }
+    else
+    {
+         ActionLoadAnswerURL = @Url.Action("DefinitionList", "Terms");
+    }
+     string ActionURLSaveAnswer = @Url.Action("SaveChildItem", "Editor");
+    
+}
+@using (Html.BeginForm())
+{
+@Html.ValidationSummary(true)
+<script type="text/javascript" src="../../Scripts/encoder.js"></script>
+      <div>
+          @Html.Hidden("CourseItemID", Model.CourseItemID) @Html.Hidden("ParentCourseItemID", Model.ParentCourseItemID)
+      </div>
+    <div id="divEditor">
+       @* <h3>
+            Your @Model.SystemObjectName</h3>*@
+
+        <textarea id="txtItemDesc" style="width: 100%;">@MvcHtmlString.Create(HttpUtility.HtmlDecode(Model.CourseItemDescription))</textarea>
+
+        <input type="button" name="btnSubmit" id="btnSubmit" value="Submit" class="askquebtn" onclick="javascript:SaveChildItem('@Model.CourseItemID', '@Model.CourseID',  '@Model.ParentCourseItemID', '@ActionURLSaveAnswer', '@ActionLoadAnswerURL','@Model.SystemObjectName');" />
+       @* <input type="button" name="btnCancel" id="btnCancel" value="Cancel" class="askquebtn"
+            onclick="javascript:HideEditor('@Model.ParentCourseItemID','@Display');" />*@
+    </div>
+}
+<script type="text/javascript">
+    (function ($) {
+        $('#txtItemDesc').wysiwyg({
+            controls: {
+                strikeThrough: { visible: true },
+                underline: { visible: true },
+                separator00: { visible: true },
+                justifyLeft: { visible: true },
+                justifyCenter: { visible: true },
+                justifyRight: { visible: true },
+                justifyFull: { visible: true },
+                resizeOptions: {}
+            }
+        });
+    })(jQuery);
+    </script>

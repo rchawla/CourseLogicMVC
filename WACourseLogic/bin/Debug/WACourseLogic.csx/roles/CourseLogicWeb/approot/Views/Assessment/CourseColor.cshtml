@@ -1,0 +1,22 @@
+﻿@using CLFacadeLayer
+@model IEnumerable<CalendarBE>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <div style="float: left; width: 100%;">
+        @foreach (var item in Model)
+        {
+            <div style="width: 50%; float:left;">
+                <span>@item.CourseTitle </span>
+                <div style="width: 50%; float:right;">
+                    @*<hr style="width: 5%; height:10px; background:@item.color" />*@
+                    <div style="height:10px; width: 5%; background-color:@item.color;"></div>
+                </div>
+            </div>
+            
+        }
+    </div>
+  
+}

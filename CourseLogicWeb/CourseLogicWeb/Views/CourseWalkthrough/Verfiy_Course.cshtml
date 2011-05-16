@@ -1,0 +1,172 @@
+﻿@using CLFacadeLayer
+@model GenericBE
+@{
+    ViewBag.Title = "Verfiy_Course";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link type="text/css" rel="Stylesheet" href="../../Content/courseIntroduction.css" />
+<script type="text/javascript" src="../../Scripts/jquery-1.4.1.min.js"></script>
+<script type="text/javascript" src="../../Images/Temp/ColorPicker2.js"></script>
+<script type="text/javascript" src="../../Images/Temp/AnchorPosition.js"></script>
+<script type="text/javascript" src="../../Images/Temp/PopUpWindow.js"></script>
+<script type="text/javascript">
+    var cp = new ColorPicker('window'); // Popup window
+    var cp2 = new ColorPicker(); // DIV style
+    
+</script>
+<script language="JavaScript" type="text/javascript">
+    cp.writeDiv()
+</script>
+<script type="text/javascript">
+    function CallCourseVerfiy(CourseID, AccountID) {
+        var ColorNumber = $("#Color").val();
+        ColorNumber = MyTrim(ColorNumber);
+        alert(ColorNumber);
+        if (ColorNumber != "") {
+            $.post(
+        url = "/Courses/SaveStudentCourse",
+        { AccountID: AccountID, CourseID: CourseID },
+        function (data) {
+            alert("Course Added Successfully");
+        }
+        );
+        }
+        else {
+            alert("PLease Select Color Code For Course");
+        }
+    }
+</script>
+<div class="profile-main" style="padding: 10px 0px 0px 40px;">
+    <div class="spac15px" style="padding: 10px 0px 0px 40px;">
+    </div>
+    <h5>
+        Course Introduction</h5>
+    <br />
+    <div style="width: 505px; margin: auto; clear: both;">
+        <!--top_menu-->
+        <div class="StepList">
+            <ol>
+                <li class="Step StepFirst StepSelected">
+                    <div class="part back">
+                    </div>
+                    <div class="part middle">
+                        <div class="content">
+                            <div class="title fsl fwb fcb">
+                                Step 1</div>
+                            <span class="description">Verify Course</span></div>
+                    </div>
+                    <div class="part point">
+                    </div>
+                </li>
+                <li class="Step ">
+                    <div class="part back">
+                    </div>
+                    <div class="part middle">
+                        <div class="content">
+                            <div class="title fsl fwb fcb">
+                                Step 2</div>
+                            Add Assessments</div>
+                    </div>
+                    <div class="part point">
+                    </div>
+                </li>
+                <li class="Step">
+                    <div class="part back">
+                    </div>
+                    <div class="part middle">
+                        <div class="content">
+                            <div class="title fsl fwb fcb">
+                                Step 3</div>
+                            Invite and Collaborate</div>
+                    </div>
+                    <div class="part point">
+                    </div>
+                </li>
+                <li class="Step">
+                    <div class="part back">
+                    </div>
+                    <div class="part middle">
+                    </div>
+                </li>
+            </ol>
+        </div>
+        <!--top_menu_end-->
+        <!--step_1-->
+        <div class="step ">
+            <div style="width: 460px;" class="flaotpanleft">
+                <div class="inner1">
+                    <label class="label">
+                        Prefix</label><div style="margin-left: 15px;" class="flaotpanleft">
+                            : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.Prefix</div>
+                    <br />
+                    <label class="label">
+                        Course Number</label><div style="margin-left: 15px;" class="flaotpanleft">
+                            : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.CourseNumber</div>
+                    <br />
+                    <label class="label">
+                        Title</label><div style="margin-left: 15px;" class="flaotpanleft">
+                            : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.CourseTitle</div>
+                    <br />
+                    <label class="label">
+                        Section</label><div style="margin-left: 15px;" class="flaotpanleft">
+                            : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.Course_Section</div>
+                    <br />
+                    <label class="label">
+                        Year</label><div style="margin-left: 15px;" class="flaotpanleft">
+                            : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.Year</div>
+                    <br />
+                    <label class="label">
+                        Color</label><div id='DivColorPicker' style="margin-left: 15px;" class="flaotpanleft">
+                            : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @Html.TextBox("Color") <a id="pick2" name="pick2"
+                                style="margin: 0px 0px 0px 5px;" href="#" onclick="cp.select(document.getElementById('Color'),'pick2');return false;">
+                                Pick</a>
+                        </div>
+                </div>
+            </div>
+            <div class="button">
+                <div class="button3">
+                    <a href="#next">Next</a></div>
+                @if (@Model.IsCourseVerfiy != true)
+                {
+                    <div class="button2">
+                        <a id="Temp" href="#verify" onclick="javascript:CallCourseVerfiy('@Model.CourseID','@Model.AccountID');">
+                            Verify</a></div>
+                }
+                @if (@Model.IsCourseVerfiy == true)
+                {
+                    <div class="button1">
+                        <a href="#drop">Drop Course</a>
+                    </div>
+                }
+            </div>
+        </div>
+        <!--step_1_end-->
+    </div>
+    @* <table border="1">
+        <tr>
+            <td>
+                This popup uses a "window" popup. Use this<br>
+                For browsers that don't support DHTML.<br>
+                Color:
+                <input type="text" name="color" size="20" value="">
+                <a href="#" onclick="cp.select(document.forms[0].color,'pick');return false;" name="pick"
+                    id="pick">Pick</a>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <table border="1">
+        <tr>
+            <td>
+                This popup uses a DHTML "layer". It looks<br>
+                nicer, but won't work in older browsers and<br>
+                The color popup won't display over some form<br>
+                elements in some browsers!<br>
+                Color:
+                <input type="text" name="color2" size="20" value="">
+                <a href="#" onclick="cp2.select(document.forms[0].color2,'pick2');return false;"
+                    name="pick2" id="pick2">Pick</a>
+            </td>
+        </tr>
+    </table>*@
+</div>

@@ -1,0 +1,117 @@
+﻿@using CLFacadeLayer
+@model GenericBE
+@{
+    long LoginUserID = 0;
+    if (Request.Cookies["ID"] != null)
+    {
+        LoginUserID = Convert.ToInt64(Request.Cookies["ID"].Value.ToString());
+    }
+
+    int CourseID = 0;
+    if (Request.QueryString["CourseID"] != null)
+    {
+        CourseID = Convert.ToInt32(Request.QueryString["CourseID"]);
+    }
+
+    string ActionURL = @Url.Action("SaveFlashCardSet", "FlashCard");
+    string EditActionURL = @Url.Action("GetFlashCardByFlashCardID", "FlashCard");
+    Boolean ChapterCheck = @Model.IsChapter;
+}
+<script src="../../Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+<script src="../../Scripts/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        var TempCheck = "@ChapterCheck";
+        if (TempCheck == "True") {
+            $("#ChapterTextBox").toggle();
+        }
+    });
+    $(function () {
+        $('#chkChapter').click(function () {
+            $("#ChapterTextBox").toggle();
+        });
+    });
+</script>
+<div class="flash-card">
+    <div class="flash-card-title">
+        <h3>
+            About You flash Card Set
+        </h3>
+    </div>
+    <div style="float: left; width: 800px; padding: 0px 40px; min-height: 200px; border: 1px solid rgb(204, 204, 204);
+        margin: 0px 0px 0px 25px;">
+        <div style="float: left; width: 800px; line-height: 28px; background: none repeat scroll 0% 0% rgb(255, 255, 255);">
+            <div style="float: left; width: 800px; margin-top: 10px;">
+            </div>
+            <div style="float: left; width: 800px; margin: 10px 0px;">
+                <span class="input-span" style="padding-left: 10px;">Title</span>
+                <input type="text" id="FlashCardTitle" class="flash-card-input" name="12" value="@Model.FlashCardTitle" />
+                <span id="ErrorTitle" style="display: none;"></span>
+            </div>
+            <div style="float: left; width: 800px; margin: 10px 0px;">
+                <span class="input-span" style="padding-left: 10px;">Description</span>
+                <textarea id="FlashCardDesc" class="flash-card-textarea" rows="5" style="height: 100px;"
+                    cols="0">@Model.FlashCardDescription</textarea>
+                <span id="ErrorDescription" style="display: none;"></span>
+            </div>
+            <div style="float: left; width: 800px; margin: 10px 0px;">
+                <span class="input-span" style="padding-left: 10px;">Subject optinal</span>
+                <input id="FlashCardSubject" type="text" class="flash-card-input" name="12" value="@Model.FlashCardSubject" />
+            </div>
+            <div style="float: left; width: 800px; margin-top: 0px;">
+                <h2>
+                    Creat a New Flash Card Set</h2>
+            </div>
+            <div style="float: left; width: 500px; clear: both; margin: 10px 0px;">
+                <div style="float: left; width: 250px; margin: 10px 0px;">
+                    @Html.CheckBox("Voted Up", @Model.IsVotedUp, new { id = "chkVotedUp", style = "float: left; margin: 8px 0px 0px;" })
+                    <span class="input-span" style="padding-left: 10px;">Voted Up</span>
+                </div>
+                <div style="float: left; width: 250px; margin: 10px 0px;">
+                    @Html.CheckBox("Question", @Model.IsQuestion, new { id = "chkQA", style = "float: left; margin: 8px 0px 0px;" })
+                    <span class="input-span" style="padding-left: 10px;">Question</span>
+                </div>
+                <div style="float: left; width: 250px; margin: 10px 0px;">
+                    @Html.CheckBox("Favorited", @Model.IsFavourted, new { id = "chkFavorite", style = "float: left; margin: 8px 0px 0px;" })
+                    <span class="input-span" style="padding-left: 10px;">Favorited</span>
+                </div>
+                <div style="float: left; width: 250px; margin: 10px 0px;">
+                    @Html.CheckBox("Notes", @Model.IsNotes, new { id = "chkNotes", style = "float: left; margin: 8px 0px 0px;" })
+                    <span class="input-span" style="padding-left: 10px;">Notes</span>
+                </div>
+                <div style="float: left; width: 250px; margin: 10px 0px;">
+                    @Html.CheckBox("Your Added", @Model.IsYourAdded, new { id = "chkYourAdded", style = "float: left; margin: 8px 0px 0px;" })
+                    <span class="input-span" style="padding-left: 10px;">Your Added</span>
+                </div>
+                <div style="float: left; width: 250px; margin: 10px 0px;">
+                    @Html.CheckBox("Term", @Model.IsTerms, new { id = "chkTD", style = "float: left; margin: 8px 0px 0px;" })
+                    <span class="input-span" style="padding-left: 10px;">Term</span>
+                </div>
+                <div style="float: left; width: 250px; margin: 10px 0px;">
+                    @Html.CheckBox("Chapter", @Model.IsChapter, new { id = "chkChapter" }) @*<input id="chkChapter" type="checkbox" style="float: left; margin: 8px 0px 0px;" checked="@Model.IsChapter" />*@
+                    <span class="input-span" style="padding-left: 10px;">Chapter</span>
+                    <div id="ChapterTextBox" style="display: none;">
+                        <input type="text" id="commaseperatedchapters" class="FlashCard-input-2" value="@Model.CommonSeperatedChapter" />
+                        <span>(Comma seperated chapter values.)</span>
+                    </div>
+                </div>
+                <div style="float: left; width: 250px; margin: 10px 0px;">
+                    @Html.CheckBox("Summary", @Model.IsSummary, new { id = "chkSummary", style = "float: left; margin: 8px 0px 0px;" })
+                    <span class="input-span" style="padding-left: 10px;">Summary</span>
+                </div>
+                <div style="float: left; width: 250px; margin: 10px 0px;">
+                    @Html.CheckBox("Assessment", @Model.IsAssessment, new { id = "chkAssessment", style = "float: left; margin: 8px 0px 0px;" })
+                    @*<input id="chkAssessment" type="checkbox" style="float: left; margin: 8px 0px 0px;" checked="@Model.IsAssessment" />*@
+                    <span class="input-span" style="padding-left: 10px;">Assessment</span>
+                </div>
+            </div>
+            <div style="float: left; width: 800px; clear: both; margin: 10px 0px;">
+                <div class="bt-font">
+                    <a onclick="javascript:SaveFlashCardSet('@Model.CourseID','@LoginUserID','@Model.FlashCardID','@ActionURL');">
+                        Select Items</a></div>
+                @*<div class="bt-font">
+                    View All</div>*@
+            </div>
+        </div>
+    </div>
+</div>

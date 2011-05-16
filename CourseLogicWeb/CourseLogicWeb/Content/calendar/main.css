@@ -1,0 +1,31 @@
+﻿#calendar {
+		width: 900px;
+		margin: 0 auto;
+		}
+label {
+display:block;
+margin-bottom:0.5em;
+margin-top:1em;
+}
+form ul {
+padding:0.3em;
+}
+textarea {
+padding:3px;
+width:250px;
+}
+form { text-align:left; }
+li { list-style-type:none; }
+ul.formatted, ol.formatted {
+display:block;
+margin:1em 0.5em;
+}
+ul.formatted li, ol.formatted li {
+margin:5px 30px;
+}
+ul.formatted li {
+list-style-type:disc;
+}
+ol.formatted li {
+list-style-type:decimal;
+}

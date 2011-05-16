@@ -1,0 +1,352 @@
+﻿@using CLFacadeLayer;
+@using Systemobject = CLFacadeLayer.SystemObject;
+@model IEnumerable<GenericBE>
+@{
+    string DetailPageURL = "";
+    string ItemImageURL = "";
+    int CourseID = 0;
+    if (Request.QueryString["CourseID"] != null)
+    {
+        CourseID = Convert.ToInt32(Request.QueryString["CourseID"]);
+    }
+    if (CourseID == 0)
+    {
+        GenericBE Temp = @Model.First();
+        CourseID = Temp.CourseID;
+    }
+    string CourseTitle = "";
+    if (Request.QueryString["Title"] != null)
+    {
+        CourseTitle = Request.QueryString["Title"].ToString();
+    }
+    int ItemCount = @Model.Count();
+    int ForLoopCount = 0;
+    string NewDsicussion = @Url.Action("DiscussionListingCourseHome", "CourseHome");
+    long LoginUserID = 0;
+    if (Request.Cookies["ID"] != null)
+    {
+        LoginUserID = Convert.ToInt64(Request.Cookies["ID"].Value);
+    }
+    string ActionEditItem = @Url.Action("LoadAddItem", "AddItem");
+    string DiscussionListingURL = @Url.Action("DiscussionByDiscussionID", "Discussion");
+}
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+
+        $("#lnkEdit").click(function () {
+            jQuery("#dialog").dialog({
+                bgiframe: true, autoOpen: false, width: 590, modal: true
+            });
+
+            $("#lnkmyclose").click(function () {
+                $(".NullValue").empty();
+                var Data = "<div style='padding: 17px 132px;'><p><img src='../../Images/loading.gif' />Please Wait AddItem is Loading</p></div>";
+                $("#dialog").html(Data);
+                jQuery('#dialog').dialog('close');
+                $("#dialog").dialog("destroy");
+            });
+
+            jQuery('#dialog').dialog('open'); return false;
+        });
+    });
+    function CourseHomeNextPageDiscussion(urldetail, course, systeid, topvoted, myadded, pagenumber) {
+        var PageTemp = parseInt(pagenumber) + parseInt(1);
+        var TopVotedClass = document.getElementById("TopVotedDis").className;
+        var MostRecentClass = document.getElementById("MostRecentDis").className;
+        var MyAddedClass = document.getElementById("lnkMyAdded").className;
+        $.post(
+                url = urldetail,
+                { CourseID: course, SystemobjectID: systeid, PageNumber: PageTemp, TopVoted: topvoted, MyAdded: myadded },
+                function (data) {
+                    $("#DivRightPaneStaticContent").html(data);
+                    document.getElementById("TopVotedDis").className = TopVotedClass;
+                    document.getElementById("MostRecentDis").className = MostRecentClass;
+                    document.getElementById("lnkMyAdded").className = MyAddedClass;
+                }
+                );
+    }
+
+    function CourseHomePreviousPageDiscussion(urldetail, course, systeid, topvoted, myadded, pagenumber) {
+        var PageTemp = parseInt(pagenumber) - parseInt(1);
+        var TopVotedClass = document.getElementById("TopVotedDis").className;
+        var MostRecentClass = document.getElementById("MostRecentDis").className;
+        var MyAddedClass = document.getElementById("lnkMyAdded").className;
+        $.post(
+                url = urldetail,
+                { CourseID: course, SystemobjectID: systeid, PageNumber: PageTemp, TopVoted: topvoted, MyAdded: myadded },
+                function (data) {
+                    $("#DivRightPaneStaticContent").html(data);
+                    document.getElementById("TopVotedDis").className = TopVotedClass;
+                    document.getElementById("MostRecentDis").className = MostRecentClass;
+                    document.getElementById("lnkMyAdded").className = MyAddedClass;
+                }
+                );
+    }
+
+    function TopVotedDis(urldetail, course, systeid, topvoted, myadded, pagenumber) {
+        $.post(
+                url = urldetail,
+                { CourseID: course, SystemobjectID: systeid, PageNumber: pagenumber, TopVoted: topvoted, MyAdded: myadded },
+                function (data) {
+                    $("#DivRightPaneStaticContent").html(data);
+                    if ($("#TopVotedDis").hasClass("font-4")) {
+                        $("#TopVotedDis").removeClass("font-4");
+                        $("#TopVotedDis").addClass("font-1");
+                    }
+                    if ($("#MostRecentDis").hasClass("font-1")) {
+                        $("#MostRecentDis").removeClass("font-1");
+                        $("#MostRecentDis").addClass("font-4");
+                    }
+                    if ($("#lnkMyAdded").hasClass("font-1")) {
+                        $("#lnkMyAdded").removeClass("font-1");
+                        $("#lnkMyAdded").addClass("font-4");
+                    }
+                }
+                );
+
+    }
+
+    function MostRecentDis(urldetail, course, systeid, topvoted, myadded, pagenumber) {
+        $.post(
+                url = urldetail,
+                { CourseID: course, SystemobjectID: systeid, PageNumber: pagenumber, TopVoted: topvoted, MyAdded: myadded },
+                function (data) {
+                    $("#DivRightPaneStaticContent").html(data);
+                    if ($("#TopVotedDis").hasClass("font-1")) {
+                        $("#TopVotedDis").removeClass("font-1");
+                        $("#TopVotedDis").addClass("font-4");
+                    }
+                    if ($("#MostRecentDis").hasClass("font-4")) {
+                        $("#MostRecentDis").removeClass("font-4");
+                        $("#MostRecentDis").addClass("font-1");
+                    }
+                    if ($("#lnkMyAdded").hasClass("font-1")) {
+                        $("#lnkMyAdded").removeClass("font-1");
+                        $("#lnkMyAdded").addClass("font-4");
+                    }
+                }
+                );
+    }
+    function MyAdded(urldetail, course, systeid, topvoted, myadded, pagenumber) {
+        $.post(
+                url = urldetail,
+                { CourseID: course, SystemobjectID: systeid, PageNumber: pagenumber, TopVoted: topvoted, MyAdded: myadded },
+                function (data) {
+                    $("#DivRightPaneStaticContent").html(data);
+                    if ($("#TopVotedDis").hasClass("font-1")) {
+                        $("#TopVotedDis").removeClass("font-1");
+                        $("#TopVotedDis").addClass("font-4");
+                    }
+                    if ($("#MostRecentDis").hasClass("font-1")) {
+                        $("#MostRecentDis").removeClass("font-1");
+                        $("#MostRecentDis").addClass("font-4");
+                    }
+                    if ($("#lnkMyAdded").hasClass("font-4")) {
+                        $("#lnkMyAdded").removeClass("font-4");
+                        $("#lnkMyAdded").addClass("font-1");
+                    }
+                }
+                );
+    }
+
+    function LoadDiscussionPage(CourseID, CourseItemID, ListURL) {
+        $.post(
+        url = ListURL + "?DID=" + CourseItemID + "&IsLoadInRightPane=1",
+        { DID: CourseItemID,IsLoadInRightPane: 1 },
+        function (data) {
+            $("#DivRightPaneStaticContent").html(data);
+                }
+        );
+    }
+</script>
+<div style="float: right; width: 640px;">
+    @foreach (var item in Model)
+    {
+        string DivItemID = "DivItemID" + item.CourseItemID;
+        string IconClass = "ds_" + item.Discussion_Rank + "-icon font-1";
+        switch (item.SystemObjectID)
+        {
+            case 4:
+                ItemImageURL = "../../Images/question.gif";
+                break;
+            case 5:
+
+                ItemImageURL = "../../Images/answer.gif";
+                break;
+            case 7:
+                ItemImageURL = "../../Images/discussion.png";
+                break;
+            case 8:
+                ItemImageURL = "../../Images/term.png";
+                break;
+            case 9:
+
+                ItemImageURL = "../../Images/definition.png";
+                break;
+            case 10:
+                ItemImageURL = "../../Images/notes.png";
+                break;
+            case 14:
+                ItemImageURL = "../../Images/summary.png";
+                break;
+            default: DetailPageURL = "#";
+                ItemImageURL = "";
+                break;
+        }
+        <!--new-tab-menu-area-->
+        if (ForLoopCount == 0)
+        {
+                    <table width="640" style="margin: 5px 0px 5px 10px;" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="250" valign="middle" style="padding-left:16px;" class="add-bg font-1">
+                               @* <a class="tab-link-normal" id="lnkEdit" onclick="javascript:AddItem('0','@ActionEditItem','@CourseID','@LoginUserID','@SystemObject.Discussion','1');">
+                                    Add Discussion</a>*@
+                                    @Html.ActionLink("Add Discussion", "LoadAddItem", "AddItem", new { CourseItemID = 0, CourseID = @CourseID, SystemObjectName = @SystemObject.Discussion, IsCourseHomePage = '1' }, new { Class = "tab-link-normal" })
+                            </td>
+                            <td width="60" valign="middle" style="padding: 5px;" class=" font-4">
+                                Sort By:
+                            </td>
+                            <td width="80" id="TopVotedDis" valign="middle" align="left" style="padding: 5px;" class="font-4" onclick="javascript:TopVotedDis('@NewDsicussion','@item.CourseID','@item.SystemObjectID','1','0','@item.CourseHomePageNumber');">
+                                Top Voted
+                            </td>
+                            <td width="80" id="MostRecentDis" valign="middle" align="left" style="padding: 5px;" class="font-1" onclick="javascript:MostRecentDis('@NewDsicussion','@item.CourseID','@item.SystemObjectID','0','0','@item.CourseHomePageNumber');">
+                                Most Recent
+                            </td>
+                            @if (!@item.IsMyAdded)
+                            {
+                                <td width="80" id="lnkMyAdded" valign="middle" align="right" style="padding: 5px;" class="font-4" onclick="javascript:MyAdded('@NewDsicussion','@item.CourseID','@item.SystemObjectID','0','1','1');">
+                                    My Discussion
+                                </td>
+                            }
+                            else
+                            {
+                                 <td width="80" id="lnkMyAdded" valign="middle" align="right" style="padding: 5px;" class="font-4" onclick="javascript:MyAdded('@NewDsicussion','@item.CourseID','@item.SystemObjectID','0','1','@item.CourseHomePageNumber');">
+                                     My Discussion
+                                 </td>
+                            }
+                        </tr>
+                    </table>
+        }
+                <div style="float: left; width: 640px; margin: 5px 0px 5px 10px;">
+                    <div style="float: left; width: 60px; padding: 5px;">
+                        <span class="votes font-6">@item.VoteCount</span> <span class="votes font-5 ">votes</span>
+                        <div style="clear: both; padding: 5px 0px;">
+                        </div>
+                        <span class="votes font-6">@item.CommentCount</span> <span class="votes font-5 ">comments</span>
+                    </div>
+                    <div style="float: left; width: 570px; background: #FFFFFF;" onclick="javascript:LoadDiscussionPage('@item.CourseID','@item.CourseItemID','@DiscussionListingURL');">
+                        <div style="float: left; width: 90px; padding: 8px;">
+                            @if (!string.IsNullOrEmpty(@item.ProfileImage))
+                            {
+                                <img alt="" height="52" width="63" src="/images/ProfileImage/@item.AccountID/@item.ProfileImage" />
+                            }
+                            else
+                            { 
+                                    <img alt="" height="52" width="63" src="/images/answerPic.jpg" />
+                            }
+                            <span class="@IconClass" style="padding-left: 30px;">@item.UserName </span>
+                        </div>
+                        <div style="float: left; width: 462px;">
+                            <div style="padding: 8px 0px;">
+                                <span class="font-1" style="float: left; width: 415px;">@item.CourseItemTitle </span>
+                                <span style="float: right; width: 18px; margin: 0px 6px;">
+                                    @if (@item.StarDisplay > 0)
+                                    {
+                                        <img alt="" src="../../Images/Favorited_white.png" />
+                                    }
+                                </span>
+                            </div>
+                            <div style="clear: both">
+                            </div>
+                            <div style="padding: 3px 0px; min-height: 46px;">
+                                <span class="font-2" style="float: left; width: 430px;"></span><span style="float: right;
+                                    width: 18px; margin: 0px 6px;">
+                                    <img alt="" src="../../Images/Attachment.png" /></span>
+                            </div>
+                            <div style="clear: both">
+                            </div>
+                            <div style="padding: 3px 0px;">
+                                <span style="float: left; min-width: 250px; height: 18px; padding: 6px 0px;" class="font-3">
+                                    Tags:<a href="#" class="post-tag2">chapter @item.Chapter </a><a href="#" class="post-tag2">
+                                        section @item.Section</a> <a href="#" class="post-tag2">page @item.PageNumber</a>
+                                </span><span style="float: right; width: 18px; margin: 0px 6px;">
+                                    <img alt="" src="../../Images/Hot-Topic-Icon.png" /></span>
+                                <div style="float: right; margin-right: 15px; height: 18px; padding: 6px 0px;" class="font-3">
+                                    Last Update @item.PostedDate</div>
+                            </div>
+                        </div>
+                    </div>
+                    @* Noramal Desgin
+                    <div style="float: left; width: 570px; background: #eaeced;" onclick="javascript:LoadDiscussionPage('@item.CourseID','@item.CourseItemID','@DiscussionListingURL');">
+                        <div style="float: left; width: 90px; padding: 8px;">
+                            @if (!string.IsNullOrEmpty(@item.ProfileImage))
+                            {
+                                <img alt="" height="52" width="63" src="/images/ProfileImage/@item.AccountID/@item.ProfileImage" />
+                            }
+                            else
+                            { 
+                                    <img alt="" height="52" width="63" src="/images/answerPic.jpg" />
+                            }
+                            <span class="@IconClass" style="padding-left: 30px;">@item.UserName </span>
+                        </div>
+                        <div style="float: left; width: 462px;">
+                            <div style="padding: 8px 0px;">
+                                <span class="font-1" style="float: left; width: 415px;">@item.CourseItemTitle </span>
+                                <span style="float: right; width: 18px; margin: 0px 6px;">
+                                    @if (@item.StarDisplay > 0)
+                                    {
+                                        <img alt="" src="../../Images/Favorite-Gold_03.png" />
+                                    }
+                                    else
+                                    {
+                                        <img alt="" src="../../Images/Favorite-Blue_03.png" />
+                                    }
+                                </span>
+                            </div>
+                            <div style="clear: both">
+                            </div>
+                            <div style="padding: 3px 0px; min-height: 46px;">
+                                <span class="font-2" style="float: left; width: 430px;"></span><span style="float: right;
+                                    width: 18px; margin: 0px 6px;">
+                                    <img alt="" src="../../Images/ico-001.png" /></span>
+                            </div>
+                            <div style="clear: both">
+                            </div>
+                            <div style="padding: 3px 0px;">
+                                <span style="float: left; min-width: 250px; height: 18px; padding: 6px 0px;" class="font-3">
+                                    Tags:<a href="#" class="post-tag2">chapter @item.Chapter </a><a href="#" class="post-tag2">
+                                        section @item.Section</a> <a href="#" class="post-tag2">page @item.PageNumber</a>
+                                </span><span style="float: right; width: 18px; margin: 0px 6px;">
+                                    <img alt="" src="../../Images/ico-002.png" /></span>
+                                <div style="float: right; margin-right: 15px; height: 18px; padding: 6px 0px;" class="font-3">
+                                    Last Update @item.PostedDate</div>
+                            </div>
+                        </div>
+                    </div>
+                    *@
+                </div> @* Float: left; width: 640px;" Main DiV  *@
+                    <div style="float: left; width: 640px; margin: 0px 0px 0px 10px; background: #000000;
+                        border-bottom: 1px solid #CCCCCC;">
+                    </div>
+                                           if (ItemCount - 1 == ForLoopCount)
+                                           {
+                    <div class="MainPaging">
+                        <input type="hidden" id="CourseHomePageNumberDisussion" value="@item.CourseHomePageNumber" />
+                        @if (@item.CourseHomePageNumber * 10 < @item.PageFlag)
+                        {
+                            <div class="Paging" style="float: right;">
+                                <a onclick="CourseHomeNextPageDiscussion('@NewDsicussion','@item.CourseID','@item.SystemObjectID','0','0','@item.CourseHomePageNumber');">
+                                    Next</a>
+                            </div>
+                        }
+                        @if (ItemCount > 0 && item.CourseHomePageNumber != 1)
+                        {
+                            <div class="Paging" style="float: left;">
+                                <a onclick="CourseHomePreviousPageDiscussion('@NewDsicussion','@item.CourseID','@item.SystemObjectID','0','0','@item.CourseHomePageNumber');">
+                                    Previous</a>
+                            </div>
+                        }
+                    </div>
+                                           } ForLoopCount++;
+    }
+</div>

@@ -1,0 +1,87 @@
+﻿@using System.Web.Mvc;
+@{
+    View.Title = "List Course Assessment";
+   
+          
+}
+
+@model IEnumerable<CLFacadeLayer.CalendarBE>
+@{
+    long LoginUserID = 0;
+    long CourseID = 0;
+
+    if (Request.Cookies["ID"] != null)
+    {
+        LoginUserID = Convert.ToInt64(Request.Cookies["ID"].Value.ToString());
+    }
+    if (Request.QueryString["CourseID"] != null)
+    {
+        CourseID = Convert.ToInt64(Request.QueryString["CourseID"]);
+    }
+     
+}
+
+
+<script type="text/javascript" src="../../Scripts/common.js"></script>
+<script type="text/javascript" src="../../Scripts/ToolTipScript.js"></script>
+<script type="text/javascript" src="../../Scripts/jquery-1.4.1.js"></script>
+<script type="text/javascript" src="../../Scripts/jquery-1.4.1.min.js"></script>
+<link href="../../Content/tooltip.css" rel="stylesheet" type="text/css" />
+
+
+
+@if (Model.Count() != 0)
+{
+ <div class="ov-form-div" style="width:auto">
+                    <div class="ov-edit-title">
+      
+        <div class="form-row-3" style="float:left;width:30px;">
+            <div class="form-left-3">
+            </div>
+              </div>
+        <div class="form-row-3" style="float:left;width:100px;">
+            <div class="form-left-3" style="float:left">
+                Name</div>
+        </div>
+          <div class="form-row-3" style="float:left;width:300px;">
+            <div class="form-left-3" style="float:left">
+                Description</div>
+        </div>
+        <div class="form-row-3" style="float:left;width:100px;">
+        <div class="form-left-3">
+               Due Date</div>
+        </div>
+   </div>
+
+     @foreach (var item in Model)
+        {
+            if (item.CourseDetailID == CourseID)
+            {
+                                   
+               <div class="search-title-2">
+             <div class="form-row-7">
+                  <div class="form-left-5" style="width:30px;">
+                <div class="why">
+                    <p>
+                        <span class="hotspot" style="border-style:solid;border-width:thick;background-color:Red;color:White;font-weight:bold;" onmouseover="tooltip.show('@item.AssessmentTypeName');"
+                            onmouseout="tooltip.hide();">@item.AssessmentTypeName.Substring(0,1)</span></p>
+                </div></div>
+                    <div class="form-left-5" style="float:left;width:100px;">
+                    @item.Name
+                    </div>
+              <div class="form-left-5" style="float:left;width:300px;">
+                    @item.Description
+                    </div>
+                <div class="form-left-5" style="float:left;width:100px;">
+                    @item.DateDue.ToString().Substring(0,10)
+                    </div>
+               
+                </div>
+           </div>
+            } 
+           
+        }
+   
+</div>
+}
+   

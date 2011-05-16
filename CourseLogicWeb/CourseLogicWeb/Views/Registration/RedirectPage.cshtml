@@ -1,0 +1,27 @@
+﻿@using CourseLogicWeb.ConfigurationService
+@{
+    Layout = null;
+    string Domain = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.GetRoot().ToString()))
+    {
+        Domain = ConfigurationService.GetRoot().ToString();
+    }
+    string RedirectUrl = ViewData["URL"].ToString();
+    string FinialURL = Domain + RedirectUrl;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RedirectPage</title>
+</head>
+<script type="text/javascript">
+    function CallRedirect() {
+        window.opener.document.location.href = '@FinialURL';
+        window.close();
+    }
+</script>
+<body onload="CallRedirect();">
+    <div>
+    </div>
+</body>
+</html>

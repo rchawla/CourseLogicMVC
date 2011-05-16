@@ -1,0 +1,158 @@
+﻿<script type="text/javascript">
+    jQuery(document).ready(function () {
+        /*
+        jQuery("#deleteComment").dialog({
+        bgiframe: true, autoOpen: false, width: 200, modal: true
+        });
+        */
+        $("#lnkdelete").click(function () {
+            if (Get_Cookie("ID") != false && Get_Cookie("ID") != null) {
+                jQuery("#delete").dialog({
+                    bgiframe: true, autoOpen: false, width: 235, modal: true
+                });
+                var DeleteConfrim = "<div style='padding: 10px 6px;'><p>Are you sure you want to delete item ?</p></div><div style='padding: 0px 10px;'><input type='button' class='askquebtn' id='btnYes' value='Yes' />&nbsp;<input type='button' id='btnNo' class='askquebtn' value='No' /></div>";
+                $(".deleteConfrim").empty();
+                $("#delete").html(DeleteConfrim);
+                jQuery('#delete').dialog('open');
+                $("#btnNo").focus();
+
+                $("#lnkmyclose").click(function () {
+                    CourseItemID = 0;
+                    jQuery('#delete').dialog('close');
+                    var Data = "<div style='padding: 17px 132px;'><p><img src='../../Images/loading.gif' />Please Wait AddItem is Loading</p></div>";
+                    var DeleteConfrim = "<div style='padding: 20px 50px;'><p><img src='../../Images/loading.gif' />Loading...</p></div>";
+                    var DeleteCommentConfrim = "<div style='padding: 20px 50px;'><p><img src='../../Images/loading.gif' />Loading...</p></div>";
+                    $("#deleteComment").dialog("destroy");
+                    $(".deleteCommentConfrim").empty();
+                    $("#deleteComment").html(DeleteCommentConfrim);
+                    $("#delete").dialog("destroy");
+                    $(".deleteConfrim").empty();
+                    $("#delete").html(DeleteConfrim);
+                    $("#dialog").dialog("destroy");
+                    $(".NullValue").empty();
+                    $("#dialog").html(Data);
+                    return false;
+                });
+
+                $("#btnYes").click(function () {
+                    $("#frm").submit();
+                    jQuery('#delete').dialog('close');
+                    var Data = "<div style='padding: 17px 132px;'><p><img src='../../Images/loading.gif' />Please Wait AddItem is Loading</p></div>";
+                    var DeleteConfrim = "<div style='padding: 20px 50px;'><p><img src='../../Images/loading.gif' />Loading...</p></div>";
+                    var DeleteCommentConfrim = "<div style='padding: 20px 50px;'><p><img src='../../Images/loading.gif' />Loading...</p></div>";
+                    $("#deleteComment").dialog("destroy");
+                    $(".deleteCommentConfrim").empty();
+                    $("#deleteComment").html(DeleteCommentConfrim);
+                    $("#delete").dialog("destroy");
+                    $(".deleteConfrim").empty();
+                    $("#delete").html(DeleteConfrim);
+                    $("#dialog").dialog("destroy");
+                    $(".NullValue").empty();
+                    $("#dialog").html(Data);
+                    return false;
+                });
+                $("#btnNo").click(function () {
+                    jQuery('#delete').dialog('close');
+                    var Data = "<div style='padding: 17px 132px;'><p><img src='../../Images/loading.gif' />Please Wait AddItem is Loading</p></div>";
+                    var DeleteConfrim = "<div style='padding: 20px 50px;'><p><img src='../../Images/loading.gif' />Loading...</p></div>";
+                    var DeleteCommentConfrim = "<div style='padding: 20px 50px;'><p><img src='../../Images/loading.gif' />Loading...</p></div>";
+                    $("#deleteComment").dialog("destroy");
+                    $(".deleteCommentConfrim").empty();
+                    $("#deleteComment").html(DeleteCommentConfrim);
+                    $("#delete").dialog("destroy");
+                    $(".deleteConfrim").empty();
+                    $("#delete").html(DeleteConfrim);
+                    $("#dialog").dialog("destroy");
+                    $(".NullValue").empty();
+                    $("#dialog").html(Data);
+                    return false;
+                });
+                return false;
+            }
+            else {
+                if ($("#LoginCheckAlert")) {
+                    $("#LoginCheckAlert").remove();
+                }
+                $('body').append("<div id='LoginCheckAlert' title='Not Logged In'><table width='185' cellspacing='0' cellpadding='0' border='0' style='margin-top:15px;'><tbody><tr><td align='center'><span>Please log in to continue.</span></td></tr><tr><td align='center'><input style='margin-top:20px;' type='button' class='askquebtn' id='btnYesLoginCheck' value='Login'></td></tr></tbody></table></div>");
+                jQuery("#LoginCheckAlert").dialog({
+                    bgiframe: true, autoOpen: false, width: 200, modal: true
+                });
+                jQuery('#LoginCheckAlert').dialog('open');
+                $("#btnYesLoginCheck").click(function () {
+                    window.top.location.href = GetRootPathJS();
+                });
+                $("#lnkmyclose").click(function () {
+                    jQuery('#LoginCheckAlert').dialog('close');
+                    $("#LoginCheckAlert").dialog("destroy");
+                    $("#LoginCheckAlert").remove();
+                    return false;
+                });
+            }
+        });
+    });
+
+    function Get_Cookie(check_name) {
+        // first we'll split this cookie up into name/value pairs
+        // note: document.cookie only returns name=value, not the other components
+        var a_all_cookies = document.cookie.split(';');
+        var a_temp_cookie = '';
+        var cookie_name = '';
+        var cookie_value = '';
+        var b_cookie_found = false; // set boolean t/f default f
+
+        for (i = 0; i < a_all_cookies.length; i++) {
+            // now we'll split apart each name=value pair
+            a_temp_cookie = a_all_cookies[i].split('=');
+
+            // and trim left/right whitespace while we're at it
+            cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, '');
+
+            // if the extracted name matches passed check_name
+            if (cookie_name == check_name) {
+                b_cookie_found = true;
+                // we need to handle case where cookie has no value but exists (no = sign, that is):
+                if (a_temp_cookie.length > 1) {
+                    cookie_value = unescape(a_temp_cookie[1].replace(/^\s+|\s+$/g, ''));
+                }
+                // note that in cases where cookie is initialized but no value, null is returned
+                return cookie_value;
+                break;
+            }
+            a_temp_cookie = null;
+            cookie_name = '';
+        }
+        if (!b_cookie_found) {
+            return false;
+        }
+    }
+</script>
+<div id="delete" style="display: none" title="Confirm" class="deleteConfrim">
+    @*<div style="padding: 10px 6px;">
+        <p>
+            Are you sure you want to delete item ?</p>
+    </div>
+    <br />
+    <div style="padding: 10px 10px;">
+        <input type="button" class="askquebtn" id="btnYes" value="Yes" />
+        <input type="button" id="btnNo" class="askquebtn" value="No" />
+    </div>*@
+    <div style="padding: 20px 50px;">
+        <p>
+            <img alt="" src="../../Images/loading.gif" />Loading...</p>
+    </div>
+</div>
+<div id="deleteComment" style="display: none" title="Confirm" class="deleteCommentConfrim">
+    @*<div style="padding: 10px 6px;">
+        <p>
+            Are you sure you want to delete item ?</p>
+    </div>
+    <br />
+    <div style="padding: 10px 10px;">
+        <input type="button" class="askquebtn" id="btnYesComment" value="Yes" />
+        <input type="button" id="btnNoComment" class="askquebtn" value="No" />
+    </div>*@
+    <div style="padding: 20px 50px;">
+        <p>
+            <img alt="" src="../../Images/loading.gif" />Loading...</p>
+    </div>
+</div>

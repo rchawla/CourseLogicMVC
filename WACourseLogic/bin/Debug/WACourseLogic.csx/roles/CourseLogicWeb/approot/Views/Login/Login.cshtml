@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+@using CourseLogicWeb.ConfigurationService
+@model CourseLogicWeb.Models.LoginModel
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link href="../../Content/login.css" rel="stylesheet" type="text/css" />
+<link href="../../Content/tooltip.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../Scripts/common.js"></script>
+<script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"></script>
+@{    string RootPath = "";
+      if (!string.IsNullOrEmpty(ConfigurationService.GetRoot().ToString()))
+      {
+          RootPath = ConfigurationService.GetRoot().ToString();
+      }
+      string ApplicationKey = "";
+      if (!string.IsNullOrEmpty(ConfigurationService.APPLICATION_KEY().ToString()))
+      {
+          ApplicationKey = ConfigurationService.APPLICATION_KEY().ToString();
+      }
+}
+
+<script type="text/javascript">
+
+    function callForgotPassword() {
+        document.getElementById('dialogForgotPassword').style.display = "block";
+        document.getElementById('txtMailId').value = "";
+        document.getElementById('txtUserId').value = "";
+        document.getElementById('ErrorForgotPassword').title = "";
+        document.getElementById('ErrorForgotPassword').style.display = "none";
+    }
+
+    function fBlogout() {
+        try {
+            FB.Connect.ifUserConnected(function () {
+
+                FB.Connect.logoutAndRedirect('@RootPath/Login/Login/');
+            }, '@RootPath/Login/Login');
+
+        } catch (e) {
+
+            location.href = '@RootPath/Login/Login';
+        }
+    }
+    </script>
+</head>
+@*@{
+    View.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}*@
+
+<body>
+<div class="loginHeader">
+    <div class="content">
+              <img src="../../Images/cl-logo.gif" class="logo" alt="" />
+         <div class="fbconnect">
+            @using (Html.BeginForm())
+            {
+                <div class="loginleft">
+                    <div class="topLinks">
+                        <div style=" float:left;width:128px; font-size:12px; color:#ffffff; line-height:18px; height:18px;">
+                            <span class="check"></span>@Html.CheckBoxFor(m => m.RememberMe) Keep me logged in</div>
+                        <div  style=" float:left; font-size:12px; color:#ffffff; line-height:18px; margin-left:17px;  height:18px;">
+                             <a id="linkForgotPassword" onclick="javascript:callForgotPassword();return false;" style="cursor: pointer;line-height:20px;color:White;">
+                                 Forgot your password?</a>  
+                                 </div>
+                    </div>
+                    <div class="TextBoxes">
+                 <div style="float:left;width:143px;">@Html.TextBoxFor(m => m.Username, new { @class = "text" }) @Html.ValidationMessageFor(m => m.Username)</div>
+                      <div style="float:left;width:143px;">@Html.PasswordFor(m => m.Password, new { @class = "text1" }) @Html.ValidationMessageFor(m => m.Password)</div>
+                        <input type="submit" value="Login" class="login-BTN" />
+                    </div>
+                   </div>           
+            }
+            <form action="http://www.facebook.com/logout.php" method="POST">
+            <input type="hidden" name="confirm" value="1" />
+            </form>
+             <div class="fbconnectbtn">
+                <div runat="server" id="AuthenticationSection" align="left" class="facebookconnect">
+                    <fb:login-button background="white" length="long" v="2" id="fb" size="large" onlogin="window.location.reload();">Connect with Facebook</fb:login-button>
+                </div>
+            </div>
+                 <div style="width:550px;font-size: 14px; line-height:14px; height:14px; position:relative;   top:-58px; color: red; float:left;  font-weight: bold;">
+            @ViewData["Message"]</div>
+        </div>
+    </div>
+</div>
+
+<div style="width:100%; margin:auto;">
+    @{Html.RenderAction("InvitationRequest", "Invitation", Model);}
+</div>
+
+@{Html.RenderPartial("../Common/Footer");}
+<div id="dialogForgotPassword" style=" width:240px;height:auto;position:relative;top:-350px;left:460px; display:none;float:left;"  >
+          <div class="fpPopUpCenter">
+                  <div class="fpPopUpTitle">
+                    <input type="button"  onclick="javascript:document.getElementById('dialogForgotPassword').style.display ='none';return false;" id="lnkmyclose" value="X" style="float:right; margin:7px; width:25px;text-align:center;"/>
+                 </div>
+
+                 <div style="float:left;display:block;">
+                    <label id="ErrorForgotPassword" style="display:none;"></label>
+                </div>
+             
+                   <div class="fpContainer" >
+                 <div style="float:left;margin-top:5px;margin-bottom:5px;">Enter User name</div>
+                
+                     <div style="float:left;margin-top:5px;margin-bottom:5px;"><input type="text" class="text" id="txtUserId" value=""/></div>
+                    </div>
+                  
+                 <div style="float:left;display:inline;margin-left:40%;">OR</div>
+               
+           <div class="fpContainer">
+                 <div  style="float:left;width:80px;margin-top:5px;margin-bottom:5px;">Enter E-Mail</div>
+                   
+                       <div style="float:left;margin-top:5px;">  <input type="text" class="text" id="txtMailId" value=""/></div>
+                    </div>
+                    <br />
+                   <div style="float:left;height:24px;width:103px;  margin-top:15px; padding-left:137px;">
+                        <input id="btnRecoverPwd" style="color:#FFFFFF; text-align:center; border:none;  font-weight:700;  font-size:12px; background:url(../images/askque-btn.gif) repeat-x; width:71px; height:24px;" type="submit" value="SUBMIT" onclick="javascript:recoverPassword();"/>
+                    </div>
+                
+ </div> 
+                 <div style="float:left;width:240px; ">
+                    <img src="../../Images/login-popuo_bottom.png" style="vertical-align:top;" />
+                    </div>    
+  </div>
+<script type="text/javascript" src="../../Scripts/ToolTipScript.js"></script>
+<script type="text/javascript">
+    FB.init("@ApplicationKey", "@RootPath/xd_receiver.htm");
+
+</script>
+</body>
+</html>

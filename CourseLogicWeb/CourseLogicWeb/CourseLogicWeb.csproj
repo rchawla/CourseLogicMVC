@@ -1,0 +1,661 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A3D67067-ADA7-4915-9AEA-A65A8EAFC3DE}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CourseLogicWeb</RootNamespace>
+    <AssemblyName>CourseLogicWeb</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CuteWebUI.AjaxUploader">
+      <HintPath>C:\Users\cshiv\Documents\Visual Studio 2010\Projects\MvcFileUpload\MvcFileUpload\bin\CuteWebUI.AjaxUploader.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Download\SDK_Binaries\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook.Web, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Download\SDK_Binaries\Facebook.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook.Web.Mvc, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Download\SDK_Binaries\Facebook.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook.Winforms, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Download\SDK_Binaries\Facebook.Winforms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\courselogic_Working\CourseLogicWeb\CourseLogicWeb\bin\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\courselogic_Working\CourseLogicWeb\CourseLogicWeb\bin\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\..\courselogic_Working\CourseLogicWeb\CourseLogicWeb\bin\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\..\..\courselogic_Working\CourseLogicWeb\CourseLogicWeb\bin\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\..\..\courselogic_Working\CourseLogicWeb\CourseLogicWeb\bin\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\dll\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Entity">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Abstractions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Services">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.EnterpriseServices">
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AddItemController.cs" />
+    <Compile Include="Controllers\AnswerController.cs" />
+    <Compile Include="Controllers\AssessmentController.cs" />
+    <Compile Include="Controllers\CalendarController.cs" />
+    <Compile Include="Controllers\ChildCountController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\CourseHomeController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\CourseWalkthroughController.cs" />
+    <Compile Include="Controllers\DeleteItemsController.cs" />
+    <Compile Include="Controllers\DiscussionController.cs" />
+    <Compile Include="Controllers\EditorController.cs" />
+    <Compile Include="Controllers\FavoriteController.cs" />
+    <Compile Include="Controllers\FilesController.cs" />
+    <Compile Include="Controllers\FileUploadController.cs" />
+    <Compile Include="Controllers\FlashcardController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvitationController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\NoteController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\SummaryController.cs" />
+    <Compile Include="Controllers\TermsController.cs" />
+    <Compile Include="Controllers\VoteController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\AssessmentModel.cs" />
+    <Compile Include="Models\ConfigurationService.cs" />
+    <Compile Include="Models\CourseItemModel.cs" />
+    <Compile Include="Models\CoursesModel.cs" />
+    <Compile Include="Models\CourseWalkthroughModel.cs" />
+    <Compile Include="Models\Cryptography.cs" />
+    <Compile Include="Models\EditorModel.cs" />
+    <Compile Include="Models\FileManagerProvider.cs" />
+    <Compile Include="Models\FilesModel.cs" />
+    <Compile Include="Models\FlashcardModel.cs" />
+    <Compile Include="Models\InvitationModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\ProfileModel.cs" />
+    <Compile Include="Models\RegistrationModel.cs" />
+    <Compile Include="Models\SendEmail.cs" />
+    <Compile Include="Models\VoteModel.cs" />
+    <Compile Include="Models\WebCookies.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\calendar\datepicker.css" />
+    <Content Include="Content\calendar\fullcalendar.css" />
+    <Content Include="Content\calendar\main.css" />
+    <Content Include="Content\calendar\theme.css" />
+    <Content Include="Content\coursehome.css" />
+    <Content Include="Content\courseIntroduction.css" />
+    <Content Include="Content\courselogic_new.css" />
+    <Content Include="Content\itemdetails-home.css" />
+    <Content Include="Content\itemdetails.css" />
+    <Content Include="Content\login.css" />
+    <Content Include="Content\tooltip.css" />
+    <Content Include="EmailTemplates\RecoverPassword.xml" />
+    <Content Include="EmailTemplates\RegistrationApproval.xml" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\aa.png" />
+    <Content Include="Images\Add.png" />
+    <Content Include="Images\answer-big.gif" />
+    <Content Include="Images\answer-box-center.png" />
+    <Content Include="Images\answer-box-left.png" />
+    <Content Include="Images\answer-box-right.png" />
+    <Content Include="Images\answer-box2-center.png" />
+    <Content Include="Images\answer-box2-left.png" />
+    <Content Include="Images\answer-box2-right.png" />
+    <Content Include="Images\answer.gif" />
+    <Content Include="Images\AnswerPic.jpg" />
+    <Content Include="Images\arrow.png" />
+    <Content Include="Images\arrow_down.gif" />
+    <Content Include="Images\arrow_up.gif" />
+    <Content Include="Images\askque-btn-1.gif" />
+    <Content Include="Images\askque-btn-high.gif" />
+    <Content Include="Images\askque-btn.gif" />
+    <Content Include="Images\assessment.png" />
+    <Content Include="Images\Attachment.png" />
+    <Content Include="Images\big-button.png" />
+    <Content Include="Images\btn-delete.jpg" />
+    <Content Include="Images\calendar-new-design.png" />
+    <Content Include="Images\calendar.png" />
+    <Content Include="Images\calendar\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Images\calendar\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="Images\calendar\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Images\calendar\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Images\calendar\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Images\calendar\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Images\calendar\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Images\calendar\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Images\calendar\ui-icons_217bc0_256x240.png" />
+    <Content Include="Images\calendar\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Images\calendar\ui-icons_469bdd_256x240.png" />
+    <Content Include="Images\calendar\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Images\calendar\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Images\calendar\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Images\calendar\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Images\cl-login.png" />
+    <Content Include="Images\cl-logo.gif" />
+    <Content Include="Images\cl-splash.jpg" />
+    <Content Include="Images\cl.png" />
+    <Content Include="Images\close.png" />
+    <Content Include="Images\commentPic.jpg" />
+    <Content Include="Images\definition-big.png" />
+    <Content Include="Images\definition.png" />
+    <Content Include="Images\delet_02.png" />
+    <Content Include="Images\discussion-big.png" />
+    <Content Include="Images\Discussion-ds-icon.png" />
+    <Content Include="Images\discussion-new-design.png" />
+    <Content Include="Images\discussion.png" />
+    <Content Include="Images\Discussion_A.png" />
+    <Content Include="Images\Discussion_B.png" />
+    <Content Include="Images\Discussion_C.png" />
+    <Content Include="Images\Discussion_D.png" />
+    <Content Include="Images\Discussion_F.png" />
+    <Content Include="Images\edit_02.png" />
+    <Content Include="Images\facebook.png" />
+    <Content Include="Images\Favorite-Blue.png" />
+    <Content Include="Images\Favorite-Blue_03.png" />
+    <Content Include="Images\Favorite-Gold_03.png" />
+    <Content Include="Images\Favorited_white.png" />
+    <Content Include="Images\FlashCard-close.png" />
+    <Content Include="Images\flip-bt.png" />
+    <Content Include="Images\home.gif" />
+    <Content Include="Images\home.png" />
+    <Content Include="Images\Hot-Topic-Icon.png" />
+    <Content Include="Images\ico-001.png" />
+    <Content Include="Images\ico-002.png" />
+    <Content Include="Images\icon-edit.jpg" />
+    <Content Include="Images\loading.gif" />
+    <Content Include="Images\login-bt-new.png" />
+    <Content Include="Images\login-bt_new.png" />
+    <Content Include="Images\login-line.jpg" />
+    <Content Include="Images\login-popuo-title.png" />
+    <Content Include="Images\login-popuo_bottom.png" />
+    <Content Include="Images\login-popuo_center.png" />
+    <Content Include="Images\logo_new.gif" />
+    <Content Include="Images\next-bt.jpg" />
+    <Content Include="Images\next-InActive-bt.jpg" />
+    <Content Include="Images\note-new-design.png" />
+    <Content Include="Images\notes-big.png" />
+    <Content Include="Images\play_02.png" />
+    <Content Include="Images\plus-icon.png" />
+    <Content Include="Images\profile-newPic.png" />
+    <Content Include="Images\innerLogo.gif" />
+    <Content Include="Images\menuArrow-Hover.gif" />
+    <Content Include="Images\menuArrow.gif" />
+    <Content Include="Images\notes.png" />
+    <Content Include="Images\profile.jpg" />
+    <Content Include="Images\profilePic-Small.gif" />
+    <Content Include="Images\prv-bt.jpg" />
+    <Content Include="Images\prv-InActive-bt.jpg" />
+    <Content Include="Images\Q&amp;A.png" />
+    <Content Include="Images\question-answer-new-design.png" />
+    <Content Include="Images\question-big.gif" />
+    <Content Include="Images\question.gif" />
+    <Content Include="Images\register-BG.gif" />
+    <Content Include="Images\registration.png" />
+    <Content Include="Images\signup-BTN.gif" />
+    <Content Include="Images\staar.png" />
+    <Content Include="Images\star-active.png" />
+    <Content Include="Images\star-gray.png" />
+    <Content Include="Images\star.png" />
+    <Content Include="Images\study.png" />
+    <Content Include="Images\submit-bt.jpg" />
+    <Content Include="Images\summary-big.png" />
+    <Content Include="Images\summary-new-design.png" />
+    <Content Include="Images\summary.png" />
+    <Content Include="Images\tag2.jpg" />
+    <Content Include="Images\Temp\add-assessment-1.gif" />
+    <Content Include="Images\Temp\add-assessment.gif" />
+    <Content Include="Images\Temp\add-done-myprof.jpg" />
+    <Content Include="Images\Temp\add-edit.png" />
+    <Content Include="Images\Temp\add-my-calender.jpg" />
+    <Content Include="Images\Temp\add-my-prof.jpg" />
+    <Content Include="Images\Temp\addtocalender-1.gif" />
+    <Content Include="Images\Temp\addtocalender.gif" />
+    <Content Include="Images\Temp\AnchorPosition.js" />
+    <Content Include="Images\Temp\AnswerPic.jpg" />
+    <Content Include="Images\Temp\arrow_down.gif" />
+    <Content Include="Images\Temp\arrow_new.png" />
+    <Content Include="Images\Temp\arrow_up.gif" />
+    <Content Include="Images\Temp\bottombg.png" />
+    <Content Include="Images\Temp\btn-add-assessment-1.gif" />
+    <Content Include="Images\Temp\btn-add-assessment.gif" />
+    <Content Include="Images\Temp\btn-addassessment.gif" />
+    <Content Include="Images\Temp\btn-addtocalender-1.gif" />
+    <Content Include="Images\Temp\btn-addtocalender.gif" />
+    <Content Include="Images\Temp\btn-close.jpg" />
+    <Content Include="Images\Temp\btn-dropcourse-1.gif" />
+    <Content Include="Images\Temp\btn-dropcourse.gif" />
+    <Content Include="Images\Temp\btn-edit.gif" />
+    <Content Include="Images\Temp\btn-finish.gif" />
+    <Content Include="Images\Temp\btn-hideintro.gif" />
+    <Content Include="Images\Temp\btn-invite.gif" />
+    <Content Include="Images\Temp\btn-next.gif" />
+    <Content Include="Images\Temp\btn-savecontinue.gif" />
+    <Content Include="Images\Temp\btn-showintro.gif" />
+    <Content Include="Images\Temp\btn-skip-1.gif" />
+    <Content Include="Images\Temp\btn-skip.gif" />
+    <Content Include="Images\Temp\btn-skipbg.gif" />
+    <Content Include="Images\Temp\btn-verify-1.gif" />
+    <Content Include="Images\Temp\btn-verify.gif" />
+    <Content Include="Images\Temp\btn-viewassessment.gif" />
+    <Content Include="Images\Temp\classmate-course-collaborate.jpg" />
+    <Content Include="Images\Temp\collaborate.jpg" />
+    <Content Include="Images\Temp\ColorPicker2.js" />
+    <Content Include="Images\Temp\commentPic.jpg" />
+    <Content Include="Images\Temp\discussion-assessment.jpg" />
+    <Content Include="Images\Temp\discussion-note.jpg" />
+    <Content Include="Images\Temp\discussion-qnd.jpg" />
+    <Content Include="Images\Temp\discussion-tnd.jpg" />
+    <Content Include="Images\Temp\discussion-welcome.jpg" />
+    <Content Include="Images\Temp\dropcourse-1.gif" />
+    <Content Include="Images\Temp\dropcourse.gif" />
+    <Content Include="Images\Temp\editor-s.jpg" />
+    <Content Include="Images\Temp\editor-td.jpg" />
+    <Content Include="Images\Temp\editor.jpg" />
+    <Content Include="Images\Temp\header-true.png" />
+    <Content Include="Images\Temp\horizontalRuler.gif" />
+    <Content Include="Images\Temp\innerLogo.gif" />
+    <Content Include="Images\Temp\left-arrow.jpg" />
+    <Content Include="Images\Temp\leftmenu-bg.jpg" />
+    <Content Include="Images\Temp\mainContainer-Top.gif" />
+    <Content Include="Images\Temp\menu-hover.jpg" />
+    <Content Include="Images\Temp\menu1.jpg" />
+    <Content Include="Images\Temp\menu2-hove.jpg" />
+    <Content Include="Images\Temp\menu2.jpg" />
+    <Content Include="Images\Temp\menu3-hover.jpg" />
+    <Content Include="Images\Temp\menu3.jpg" />
+    <Content Include="Images\Temp\menuArrow-Hover.gif" />
+    <Content Include="Images\Temp\menuArrow.gif" />
+    <Content Include="Images\Temp\new_menu.jpg" />
+    <Content Include="Images\Temp\new_menu.png" />
+    <Content Include="Images\Temp\new_menu2.jpg" />
+    <Content Include="Images\Temp\new_menu2.png" />
+    <Content Include="Images\Temp\new_menu3.jpg" />
+    <Content Include="Images\Temp\new_menu3.png" />
+    <Content Include="Images\Temp\new_menu31.png" />
+    <Content Include="Images\Temp\new_menu4.jpg" />
+    <Content Include="Images\Temp\PopUpWindow.js" />
+    <Content Include="Images\Temp\profilePic-Small.gif" />
+    <Content Include="Images\Temp\profilePic-w.gif" />
+    <Content Include="Images\Temp\profilePic.gif" />
+    <Content Include="Images\Temp\questionPic.jpg" />
+    <Content Include="Images\Temp\right-arrow.jpg" />
+    <Content Include="Images\Temp\round.png" />
+    <Content Include="Images\Temp\skip-1.gif" />
+    <Content Include="Images\Temp\skip.gif" />
+    <Content Include="Images\Temp\stepbg.png" />
+    <Content Include="Images\Temp\stepselectedbg.png" />
+    <Content Include="Images\Temp\topbg.png" />
+    <Content Include="Images\Temp\treeview-red-line.gif" />
+    <Content Include="Images\Temp\treeview-red.gif" />
+    <Content Include="Images\Temp\upload.png" />
+    <Content Include="Images\Temp\verify-1.gif" />
+    <Content Include="Images\Temp\verify-course-collaborate.jpg" />
+    <Content Include="Images\Temp\verify-course-right.jpg" />
+    <Content Include="Images\Temp\verify.gif" />
+    <Content Include="Images\term-big.png" />
+    <Content Include="Images\term-definition-new-design.png" />
+    <Content Include="Images\Term.png" />
+    <Content Include="Images\triangle.png" />
+    <Content Include="Images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Images\ui-icons_222222_256x240.png" />
+    <Content Include="Images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Images\ui-icons_454545_256x240.png" />
+    <Content Include="Images\ui-icons_888888_256x240.png" />
+    <Content Include="Images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Images\users.png" />
+    <Content Include="Images\vote-arrow-down-h.png" />
+    <Content Include="Images\vote-arrow-down.png" />
+    <Content Include="Images\vote-arrow-up-h.png" />
+    <Content Include="Images\vote-arrow-up-New.png" />
+    <Content Include="Images\vote-comments-h.png" />
+    <Content Include="Images\vote-comments.png" />
+    <Content Include="Images\Vote-Down.png" />
+    <Content Include="Images\Vote-Up.png" />
+    <Content Include="Images\voted-down.png" />
+    <Content Include="Images\voted-up.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\blank.gif" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancybox-x.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancybox-y.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancybox.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancy_close.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancy_loading.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancy_nav_left.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancy_nav_right.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancy_shadow_e.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancy_shadow_n.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancy_shadow_ne.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancy_shadow_nw.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancy_shadow_s.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancy_shadow_se.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancy_shadow_sw.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancy_shadow_w.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancy_title_left.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancy_title_main.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancy_title_over.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\fancy_title_right.png" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\jquery.easing-1.3.pack.js" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\jquery.fancybox-1.3.4.css" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\jquery.fancybox-1.3.4.js" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\jquery.fancybox-1.3.4.pack.js" />
+    <Content Include="jquery.fancybox-1.3.4\fancybox\jquery.mousewheel-3.0.4.pack.js" />
+    <Content Include="Scripts\calendar\CourseAssessment.js" />
+    <Content Include="Scripts\calendar\datepicker.js" />
+    <Content Include="Scripts\calendar\fullcalendar.js" />
+    <Content Include="Scripts\calendar\MyAssessment.js" />
+    <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\coursehome.js" />
+    <Content Include="Scripts\encoder.js" />
+    <Content Include="Scripts\calendar\fullcalendar.min.js" />
+    <Content Include="Scripts\gcal.js" />
+    <Content Include="Scripts\jquery-ui-1.8.6.custom.css" />
+    <Content Include="Scripts\jquery-ui-1.8.6.custom.min.js" />
+    <Content Include="Scripts\calendar\jquery-ui.min.js" />
+    <Content Include="Scripts\calendar\jquery.js" />
+    <Content Include="Scripts\calendar\jquery.min.js" />
+    <Content Include="Scripts\calendar\jquery.qtip-1.0.0-rc3.js" />
+    <Content Include="Scripts\calendar\jquery.qtip-1.0.0-rc3.min.js" />
+    <Content Include="Scripts\calendar\jquery.ui.dialog.js" />
+    <Content Include="Scripts\calendar\jquery.ui.position.js" />
+    <Content Include="Scripts\jwysiwyg\jquery.wysiwyg.css" />
+    <Content Include="Scripts\jwysiwyg\jquery.wysiwyg.gif" />
+    <Content Include="Scripts\jwysiwyg\jquery.wysiwyg.js" />
+    <Content Include="Scripts\master.css" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Scripts\PrettyComments\prettyComments.js" />
+    <Content Include="Scripts\PrettyComments\__MACOSX\._prettyComments.js" />
+    <Content Include="Scripts\ToolTipScript.js" />
+    <Content Include="Scripts\calendar\ui.core.js" />
+    <Content Include="Scripts\calendar\ui.draggable.js" />
+    <Content Include="Scripts\calendar\ui.resizable.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-1.4.1.js" />
+    <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
+    <Content Include="Views\Account\LogOn.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="xd_receiver.htm" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Images\ProfileImage\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Question\QuestionList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Question\QuestionByQuestionID.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Vote\Vote.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Login\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Comment\LoadComments.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Answer\AnswerList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Comment\CommentByCommentID.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Editor\Editor.cshtml" />
+    <Content Include="Views\Editor\LoadEditor.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_DetailsMaster.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CourseHome\CourseHome.cshtml" />
+    <Content Include="Views\CourseHome\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Note\NoteList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Note\NoteByNoteID.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CLFacadeLayer\CLFacadeLayer.csproj">
+      <Project>{E832347C-9F71-42D9-BF2F-45768332E629}</Project>
+      <Name>CLFacadeLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Editor\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\jwysiwyg\Thumbs.db" />
+    <Content Include="Views\Terms\DefinitionList.cshtml" />
+    <Content Include="Views\Terms\TermByTermID.cshtml" />
+    <Content Include="Views\Terms\TermsList.cshtml" />
+    <Content Include="Views\Registration\Index.cshtml" />
+    <Content Include="Views\Courses\CourseByCourseID.cshtml" />
+    <Content Include="Views\Courses\StudentCourses.cshtml" />
+    <Content Include="Views\Registration\CLRegistration.cshtml" />
+    <Content Include="Views\Registration\RedirectPage.cshtml" />
+    <Content Include="Views\AddItem\LoadAddItem.cshtml" />
+    <Content Include="Views\ChildCount\LoadChildCount.cshtml" />
+    <Content Include="Views\Answer\GetChildByCourseItemID.cshtml" />
+    <Content Include="Views\Discussion\DiscussionByDiscussionID.cshtml" />
+    <Content Include="Views\Discussion\DiscussionList.cshtml" />
+    <Content Include="Views\Summary\SummaryBySummaryID.cshtml" />
+    <Content Include="Views\Invitation\InvitationRequest.cshtml" />
+    <Content Include="Views\Profile\CurrentCourses.cshtml" />
+    <Content Include="Views\Courses\CourseList.cshtml" />
+    <Content Include="Views\Courses\SearchCourse.cshtml" />
+    <Content Include="Views\Favorite\FavoriteList.cshtml" />
+    <Content Include="Views\Profile\EditProfile.cshtml" />
+    <Content Include="Views\FileUpload\ProfilePictureUpload.cshtml" />
+    <Content Include="Views\Shared\_CourseHomeMaster.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_ProfileMaster.cshtml" />
+    <Content Include="Views\Common\Terms.cshtml" />
+    <Content Include="Views\Common\Footer.cshtml" />
+    <Content Include="Views\Shared\ConfirmPopup.cshtml" />
+    <Content Include="Views\DeleteItems\RedirectChild.cshtml" />
+    <Content Include="Views\Common\Header.cshtml" />
+    <Content Include="Views\Shared\_LogOnPartial.cshtml" />
+    <Content Include="Views\Flashcard\GetFlashCardSets.cshtml" />
+    <Content Include="Views\Flashcard\PlayFlashCard.cshtml" />
+    <Content Include="Views\Flashcard\GetFlashCardSetSelectionItem.cshtml" />
+    <Content Include="Views\Flashcard\GetFlashCardByFlashCardID.cshtml" />
+    <Content Include="Views\Shared\_PlayFlashCardMaster.cshtml" />
+    <Content Include="Views\Flashcard\TempPlay.cshtml" />
+    <Content Include="Views\Calendar\CourseAssessments.cshtml" />
+    <Content Include="Views\Calendar\MyAssessments.cshtml" />
+    <Content Include="Views\Assessment\AssessmentList.cshtml" />
+    <Content Include="Views\Assessment\CourseColor.cshtml" />
+    <Content Include="Views\Assessment\CourseWiseAssessment.cshtml" />
+    <Content Include="UploadHandler.ashx" />
+    <Content Include="Views\Files\FileDisplay.cshtml" />
+    <Content Include="Views\CourseWalkthrough\Verfiy_Course.cshtml" />
+    <Content Include="Views\CourseHome\DiscussionListingCourseHome.cshtml" />
+    <Content Include="Views\AddItem\Attachment.cshtml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3061</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/CourseLogicWeb</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

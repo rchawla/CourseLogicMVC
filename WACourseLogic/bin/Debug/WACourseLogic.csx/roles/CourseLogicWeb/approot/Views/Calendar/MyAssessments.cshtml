@@ -1,0 +1,119 @@
+﻿
+
+@{
+    View.Title = "Course Assessment";
+    Layout = "~/Views/Shared/_DetailsMaster.cshtml";
+          
+}
+
+<br />	
+<link rel='stylesheet' type='text/css' href="../../Content/calendar/fullcalendar.css"/>
+<link href="../../Content/tooltip.css" rel="stylesheet" type="text/css" ></link>
+<link href="../../Content/calendar/main.css" rel="stylesheet" type="text/css" ></link>
+<link href="../../Scripts/jquery-ui-1.8.6.custom.css" rel="stylesheet" type="text/css" ></link>
+<link rel='stylesheet' type='text/css' href="../../Content/calendar/theme.css"/>
+
+<script type='text/javascript' src="../../Scripts/calendar/jquery.js"></script>
+<script type='text/javascript' src="../../Scripts/calendar/ui.core.js"></script>
+<script type='text/javascript' src="../../Scripts/calendar/ui.draggable.js"></script>
+<script type='text/javascript' src="../../Scripts/calendar/ui.resizable.js"></script>
+
+<script src="../../Scripts/calendar/jquery.min.js" type='text/javascript'></script>
+<script src="../../Scripts/calendar/jquery-ui.min.js" type='text/javascript'></script>
+ <script type='text/javascript' src="../../Scripts/calendar/fullcalendar.js"></script>
+ <script type='text/javascript' src="../../Scripts/calendar/MyAssessment.js"></script>
+
+<script type='text/javascript' src="../../Scripts/calendar/jquery.ui.position.js"></script>
+<script type='text/javascript' src="../../Scripts/calendar/jquery.ui.dialog.js"></script>
+<script type="text/javascript" src="../../Scripts/calendar/jquery.qtip-1.0.0-rc3.min.js"></script>
+<script type="text/javascript" src="../../Scripts/calendar/jquery.qtip-1.0.0-rc3.js"></script>
+
+
+
+
+<style>
+   
+    .ui-dialog .ui-dialog-buttonpane
+    {
+        background:none repeat scroll 0 0 #FDF6CD;
+        border:1px solid #CCCCCC;
+        margin:0 10px 10px;
+        padding:0 5px 5px;
+        text-align:left
+}
+.ui-dialog .ui-dialog-buttonpane button
+    {
+       font-family:""Lucida Grande",Helvetica,Arial,Verdana,sans-serif"; float:right; margin:0px 10px 10px 0px;  background: url("../images/askque-btn.gif") no-repeat scroll 0 0 transparent; color:#FFFFFF;  width:68px; height:24px; 
+    }
+    
+    .ui-dialog-buttonset
+    {
+        float:right;
+        margin-top:10px
+        }
+     
+</style>
+
+
+<div id="courseNot">
+@{Html.RenderAction("CourseColor", "Assessment");}
+<br /><br /><br />
+</div>
+
+<div id='calendar'></div>
+
+<div class="tab-box" id="event_edit_container" style="width:60%" >
+        <div class="tab-arrow">
+            <img alt="" src="/images/aa.png" width="9" height="6" border="0" />
+        </div>
+        <div style="margin: 10px 76px;">
+            <b>
+                <label id="ResultsSucess" style="display: none; color: Green">
+                </label>
+            </b>
+        </div>
+        
+        <div class="tab-box-title">
+            Assessment Title</div>
+        
+        <div>
+            <textarea id="AssTitle"  class="textarea-2 fontEditTextArea"></textarea>
+
+            <label id="ErrorCourseItemTitle"  class="ErrorLabel">
+            </label>
+        </div>
+        <div class="tab-box-title-2">
+            Description</div>
+        <div style="width:100%;">
+            <textarea id="AssDescription" rows="3" class="textarea-1"></textarea>
+            <label id="ErrorCourseItemDescription"  class="ErrorLabel">
+            </label>
+        </div>
+        <div class="more-input" align="left">
+            <span>Assessment Type</span><span>@Html.DropDownList("AssessmentType", new SelectList((IEnumerable<CLFacadeLayer.GenericBE>)ViewData["AssTypes"], "AssessmentTypeID", "AssessmentTypeName"), "--Select Type--")</span>
+            <span style="width:auto">Due Date</span><input id="Duedate"  class="textarea-3" />
+            <span>Possible Points</span><textarea id="PosPonits" title="0" class="textarea-3"></textarea>
+             <div class="bt-1">
+            @*<input type="submit" value="SHARE" class="bt-1-2" />*@
+          @* <input id="AddItemShare" type="button" name="btnSubmit" id="btnSubmit" value="SHARE" class="bt-1-2" />*@
+        </div>
+
+        </div>
+       
+        <div>
+            <label id="ErrorChapter" class="ErrorLabel">
+            </label>
+        </div>
+      
+    
+       
+    </div>
+	 <script type="text/javascript">
+	     //     function GoToAssessmentList(CourseID) {
+	     //    window.location.href = "../Assessment/showAss"+"?CourseID="+CourseID ;
+	     //} 
+	     (function ($) {
+	         
+	         $('#Duedate').datepicker();
+	     })(jQuery);
+</script>  

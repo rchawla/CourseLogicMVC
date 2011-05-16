@@ -1,0 +1,34 @@
+﻿@using CLFacadeLayer
+@model GenericBE
+@if (Model.IsBoth)
+{ 
+<div class="content-area-new">
+    <div class="course-info float-l">
+        <h2>
+            Course Info:</h2>
+        <br />
+        <br />
+        <br />
+        <ul>
+            <li>
+                <div class="course-info-title">
+                    Prefix</div>
+                <span>:&nbsp;@Model.Prefix</span></li>
+            <li>
+                <div class="course-info-title">
+                    Course Number</div>
+                <span>:&nbsp;@Model.CourseNumber</span></li>
+            <li>
+                <div class="course-info-title">
+                    Title</div>
+                <span>:&nbsp;@Model.CourseTitle</span></li>
+        </ul>
+    </div>
+</div>
+}
+else
+{
+    <div style="float: left; line-height: 34px; margin-left: 23px; width: 260px;">
+                        <h2>@Model.CourseTitle</h2>
+     </div>
+}

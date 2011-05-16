@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+@using CLFacadeLayer
+@using CourseLogicWeb.ConfigurationService
+@using Systemobject = CLFacadeLayer.SystemObject;
+@if (Request.Cookies["ID"] == null)
+{
+    string RootPath = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.GetRoot().ToString()))
+    {
+        RootPath = ConfigurationService.GetRoot().ToString();
+    }
+    Response.Redirect(Url.Action("Login", "Login"));
+}
+else
+{
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    @{
+    long LoginUserID = 0;
+    if (Request.Cookies["ID"] != null)
+    {
+        LoginUserID = Convert.ToInt64(Request.Cookies["ID"].Value.ToString());
+    }
+    int CourseID = 0;
+    if (Request.QueryString["CourseID"] != null)
+    {
+        CourseID = Convert.ToInt32(Request.QueryString["CourseID"]);
+    }
+    string AccountTitle = "";
+    if (Request.Cookies["AccountTitle"] != null)
+    {
+        AccountTitle = Request.Cookies["AccountTitle"].Value.ToString();
+    }
+    string RootPath = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.GetRoot().ToString()))
+    {
+        RootPath = ConfigurationService.GetRoot().ToString();
+    }
+    string ApplicationKey = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.APPLICATION_KEY().ToString()))
+    {
+        ApplicationKey = ConfigurationService.APPLICATION_KEY().ToString();
+    }
+    string ProfileImage = "";
+    if (Request.Cookies["PImage"] != null)
+    {
+        ProfileImage = Request.Cookies["PImage"].Value.ToString();
+    }
+ }
+    <head>
+        <title>Profile</title>
+        <link href="@Url.Content("~/Content/courselogic_new.css")" rel="stylesheet" type="text/css" />        
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>        
+        @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>*@
+        <script type="text/javascript" src="../../Scripts/jquery-ui-1.8.6.custom.min.js"></script>
+        <link rel="Stylesheet" type="text/css" href="../../Scripts/jquery-ui-1.8.6.custom.css" />  
+        <script type="text/javascript" src="../../Scripts/common.js"></script>
+        <script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"></script>
+        <script type="text/javascript">
+            function fBlogout() {
+                try {
+                    FB.Connect.ifUserConnected(function () {
+                        FB.Connect.logoutAndRedirect('@RootPath/Login/Login/');
+                    }, '@RootPath/Login/Login');
+
+                } catch (e) {
+                    location.href = '@RootPath/Login/Login';
+                }
+            }
+        </script>
+    </head>
+    <body>
+
+      <!--header-->
+       @{Html.RenderPartial("../Common/Header");}
+        <!--header-end-->
+    <div style ="width:980px;margin:auto;">
+
+    <!--changes on 25/1/11 -->
+    <!--     
+    <body>
+
+ 
+    <body style="background:url(Images/register-BG.jpg) repeat-x;">   -->
+    <!--End of changes -->
+
+        <!--content-->
+       
+        @RenderBody()
+          <!--content-end-->
+        @{Html.RenderPartial("../Common/Footer");}
+
+  
+        </div>
+    </body>
+    <script type="text/javascript">
+        FB.init("@ApplicationKey", "@RootPath/xd_receiver.htm");
+    </script>
+    <script type="text/javascript">
+        function GoToProfile() {
+            window.location.href = "../Profile/CurrentCourses";
+        }
+        function GoToSearch() {
+            window.location.href = "../Courses/SearchCourse";
+        }
+        function GoToEditProfile() {
+            window.location.href = "../Profile/EditProfile";
+        }
+    </script>
+    <script type="text/javascript">
+        
+        function fBlogout() {
+            try {
+                FB.Connect.ifUserConnected(function () {
+                    FB.Connect.logoutAndRedirect('@RootPath/Login/Login/');
+                }, '@RootPath/Login/Login');
+
+            } catch (e) {
+                location.href = '@RootPath/Login/Login';
+            }
+        }
+    </script>
+    </html>
+}

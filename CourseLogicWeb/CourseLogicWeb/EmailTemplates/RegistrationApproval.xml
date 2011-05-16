@@ -1,0 +1,11 @@
+﻿<EmailTemplate>
+<FromAddress>courselogic@gmail.com</FromAddress>
+<Subject>CourseLogic Registration</Subject>
+<Body>
+Welcome to CourseLogic,&lt;br&gt;
+Your account has been created - now it will be easier than ever to collaborate with your classmates.
+&lt;br&gt;
+To complete the sign-up process, please follow this link:&lt;br&gt;
+&lt;a href="##RegistrationURL##" target="_blank"&gt;Activate your CourseLogic Account&lt;/a&gt;
+</Body>
+</EmailTemplate>

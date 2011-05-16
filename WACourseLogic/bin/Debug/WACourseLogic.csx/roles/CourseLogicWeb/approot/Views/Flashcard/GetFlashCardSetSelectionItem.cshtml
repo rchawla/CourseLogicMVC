@@ -1,0 +1,59 @@
+﻿@model IEnumerable<CLFacadeLayer.GenericBE>
+@{
+    Layout = null;
+    long LoginUserID = 0;
+    if (Request.Cookies["ID"] != null)
+    {
+        LoginUserID = Convert.ToInt64(Request.Cookies["ID"].Value.ToString());
+    }
+
+    int CourseID = 0;
+    if (Request.QueryString["CourseID"] != null)
+    {
+        CourseID = Convert.ToInt32(Request.QueryString["CourseID"]);
+    }
+    int ItemCount = @Model.Count();
+    int ForLoopCount = 0;
+    string ActionURL = @Url.Action("SaveFlashCardSet", "FlashCard");
+}
+@if (ItemCount > 0)
+{
+    <div class="flash-card">
+        <div class="flash-card-title">
+            <h3>
+                About You flash Card Set
+            </h3>
+        </div>
+        <div style="float: left; width: 800px; padding: 0px 40px; min-height: 200px; border: 1px solid rgb(204, 204, 204);
+            margin: 0px 0px 0px 25px;">
+            <div style="float: left; width: 500px; line-height: 28px; background: none repeat scroll 0% 0% rgb(255, 255, 255);">
+                <div style="float: left; width: 500px; margin-top: 0px;">
+                    <h2>
+                        Creat a New Flash Card Set</h2>
+                </div>
+                @foreach (var item in Model)
+                {
+                    int TempCourseID = @item.CourseID;
+                    <div style="float: left; width: 500px; clear: both; margin: 0px;">
+                        <div style="float: left; width: 500px; margin: 10px 0px;">
+                            <input id="@item.CourseItemID" type="checkbox" name="CourseItemFlashCardSetList" style="float: left; margin: 8px 0px 0px;" />
+                            <span class="input-span" style="padding-left: 10px;">@item.CourseItemTitle</span>
+                        </div>
+                    </div>
+                    if (ItemCount - 1 == ForLoopCount)
+                    {
+                        <div style="float: left; width: 800px; clear: both; margin: 10px 0px;">
+                            @*<div class="bt-font">
+                                Play</div>*@
+                            <div class="bt-font">
+                                <a onclick="javascript:SaveAndPlay('@item.CourseID','@LoginUserID','@ActionURL');">save</a>
+                            </div>
+                        </div>
+                    }
+                    ForLoopCount++;
+                }
+                <span id="ErrorItemSelect" style="display:none;"></span>
+            </div>
+        </div>
+    </div>
+}

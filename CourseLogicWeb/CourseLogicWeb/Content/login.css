@@ -1,0 +1,368 @@
+/*
+
+body {
+font-family:Tahoma,Geneva,sans-serif;
+font-size:12px;
+margin:0;
+padding:0;
+}
+*/
+
+/*Changed body tag 25/1/11*/
+
+body {
+font-family:Helvetica, Arial, sans-serif;
+font-size:12px;
+margin:0 0 0 0;
+padding:0;
+overflow-x:auto;
+overflow-y:auto;
+}
+.loginHeader {
+background:none repeat scroll 0 0 #203550;
+display:block;
+margin:auto;
+height:78px;
+width:100%;
+}
+
+.loginHeader .content {
+display:block;
+float:none;
+height:auto;
+margin:auto;
+width:980px;
+}
+.loginHeader .content .fbconnect {
+display:inline;
+float:right;
+height:auto;
+margin-right:0;
+width:560px;
+}
+.fbconnect form { margin:0px ; padding:0px;}
+.loginHeader .content .logo {
+border:medium none;
+display:inline;
+float:left;
+margin-bottom:15px;
+margin-left:20px;
+margin-top:14px;
+vertical-align:middle;
+}
+.loginHeader .content .loginForm {
+display:inline;
+float:right;
+height:78px;
+margin-right:20px;
+width:370px;
+}
+.loginleft { width:357px; float:left; background:url(../../Images/login-line.jpg) right bottom no-repeat }
+.fbconnectbtn	{ float:right; margin:33px 0 0 0 }
+
+/*changed class*/
+.loginHeader .content .fbconnect .topLinks {
+display:block;
+float:left;
+height:18px;
+margin-top:15px;
+width:352px;
+}
+.loginHeader .content .fbconnect .topLinks p {
+color:#FFFFFF;
+display:block;
+float:left;
+font-size:100%;
+margin:0 15px 0 0;
+padding:0;
+vertical-align:middle;
+width:150px;
+}
+.loginHeader .content .fbconnect .topLinks p .check {
+display:block;
+float:left;
+margin:-2px 0 0 -4px;
+padding:0;
+}
+.loginHeader .content .loginForm .TextBoxes {
+display:block;
+float:left;
+margin-top:6px;
+width:352px;
+}
+.loginHeader .content .fbconnect .TextBoxes .text {
+border:1px solid #203550;
+color:#666666;
+display:block;
+float:left;
+font-size:100%;
+margin:0 10px 0 0;
+height:20px;
+vertical-align:middle;
+width:134px;
+}
+
+.loginHeader .content .fbconnect .TextBoxes .text1 {
+border:1px solid #203550;
+color:#666666;
+display:block;
+float:left;
+font-size:100%;
+margin:0 10px 0 0;
+height:20px;
+vertical-align:middle;
+width:134px;
+}
+.loginHeader .content .fbconnect .TextBoxes .login-BTN
+{
+    background: url('../Images/login-bt-new.png') no-repeat scroll 0px 0px;
+    border:none;
+    color: #FFFFFF;
+    display: block;
+    float: left;
+    height: 25px;
+    line-height: 25px;
+    margin: 0px;
+    text-align: center;
+    text-transform: capitalize;
+    width: 50px;
+    font-size:13px;
+    color:#ffffff;
+    font-weight:700;
+    font-family:"Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+    
+}
+div.why			{ margin:0 0 5px 100px; width:200px; clear:both}
+a.why			{ color:#00349c; font-size:11px; font-family:Arial; text-decoration:none }
+a:hover.why		{ text-decoration:underline }
+.register 
+{
+  background-image:url(../images/register-BG.gif);
+  background-repeat:repeat-x;
+  background-position:left top;
+display:block;
+float:left;
+height:358px;
+clear:both;
+margin:auto;
+width:100%;
+}
+.register .content {
+display:block;
+float:none;
+height:358px;
+margin:auto;
+width:990px;
+}
+.register .content .splash {
+background-image:url("../images/cl-splash.jpg");
+background-position:left center;
+background-repeat:no-repeat;
+display:block;
+float:left;
+height:358px;
+margin-left:20px;
+width:554px;
+}
+.register .content .signUp {
+display:block;
+float:right;
+height:251px;
+margin-right:40px;
+margin-top:44px;
+width:375px;
+}
+.register .content .signUp h1 {
+color:#203550;
+display:block;
+float:left;
+font-size:150%;
+font-weight:bold;
+margin:0;
+padding:0;
+width:375px;
+}
+.register .content .signUp h2 {
+color:#203550;
+display:block;
+float:left;
+font-size:150%;
+font-weight:normal;
+margin:0;
+padding:0;
+width:375px;
+}
+.register .content .signUp .signupForm {
+display:block;
+float:left;
+margin-top:10px;
+width:300px;
+height:175px;
+}
+.register .content .signUp .signupForm .label {
+color:#203550;
+display:block;
+float:left;
+font-size:120%;
+font-weight:normal;
+height:22px;
+line-height:22px;
+margin:0 0 5px;
+padding:0;
+text-transform:capitalize;
+vertical-align:middle;
+width:100px;
+}
+.register .content .signUp .signupForm .text {
+border:1px solid #96A6C5;
+color:#203550;
+display:block;
+float:left;
+font-size:100%;
+font-weight:normal;
+margin:0 0 5px;
+padding:4px;
+width:184px;
+}
+.register .content .signUp .signupForm .select {
+border:1px solid #96A6C5;
+color:#203550;
+display:block;
+float:left;
+font-size:90%;
+font-weight:normal;
+margin:0 0 5px;
+padding:1px 1px 1px 0;
+width:82px;
+}
+.register .content .signUp .signupForm .signupBTN {
+border:medium none;
+clear:left;
+display:block;
+float:left;
+margin-left:100px;
+}
+.register .content .signUp .undertaking {
+display:block;
+float:left;
+width:375px;
+}
+.register .content .signUp .undertaking .horizontalRuler {
+
+display:block;
+float:left;
+border-bottom:1px solid  #666666;
+margin:0px 0;
+width:375px;
+}
+.register .content .signUp .undertaking p {
+color:#666666;
+display:block;
+float:left;
+font-size:90%;
+line-height:15px;
+margin:0;
+padding:0;
+vertical-align:middle;
+width:375px;
+}
+.register .content .signUp .undertaking p a {
+color:#666666;
+font-weight:bold;
+text-decoration:underline;
+}
+.register .content .signUp .undertaking p a:hover {
+color:#666666;
+font-weight:bold;
+text-decoration:none;
+}
+.register .content .signUp .validation {
+background:none repeat scroll 0 0 #FFD9D9;
+border:1px solid #FF0000;
+color:#000000;
+display:none;
+float:left;
+font-size:125%;
+font-weight:normal;
+height:29px;
+line-height:29px;
+margin-top:10px;
+text-align:center;
+vertical-align:middle;
+width:373px;
+}
+.footer {
+clear:both;
+display:block;
+float:none;
+height:20px;
+margin:auto;
+width:980px;
+}
+.footer p {
+color:#203550;
+font-size:90%;
+line-height:15px;
+margin:5px 0 0;
+padding:0;
+}
+.footer p a {
+color:#203550;
+text-decoration:none;
+cursor:pointer;
+}
+.footer p a:hover {
+color:#203550;
+text-decoration:underline;
+}
+.footer p.copyRights {
+display:block;
+float:left;
+margin-left:20px;
+}
+.footer p.links {
+display:block;
+float:right;
+margin-right:20px;
+}
+
+
+.fpContainer
+{
+    float:left;
+    margin:7px 3px 3px 28px;
+}
+   
+.fpContainer input  
+{
+    margin:0px;
+    padding:0px;
+    float:left;
+    width:180px;
+}
+        
+.fpPopUpTitle
+{
+    width: 100%;
+    color: #FFFFFF;
+    font-weight: 700;
+    line-height: 38px;
+    font-size: 13px;
+    float: right;
+    height: 38px;
+    background: url('../Images/login-popuo-title.png') no-repeat;
+}   
+.fpPopUpCenter
+{
+   width:240px; float:left;
+    background:#FFFFFF url('../Images/login-popuo_center.png') repeat-y;
+    height:auto;
+    padding-bottom:10px;
+}   
+
+.fpPopUptop
+{
+   width:240px;height:auto;position:relative;top:-350px;left:460px; display:none;float:left;
+   
+    
+} 

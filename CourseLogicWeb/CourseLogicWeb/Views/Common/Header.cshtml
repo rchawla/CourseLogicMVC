@@ -1,0 +1,100 @@
+﻿@*@{
+    Layout = null;
+}
+*@
+ @{
+    long LoginUserID = 0;
+    if (Request.Cookies["ID"] != null)
+    {
+        LoginUserID = Convert.ToInt64(Request.Cookies["ID"].Value.ToString());
+    }
+    int CourseID = 0;
+    if (Request.QueryString["CourseID"] != null)
+    {
+        CourseID = Convert.ToInt32(Request.QueryString["CourseID"]);
+    }
+
+    string AccountTitle = "";
+    if (Request.Cookies["AccountTitle"] != null)
+    {
+        AccountTitle = Request.Cookies["AccountTitle"].Value.ToString();
+    }
+
+    string ProfileImage = "";
+    if (Request.Cookies["PImage"] != null)
+    {
+        ProfileImage = Request.Cookies["PImage"].Value.ToString();
+    }
+    }
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div class="top-bg float-l">
+            <div class="top">
+                <div class="logo float-l">
+                    <img src="../../Images/logo_new.gif" class="logo" alt="Course Logic" /></div>
+                <!--menu-->
+                <div class="topcontent">
+                    <div class="mainMenu ">
+                        <ul>
+                            <li class="profile-link"><a onclick="javascript:GoToProfile();" title="Profile" id="profileMenu"
+                                style="cursor: pointer">profile</a></li>
+                            <li class="gap">&nbsp;</li>
+                            <li class="dropDown"  id="courseMenu"><a href="#" title="Courses"  class="hover1">course
+                            </a>
+                                <ul style="float: left; background:#ffffff; clear: both;" onmouseover="javascript:document.getElementById('courseMenu').className='selected';"
+                                    onmouseout="javascript:document.getElementById('courseMenu').className='dropDown';"
+                                    class="coursesSubmenu">
+                                    <li class="blank"><span class="myActiveCourses">my active courses</span> <span class="addCourse">
+                                        <a onclick="javascript:GoToSearch();" style="cursor: pointer" title="Add A New Course">
+                                            Add A New Course</a></span> </li>
+                                    @{Html.RenderAction("StudentCourses", "Courses");}
+                                    <li class="seeAll"><a onclick="javascript:GoToSearch();" style="cursor: pointer">see
+                                        all courses</a></li>
+                                        
+                                </ul>
+                            </li>
+                      <li class="profile-link"><a onclick="javascript:GoToAssessmentCalendar(@LoginUserID);" title="Calendar" id="profileMenu"
+                                style="cursor: pointer">Calendar</a>
+                        </ul>
+                        </ul>
+                    </div>
+                    <!-- Main Menu Div and List End -->
+                    <!-- User Info and logout Button Div Start -->
+                    <ul class="userInfo">
+                        <li id="userName"><a href="#" title="@AccountTitle"><b>@AccountTitle</b></a><br />
+                            <ul onmouseover="javascript:document.getElementById('userName').className='selected';"
+                                onmouseout="javascript:document.getElementById('userName').className='userName';">
+                                <li class="displayPic"><a href="#" title="Change/ Upload Profile Pictures">
+                                   
+                                   @if (!string.IsNullOrEmpty(ProfileImage))
+                                   {
+                                  <img align="middle" alt="Image can not be displayed." src="/images/ProfileImage/@LoginUserID/@ProfileImage" style="width:80px;height:70px;"  />
+                                   }
+                                   else
+                                   {
+                                    <img src="../../../Images/profilePic-Small.gif" alt="Display Pic" class="img" />
+                                    }
+                                    
+                                    
+                                    </a></li>
+                                <li><a  onclick="javascript:GoToEditProfile();" style="cursor: pointer" title="Edit Profile">Edit Profile</a></li>
+                                @* <li><a href="#" title="Change/ Upload Picture">Change Password</a></li>
+                            <li><a href="#" title="Change/ Upload Picture">Change/ Upload Picture</a></li>*@
+                            </ul>
+                        </li>
+                        <li class="logoutBTN"><a onclick="javascript:fBlogout();"><b>logout</b></a></li>
+                    </ul>
+                    <!-- User Info and logout Button Div End -->
+                </div>
+                <!--menu-end-->
+            </div>
+        </div>
+</body>
+</html>

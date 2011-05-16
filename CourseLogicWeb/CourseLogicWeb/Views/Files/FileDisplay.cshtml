@@ -1,0 +1,75 @@
+﻿@using CLFacadeLayer;
+@using CourseLogicWeb.ConfigurationService
+@model IEnumerable<GenericBE>
+@{
+    Layout = null;
+    string RootPath = "";
+    if (!string.IsNullOrEmpty(ConfigurationService.GetRoot().ToString()))
+    {
+        RootPath = ConfigurationService.GetRoot().ToString();
+    }
+    long LoginUserID = 0;
+    if (Request.Cookies["ID"] != null)
+    {
+        LoginUserID = Convert.ToInt64(Request.Cookies["ID"].Value);
+    }
+}
+<script type="text/javascript" src="../../jquery.fancybox-1.3.4/fancybox/jquery.fancybox-1.3.4.js"></script>
+<link rel="stylesheet" type="text/css" href="../../jquery.fancybox-1.3.4/fancybox/jquery.fancybox-1.3.4.css"
+    media="screen" />
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $(".ImageFileViewer").fancybox();
+    });
+    function DeleteFiles(FileID, FileName, CourseItemID, systemObjectID, CourseID) {
+        $.post(
+        url = "/Files/DeleteFiles",
+        { FileID: FileID, FileName: FileName, CourseItemID: CourseItemID, SystemObjectID: systemObjectID, CourseID: CourseID },
+        function (data) {
+            $.post(
+            url = "/Files/FileDisplay",
+            { CourseItemID: CourseItemID, CourseID: CourseID, SystemObjectID: systemObjectID },
+            function (ImageData) {
+                $("#DivFile" + CourseItemID).html(ImageData);
+            }
+            );
+        }
+        );
+    }
+</script>
+<div id="x">
+</div>
+@foreach (var item in Model)
+{
+    string hrefPath = null;
+    string hrefDocPath = null;
+    if (@item.SystemObjectID == Convert.ToInt32(SystemObject.Discussion))
+    {
+        hrefPath = "../Images/" + SystemObject.Discussion.ToString() + "/" + @item.CourseItemID + "/" + @item.FileName;
+        hrefDocPath = "http://viewer.zoho.com/docs/urlview.do?url=" + @RootPath + "/Images/" + SystemObject.Discussion.ToString() + "/" + @item.CourseItemID + "/" + @item.FileName + "&embed=true";
+    }
+    <div style='float: left; width: 200px; margin: 10px 0px;'>
+        @if (@item.FileExtensions.ToLower() == "jpg" || @item.FileExtensions.ToLower() == "jpeg" || @item.FileExtensions.ToLower() == "png" || @item.FileExtensions.ToLower() == "bmp")
+        {
+            <a class="ImageFileViewer"  href="@hrefPath" title="@item.FileName">
+                <img width='100' height='60' alt='' src="@hrefPath" /></a>
+                                                            if (@item.AccountID == LoginUserID)
+                                                            {
+<br />
+                    <a onclick="javascript:DeleteFiles('@item.FileID','@item.FileName','@item.CourseItemID','@item.SystemObjectID','@item.CourseID');">
+                        Delete</a>
+                                                            }
+
+        }
+        else
+        {
+        <a href="@hrefDocPath"  target="_blank">@item.FileName</a>
+                                           if (@item.AccountID == LoginUserID)
+                                           {
+                <br />
+                <a onclick="javascript:DeleteFiles('@item.FileID','@item.FileName','@item.CourseItemID','@item.SystemObjectID','@item.CourseID');">
+                    Delete</a>
+                                           }
+        }
+    </div>
+}
